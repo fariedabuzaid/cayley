@@ -1,0 +1,183 @@
+\begin{thebibliography}{10}
+
+\bibitem{AbdJ96}
+Parosh~A. Abdulla and Bengt Jonsson.
+\newblock Verifying programs with unreliable channels.
+\newblock {\em Information and Computation}, 127(2):91--101, 1996.
+\newblock \href {http://dx.doi.org/10.1006/inco.1996.0053}
+  {\path{doi:10.1006/inco.1996.0053}}.
+
+\bibitem{Bol06}
+Benedikt Bollig.
+\newblock {\em Formal {{Models}} of {{Communicating Systems}}: {{Languages}},
+  {{Automata}}, and {{Monadic Second}}-{{Order Logic}}}.
+\newblock {Springer-Verlag}, Berlin Heidelberg, 2006.
+\newblock \href {http://dx.doi.org/10.1007/3-540-32923-4}
+  {\path{doi:10.1007/3-540-32923-4}}.
+
+\bibitem{BraZ83}
+Daniel Brand and Pitro Zafiropulo.
+\newblock On {{Communicating Finite}}-{{State Machines}}.
+\newblock {\em Journal of the ACM}, 30(2), 1983.
+\newblock \href {http://dx.doi.org/10.1145/322374.322380}
+  {\path{doi:10.1145/322374.322380}}.
+
+\bibitem{CEHLPT92}
+James~W Cannon, David~BA Epstein, Derek~F Holt, Silvio~VF Levy, Michael~S
+  Paterson, and William~P Thurston.
+\newblock Word processing in groups.
+\newblock {\em Jones and Barlett Publ., Boston, MA}, 1992.
+
+\bibitem{CecFP96}
+G{\'e}rard C{\'e}c{\'e}, Alain Finkel, and S.~Purushotaman~Iyer.
+\newblock Unreliable channels are easier to verify than perfect channels.
+\newblock {\em Information and Computation}, 124(1):20--31, 1996.
+\newblock \href {http://dx.doi.org/10.1006/inco.1996.0003}
+  {\path{doi:10.1006/inco.1996.0003}}.
+
+\bibitem{FerR79}
+Jeanne Ferrante and Charles~W. Rackoff.
+\newblock {\em The {{Computational Complexity}} of {{Logical Theories}}}.
+\newblock Number 718 in Lecture Notes in Mathematics. {Springer}, 1979.
+\newblock \href {http://dx.doi.org/10.1007/BFb0062837}
+  {\path{doi:10.1007/BFb0062837}}.
+
+\bibitem{Graedel03}
+Erich Gr{\"a}del.
+\newblock Finite {{Model Theory}} and {{Descriptive Complexity}}.
+\newblock In {\em Finite {{Model Theory}} and {{Its Applications}}}, Texts in
+  Theoretical Computer Science an EATCS Series, pages 125--230. {Springer,
+  Berlin, Heidelberg}, 2007.
+\newblock \href {http://dx.doi.org/10.1007/3-540-68804-8_3}
+  {\path{doi:10.1007/3-540-68804-8_3}}.
+
+\bibitem{Gre51}
+James~A. Green.
+\newblock On the structure of semigroups.
+\newblock {\em Annals of Mathematics}, pages 163--172, 1951.
+
+\bibitem{HaaSS14}
+Christoph Haase, Sylvain Schmitz, and Philippe Schnoebelen.
+\newblock The power of priority channel systems.
+\newblock {\em Logical Methods in Computer Science}, 10(4:4), 2014.
+
+\bibitem{HusKZ17}
+Martin Huschenbett, Dietrich Kuske, and Georg Zetzsche.
+\newblock The monoid of queue actions.
+\newblock {\em Semigroup forum}, 95(3):475--508, 2017.
+\newblock \href {http://dx.doi.org/10.1007/s00233-016-9835-4}
+  {\path{doi:10.1007/s00233-016-9835-4}}.
+
+\bibitem{kambites2009}
+Mark Kambites.
+\newblock Formal languages and groups as memory.
+\newblock {\em Communications in Algebra}, 37(1):193--208, 2009.
+\newblock \href {http://dx.doi.org/10.1080/00927870802243580}
+  {\path{doi:10.1080/00927870802243580}}.
+
+\bibitem{KKM14}
+Olga Kharlampovich, Bakhadyr Khoussainov, and Alexei Miasnikov.
+\newblock From automatic structures to automatic groups.
+\newblock {\em Groups, Geometry, and Dynamics}, 8(1):157--198, 2014.
+\newblock \href {http://dx.doi.org/10.4171/GGD/221}
+  {\path{doi:10.4171/GGD/221}}.
+
+\bibitem{KN95}
+Bakhadyr Khoussainov and Anil Nerode.
+\newblock Automatic presentations of structures.
+\newblock In {\em Logic and Computational Complexity}, volume 960 of {\em
+  Lecture Notes in Computer Science}, pages 367--392. {Springer}, 1995.
+\newblock \href {http://dx.doi.org/10.1007/3-540-60178-3_93}
+  {\path{doi:10.1007/3-540-60178-3_93}}.
+
+\bibitem{Koe18}
+Chris K{\"o}cher.
+\newblock Rational, {{Recognizable}}, and {{Aperiodic Sets}} in the {{Partially
+  Lossy Queue Monoid}}.
+\newblock In {\em {{STACS}}'18}, volume~96 of {\em LIPIcs}, pages 45:1--45:14.
+  {Dagstuhl Publishing}, 2018.
+\newblock \href {http://dx.doi.org/10.4230/LIPIcs.STACS.2018.45}
+  {\path{doi:10.4230/LIPIcs.STACS.2018.45}}.
+
+\bibitem{KKP18}
+Chris K{\"o}cher, Dietrich Kuske, and Olena Prianychnykova.
+\newblock The {{Inclusion Structure}} of {{Partially Lossy Queue Monoids}} and
+  their {{Trace Submonoids}}.
+\newblock {\em RAIRO - Theoretical Informatics and Applications}, 2018.
+
+\bibitem{KusL05}
+Dietrich Kuske and Markus Lohrey.
+\newblock Logical aspects of {{Cayley}}-graphs: The group case.
+\newblock {\em Annals of Pure and Applied Logic}, 131(1):263--286, 2005.
+\newblock \href {http://dx.doi.org/10.1016/j.apal.2004.06.002}
+  {\path{doi:10.1016/j.apal.2004.06.002}}.
+
+\bibitem{KusL06}
+Dietrich Kuske and Markus Lohrey.
+\newblock Logical aspects of {{Cayley}}-graphs: The monoid case.
+\newblock {\em International Journal of Algebra and Computation},
+  16(02):307--340, 2006.
+\newblock \href {http://dx.doi.org/10.1142/S0218196706003001}
+  {\path{doi:10.1142/S0218196706003001}}.
+
+\bibitem{KusL11}
+Dietrich Kuske and Markus Lohrey.
+\newblock Automatic structures of bounded degree revisited.
+\newblock {\em The Journal of Symbolic Logic}, 76(4):1352--1380, December 2011.
+\newblock \href {http://dx.doi.org/10.2178/jsl/1318338854}
+  {\path{doi:10.2178/jsl/1318338854}}.
+
+\bibitem{MasS02}
+Beno{\^\i}t Masson and Philippe Schnoebelen.
+\newblock On verifying fair lossy channel systems.
+\newblock In {\em {{MFCS}}'02}, volume 2420 of {\em Lecture Notes in Computer
+  Science}, pages 543--555. {Springer}, 2002.
+\newblock \href {http://dx.doi.org/10.1007/3-540-45687-2_45}
+  {\path{doi:10.1007/3-540-45687-2_45}}.
+
+\bibitem{MulS85}
+David~E. Muller and Paul~E. Schupp.
+\newblock The theory of ends, pushdown automata, and second-order logic.
+\newblock {\em Theoretical Computer Science}, 37:51--75, January 1985.
+\newblock \href {http://dx.doi.org/10.1016/0304-3975(85)90087-8}
+  {\path{doi:10.1016/0304-3975(85)90087-8}}.
+
+\bibitem{NarO90}
+Paliath Narendran and Friedrich Otto.
+\newblock Some results on equational unification.
+\newblock In {\em 10th {{International Conference}} on {{Automated
+  Deduction}}}, Lecture Notes in Computer Science, pages 276--291. {Springer,
+  Berlin, Heidelberg}, July 1990.
+\newblock \href {http://dx.doi.org/10.1007/3-540-52885-7_94}
+  {\path{doi:10.1007/3-540-52885-7_94}}.
+
+\bibitem{pin2010}
+Jean-{\'E}ric Pin.
+\newblock Mathematical foundations of automata theory.
+\newblock {\em Lecture notes LIAFA, Universit{\'e} Paris}, 7, 2010.
+
+\bibitem{RobS84}
+Neil Robertson and Paul~D. Seymour.
+\newblock Graph minors, {{Part III}}: {{Planar}} tree-width.
+\newblock {\em Journal of Combinatorial Theory, Series B}, 36(1):49--64,
+  February 1984.
+\newblock \href {http://dx.doi.org/10.1016/0095-8956(84)90013-3}
+  {\path{doi:10.1016/0095-8956(84)90013-3}}.
+
+\bibitem{Sak86}
+Jacques Sakarovitch.
+\newblock Kleene's theorem revisited.
+\newblock In {\em Trends, {{Techniques}}, and {{Problems}} in {{Theoretical
+  Computer Science}}}, Lecture Notes in Computer Science, pages 39--50.
+  {Springer, Berlin, Heidelberg}, October 1986.
+\newblock \href {http://dx.doi.org/10.1007/3540185356_29}
+  {\path{doi:10.1007/3540185356_29}}.
+
+\bibitem{See91}
+D.~Seese.
+\newblock The structure of the models of decidable monadic theories of graphs.
+\newblock {\em Annals of Pure and Applied Logic}, 53(2):169--195, July 1991.
+\newblock \href {http://dx.doi.org/10.1016/0168-0072(91)90054-P}
+  {\path{doi:10.1016/0168-0072(91)90054-P}}.
+
+\end{thebibliography}

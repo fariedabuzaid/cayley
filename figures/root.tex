@@ -1,0 +1,18 @@
+\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
+	\node at (-1, .2) {$u_{i+1}:$};
+	\node at (1, .2) {$v$};
+	\node at (3, .2) {$v$};
+	\node at (5, .2) {$v$};
+	\node at (7, .2) {$v$};
+	\draw [decorate,decoration={brace,amplitude=10pt}] (10,0) -- (8, 0) node [black,midway,yshift=-.6cm] {$v$};
+	\draw (0,0) rectangle (9, .5);
+	\draw [decorate,decoration={brace,amplitude=10pt}] (7,0) -- (0, 0) node [black,midway,yshift=-.6cm] {$u_i$};
+	\draw [decorate,decoration={brace,amplitude=10pt}] (2,0.5) -- (9, 0.5) node [black,midway,yshift=.6cm] {$u_i$};
+	\draw (2,.5) -- (2,0);
+	\draw (4,.5) -- (4,0);
+	\draw (6,.5) -- (6,0);
+	\draw (8,.5) -- (8,0);
+	\draw[dashed] (10,.5) -- (10,0);
+	\draw[dashed] (9,.5) -- (10,.5);
+	\draw[dashed] (9,0) -- (10,0);   
+\end{tikzpicture}

@@ -1,0 +1,21 @@
+\section{Conclusion and Open Problems}
+We studied the Cayley-graph of the queue monoid and the logics of these graphs. Concretely, we haven shown the decidability of the Cayley-graph's first order theory and the undecidability of the monadic second-order theory. This answers a question from Huschenbett et al.\ in \cite{HusKZ17}.
+
+In Table~\ref{tab:conclusion} is a comparison of our results compared to other fundamental data structures.
+
+\begin{table}[h]
+	\begin{tabular}{cc|cc}
+		Data Structure & Transformation Monoid $\calM$ & $\FOTh{\cayley{\calM}{\varGamma}}$ & $\MSOTh{\cayley{\calM}{\varGamma}}$\\
+		\hline
+		\hline
+		finite monoid & finite monoid & $\classfont{PSPACE}$ \cite{Graedel03} & $\classfont{PSPACE}$ \cite{Graedel03}\\
+		counter & $(\bbZ,+)$ & $\classfont{2EXPSPACE}$ \cite{KusL11} & decidable \cite{KusL06}\\
+		stack & polycyclic monoid & $\classfont{2EXPSPACE}$ \cite{KusL11} & decidable \cite{KusL06}\\
+		queue & queue monoid & primitive recursive & undecidable
+	\end{tabular}
+	\caption{Comparison of the decidability of logics on Cayley-graphs of fundamental data structures.\label{tab:conclusion}}
+\end{table}
+
+Though, there are still some questions open relating to the queue monoid: in this paper we have given an primitive recursive but non-elementary upper bound on the complexity of the first-order theory of the queue monoid's Cayley-graph. So, one may ask for tight upper and lower bounds.
+Another open question concern the automaticity of the queue monoid. While it is neither automatic in the sense of Khnoussainov and Nerode~\cite{KN95} nor automatic in the sense of Thurston et al.~\cite{CEHLPT92} due to~\cite{HusKZ17}. But we still do not know whether the Cayley-graph of the queue monoid is automatic.
+Finally, the decidability of the first-order theory of the (partially) lossy queue monoid's (cf.~\cite{KKP18,Koe18}) Cayley-graph is left open as well and is worth to be studied.

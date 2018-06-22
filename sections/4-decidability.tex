@@ -1,0 +1,146 @@
+\section{Decidability of the FO-Theory}
+In the following we denote the Cayley-graph of the queue monoid $\Qx$ induced by $A$ by $\frakC=(C,(E_\alpha)_{\alpha\in\Sigma})$. 
+For $a,b\in C$ let $a\Delta b = (\rd{a}, \wrt{a})\Delta (\rd{b}, \wrt{b})$ and we call $|a\Delta b|$ the ($\Delta$-)distance of $a$ and $b$. 
+\begin{definition}
+	Let $V$ be an $r$-skeleton. We say that $a\in C$ is \emph{compatible} with $V$ 
+	if $V$ has an instantiation $v$ such that $\rd{a}= \rd{v}x$ for some $x\in \Sigma^{\leq r}$ and 
+	$|\wrt{a} \Delta \wrt{v}| \leq r$.
+\end{definition}
+Intuitively, $a$ being compatible to an $r$-skeleton $V$ means that we can obtain an element
+$a'$ with $r$-skeleton $V$ by deleting up to $r$ many  read actions and modifying the write
+actions arbitrarily up to distance $r$. We use this notion in order to translate elements of the Cayley-graph
+into positions of an $r$-skeleton.
+
+\begin{definition}
+	For $a\in C$ with $|\mu(a)| \geq r$ let $\cpr_r(a)$ be the element $a'$  with $\wrt{a'} = \wrt{a}$, $\rd{a'}=\rd{a}\suf_{r}({\rd{a}})^{-1}$, and $\mu(a') = \mu(a) \suf_{r}({\mu({a})})^{-1}$.
+\end{definition}
+
+We describe the way, in which we associate positions in an $r$-skeleton with elements of $C$ and vice versa. 
+\begin{definition}
+	Let $a,b\in C$ and let $U$ and $V$ be the $3r$-skeletons $\cpr_{2r}(a)$ and $\cpr_{2r}(b)$ respectively. If we suppose that $(p_1,\ldots,p_k)$ are positions in $V$ and $(q_1,\ldots,q_k)$ are positions in $U$ such that $(U,p_1,\ldots,p_k) \equiv_{\ell} (V,q_1,\ldots,q_k)$ for some $\ell \geq 1$. For $a'\in C$ with $|a'\Delta a| \leq r$ we associate a position $p_{k+1}$ in $U$ as follows:
+	Let $(u_1,\ldots, u_m)$ be the complete canon-decomposition of $\rd{\cpr_{2r}(a)}$ and $(v_1,\ldots,v_n)$. As $a'$ has distance at most $r$ from $a$ we have that $\rd{a'} = \rd{\cpr_{2r}(a)}x$
+	for some $x\in \Sigma^{\leq 2r}$. Therefore there is an $i\leq m$ such that $\mddl{a'} = u_ix$. Then $i$ is the position that is associated with $a'$.
+	
+	Now let $q_{k+1}$ be such that $(U,p_1,\ldots,p_{k+1}) \equiv_{\ell-1} (V,q_1,\ldots,q_{k+1})$ we associate an element $b'$ with $q_{k+1}$ as follows:
+	Let $b'$ be the element with $\rd{b'} = \rd{\cpr_{2r}(b)}u_{p_{k+1}}^{-1}\mu(a')$, $\wrt{b'}\Delta\wrt{\cpr_r({b})} = \wrt{a'}\Delta\wrt{\cpr_{2r}({a})}$, and 
+	$\mu(b') = v_{q_{k+1}}u_{p_{k+1}}^{-1}\mu(a')$. Note that $b'$ is well defined since $V[j]$ is labeled by $\pref_{2^{r+2}}(u_i^{-1}\mu({a}))$. Therefore $v_j\pref_{2^{r+1}}(v_i^{-1}\mddl{a})$ is a prefix of $\wrt{b'}$ by construction.
+\end{definition}
+The basic idea behind this definition is to ensure that the neighborhood structure of the elements $a'$ and $b'$ is $\ell$-equivalent. We use this idea to  define a family of  equivalence relations $(E^r_m)_{r,m\in\bbN}$.
+For $r,m\in \bbN$ and $\bar{a},\bar{b}\in C^m$ let $\bar{a} E^r_m \bar{b}$ iff
+\begin{enumerate}[(1)]
+	\item \label{item:E_suffix} $\suf_{2^{r}}(\rd{b_i}) = \suf_{2^{r}}(\rd{a_i})$ and $\suf_{2^{r}}(\wrt{a_i}) = \suf_{2^{r}}(\wrt{b_i})$ for all $1\leq i\leq m$.
+	\item\label{item:E_distance} $|a_i \Delta a_j| =_{2^r} |b_i\Delta b_j|$ for all $1\leq i, j\leq m$ and if $|a_i\Delta a_j| \leq 2^r$ then also $a_i \Delta a_j = b_i\Delta b_j$. 
+	\item\label{item:E_partition} There is a partition $X_1,\ldots,X_k$ of $\{1,\ldots,m\}$ such that for $X\neq X'\in \{X_1,\ldots,X_k\}$ it holds that: 
+	\begin{enumerate}[(a)]
+		\item If $i\in X$, $j\in X'$ it holds that $|a_i\Delta a_j| > 2^r$ (and therefore $|b_i\Delta b_j| > 2^r$).
+		\item Let $i= \min X$. Then for all $j\in X$ it holds that $|a_i \Delta a_j| \leq \sum_{s= r+m-i}^{r} 2^s$ (and therefore also $|a_i \Delta a_j| \leq \sum_{s= r+m-i}^{r} 2^s$).      
+		\item\label{subitem:E_partition:equivalence} Let $i= \min X$ and let $U$ be the $3\cdot 2^{r+m-i+1}$-skeleton of $\cpr_{2^{r+m-i+2}}(a_i)$ and $V$ be the $3\cdot 2^{r+m-i+1}$-skeleton $\cpr_{2^{r+m-i+2}}(b_i)$. Then for all 
+		$j\in X$ we have that $a_j$ is compatible with $U$ and $b_j$ is compatible with $V$. Further if $p_1,\ldots, p_n$ are the positions in $U$ that are associated with  $\{a_j \mid j\in X_i \}$ and $q_1,\ldots, q_n$ are the positions in $U$ that are associated with  $\{b_j \mid j\in X_i \}$ then $(V,p_1,\ldots,p_n) \equiv_{r+1} (U,q_1,\ldots,q_n)$.          
+	\end{enumerate}  
+\end{enumerate} 
+
+\begin{lemma}\label{lem:partial_isomorphism}
+	For all $m\in\bbN_{>0}$ and all $\bar{a},\bar{b} \in C^m$: If $\bar{a} E^0_m \bar{b}$ then the mapping $a_i \mapsto b_i$ is a partial isomorphism.
+\end{lemma}
+\begin{proof}
+	We need to show that $(a_i,a_j)\in E_x \Rightarrow (b_i,b_j)\in E_x$  for all $i,j\leq m$ and all $x\in\Sigma$.
+	Let $\bar{a}, \bar{b} \in C^m$ with $\bar{a} E^0_m \bar{b}$. Suppose  $(a_i,a_j) \in E_x$ for some $x\in \Sigma$. Then $|a_i\Delta a_j| = 1$. Hence $a_i\Delta a_j = b_i\Delta b_j$ by (\ref{item:E_distance}). 
+	Since the distance between $a_i$ and $a_j$ and between $b_i$ and $b_j$ is $1$, there are $2^\ell$-skeletons (for some $\ell \geq m-\min\{i,j\}+2$) $U,V$ such that 
+	$a_i$ and $a_j$ can be translated into positions $p, p'$ in $U$ and  $b_i$ and $b_j$ can be translated into position $q, q'$ in $V$ such that $(U,p,p') \equiv_1 (V,q,q')$. 
+	There are two possible types of configurations for $a_i$ and $a_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{a_i} = \rd{a_j}$,
+	$\wrt{a_i}x = \wrt{a_j}$, and $\mu(a_i) = \mu(a_j)$. In this case $p=p'$ and therefore $q=q'$, which implies that $\rd{b_i} = \rd{b_j}$,
+	$\wrt{b_i}x = \wrt{b_j}$, and $\mu(b_i) = \mu(b_j)$. Therefore $(b_i,b_j) \in E_x$.
+	Second  it might be that $\rd{a_i}x = \rd{a_j}$,
+	$\wrt{a_i} = \wrt{a_j}$, and $\mu(a_j)x^{-1}$ is the largest suffix $w$ of $\mu(a_i)$ such that $wx$ is a prefix of $\wrt{a_i}$.  This property can be translated into a formula $\phi$
+	on $(U, p, p')$ of quantifier rank $1$. As $(U,p,p') \equiv_1 (V, q,q')$, $(V,q,q') \models \phi$ and therefore $(b_i,b_j)\in E_x$. 
+\end{proof}
+
+In order to prove the the main technical lemma we need to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach. 
+\begin{lemma}\label{lem:r-equiv_word_construction}
+	From a given an alphabet $\Sigma$, a word $v\in\Sigma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(2, p(r))$ with $L(\calA) = \{w\in \Sigma^\ast\mid w\equiv_r v \}$ .  
+\end{lemma}
+\begin{proof}[Proof sketch]
+	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Sigma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
+	$\exp_{r+1}(2, p(r))$ for some suitable polynomial $p$.
+\end{proof}
+
+
+\begin{lemma}\label{lem:EF_relations}
+	For all $m,r\in\bbN$ and all $\bar{a},\bar{b}\in C^m$:  
+	\[\bar{a} E^{r+1}_m \bar{b} \Rightarrow \forall a\in C \exists b\in \calN_{\exp_{r+2}(2,p(r))}(\bar{b}): (\bar{a}, a) E^{r}_{m+1} (\bar{b}, b).\]
+	for some polynomial $p$.
+\end{lemma}
+\begin{proof}
+	Let $\bar{a}, \bar{b} \in C^m$ with $(\bar{a}, \bar{b}) \in E^{r+1}_m$ and 
+	let $X_1,\ldots,X_k$ be a partition of $\{1,\ldots,m\}$ with the properties described in (\ref{item:E_partition}). Further let $X_i(\bar{a}) = \{a_j \mid j\in X_i \}$ and $X_i(\bar{b}) = \{b_j \mid j\in X_i \}$. Consider $a\in C$. We distinguish three cases.
+	If $a$ has distance $\leq 4\exp_{r+2}(2, p(r))$ from $\epsilon$ then we choose $b=a$.
+	
+	From now on suppose $a$ has  distance $> 4\exp_{r+2}(2, p(r))$ from $\epsilon$.	
+	We consider the case that $a$ has distance $>2^r$ from every $a_i$.
+	Since the distance from $\epsilon$ is exactly $|\lambda(a)| + 2|\mu(a)| + |\rho(a)|$ it follows that $|\lambda(a)| > \exp_{r+2}(2,p(a))$ or $|\mu({a})| > \exp_{r+2}(2,p(a))$ or $|\rho(a)| > \exp_{r+2}(2,p(a))$. 
+	%	 If $|\lambda(a)| > 2^r$ then we choose a $v\in \Sigma^\ast$ such that  
+	%    $\rd{a}\suf_{2^{r}}(\rd{a})^{-1} \sqcap \wrt{a} = v\,\rd{a}\suf_{2^{r}}(v\,\rd{a})^{-1} \sqcap \wrt{b}$. If $x$ is the first letter of $\wrt{a}$ then we can choose $v= y^\ell$ for some $y\neq x$ and some $\ell\in\bbN$. 
+	%    Let $b_\ell$ be the element with $\rd{b_\ell} = y^\ell \rd{a}$, $\wrt{b_\ell} = \wrt{a}$, and $\mu(b) = \mu(a)$.
+	%    As there are only $m$ other elements chosen so far, we can choose $\ell$ large enough so that the element $b$ has distance $>2^{r}$ from every $b_i$ and from $\epsilon$. If   
+	Basically, we want to use the $3\cdot 2^{r+1}$-skeleton of $a$ to construct a suitable answer $b$. However, we need to cut the last $2^{r+1}$ read actions in order to avoid certain problems that would occur if we want to translate elements in close proximity to $a$ into positions of the $3\cdot 2^{r+1}$-skeleton.   
+	Let $a'= \cpr_{2^{r+2}}(a)$.  Consider 
+	the $3\cdot 2^{r+1}$-skeleton $V = \calS_{3\cdot 2^{r+1}}(a')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+1}$-skeleton $W$ of length at most $\exp_{r+1}(2,p(r))$. From $W$ we construct the canonical $2^{r+2}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
+	$2^{r+1}$ such that 
+	\begin{itemize}
+		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{a}\suf_{2^{r}}(\rd{a})^{-1} )$,
+		\item $\suf_{2^{r}}(wv) = \suf_{2^{r}}(\wrt{a})$,
+		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{a})$, and
+		\item $uw\sqcap wv = w$.
+	\end{itemize}
+	Let $(v_0,v_1,\ldots, v_m)$ be the complete canon-decomposition of $\wrt{a'}\sqcap \rd{a'}$ and let the complete canon-decomposition of $w$ be $(w_0, w_1,\ldots, w_n)$ . Let $i$
+	be the index of $\mu(a')$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+1}}(a') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ with $(\calS_{2^{r+2}}(a'), i) \equiv_r (W,j)$.
+	Now let $b$ be the element associated to $j$.
+	
+	%As the tuples $(\bar{a}, a)$ and $(\bar{a},b)$ fulfill the precondition of Lemma \ref{lem:EF_relations}, we can derive that the two tuples are $r$-equivalent. 
+	
+	Finally, if $a$ has distance $\leq 2^{r}$ from some $a_i$ then let $Y\in \{X_1,\ldots,X_k\}$ be such that $i\in Y$ and let $j=\min Y$. Let $U$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(a_j)$ and 
+	$V$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(b_j)$.
+	Then $a$ is compatible with $U$. Let $p_1,\ldots,p_n$ be the positions in $U$ that are associated with the elements $\{a_s \mid s\in Y\}$, $p_{n+1}$ the position in $U$ that is associated with $a$, and $q_1,\ldots,q_n$ be the positions associated with  $\{a_s \mid s\in Y\}$ in $V$. Since $(U,p_1,\ldots,p_n) \equiv_{r+2} (V,q_1,\ldots,q_n)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $q_{n+1}$ with $(U,p_1,\ldots,p_{n+1}) \equiv_{r+1} (V,q_1,\ldots,q_{n+1})$. From $q_{n+1}$ we compute the associated element $b$
+	in the  $(\sum_{s= r+m-i}^{r} 2^s)$-neighborhood of $b_j$.	
+	The construction of $b$ ensures that Properties (\ref{item:E_suffix}) to (\ref{item:E_partition}) are fulfilled for $(\bar{a}, a)$ and $(\bar{b}, b)$ by adding $m+1$ to $Y$. Hence $(\bar{a}, a) E^r_m (\bar{b}, b)$.   
+\end{proof}
+
+The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that $E^r_m$-equivalent tuples are also $r$-equivalent.
+
+\begin{corollary}\label{cor:equivalence}
+	For all $\bar{a}\in C^m$, $a\in C$, and $r\in\bbN$ there exists an element $b\in \calN_{\exp_{r+2}(2,p(r))}(\bar{a})$ with $(\frakC, \bar{a}, a) \equiv_r (\frakC,\bar{a}, b)$.
+\end{corollary}
+
+%\begin{lemma}
+%	There is a primitive-recursive function $f\colon \bbN \to \bbN$ such that for all $r\in\bbN_{>0}$, all $m$-tuples $\bar{a}\in C^m$, and all $a\in C$ there exists a $b \in \calN_{f(r)}(\bar{a})$ such that $(\calC, \bar{a}, a) \equiv_r (\calC, \bar{a}, b)$
+%\end{lemma}
+%\begin{proof}
+%	Let $\bar{a}\in C^m$ and $a_{m+1} \in C$. If $a_{m+1}\in \calN_{2^{r+4}}(\bar{a})$ then we can choose $b_{m+1} = a_{m+1}$ and be done. Otherwise 
+%	the tuple  
+%	$\chi(a') = (\lambda(a'), \mu(a'), \rho(a'))$. Since $a$ has distance $> 2^{r+4}$ from the origin $\epsilon$ and 
+%	$|\Delta(\epsilon, a_{m+1})| = |\lambda(a_{m+1})| + 2|\mu(a_{m+1})| + |\rho(a_{m+1})|$ it follows that at least one of the three values $|\theta(a_{m+1})|$,  $\theta\in \{\lambda,\mu, \rho \}$, is larger than $(2^{r+4} - 2^{r+1})/4  > 2^{r+2} - 2^{r+1} = 2^{r+1}$.  
+%\end{proof}
+
+%\begin{definition}
+%	For $a\in C$  let $\cut_r(a) \in C$ be the element.  
+%\end{definition}
+
+
+
+\begin{lemma}\label{lem:neighborhood_size}
+	For every $a\in C$ and every $r$ there are at most $|\Sigma|^{4(r+1)} (\min\{|\rd{a}|, |\wrt{a}|\} + r)$ many elements in the $r$-neighborhood of a node $a\in C$. 
+\end{lemma}
+\begin{proof}
+	every element $b$ in the $r$-neighborhood of $a$ can be characterized by the tuple $a\Delta b = (u,v, w, x)\in (\Sigma^{\leq r})^4$ and $\mu(b)$. Once we have  fixed  
+	$a\Delta b \in (\Sigma^{\leq r})^4$ (and therefore fixed $\rd{b}$ and $\wrt{b}$) there are at most   $\min\{ |\rd{b}|, |\wrt{b}| \} \leq \min\{ |\rd{a}|, |\wrt{a}| \} + r$ possible values for $\mu(b)$.
+\end{proof}
+
+\begin{theorem}
+	$\FOTh{\calC}$ is primitive recursive.
+\end{theorem}
+\begin{proof}
+	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,q(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
+	We see that the values $|\rd{a}|$ and $|\wrt{a}|$ are bounded by $r\exp_{r+1}(2,q(r))$
+	Hence, by Lemma \ref{lem:neighborhood_size}  the algorithm needs to consider at most $|\Sigma|^{4r} r(\exp_{r+1}(2,q(r)) +1)$ many Elements, which leads to a runtime of
+	$|\phi| \cdot (|\Sigma|^{4(r+1)} r(\exp_{r+1}(2,q(r)) +1))^r$, which is obviously a primitive recursive function. 
+\end{proof}
