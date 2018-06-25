@@ -13,8 +13,9 @@
 \usepackage{thmtools}
 \usepackage{thm-restate}
 \usepackage{mathabx}
+\usepackage{float}
 
-\usetikzlibrary{decorations.pathreplacing,arrows,snakes}
+\usetikzlibrary{decorations,arrows}
 
 
 %opening
@@ -146,17 +147,17 @@
 
 \begin{document}
 	\maketitle
-	
+
 	\begin{abstract}
 		\input{sections/0-abstract}
 	\end{abstract}
-	
+
 	\input{sections/1-introduction}
 	\input{sections/2-preliminaries}
 	\input{sections/3-queuemonoid}
 	\input{sections/4-decidability}
 	\input{sections/5-conclusion}
-	
+
 	\bibliographystyle{plainurl}
 	\bibliography{sections/lit}
 \end{document}

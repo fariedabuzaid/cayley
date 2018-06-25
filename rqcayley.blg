@@ -1,6 +1,9 @@
 This is BibTeX, Version 0.99d (TeX Live 2017)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: rqcayley.aux
+A level-1 auxiliary file: figures/repetition.aux
+A level-1 auxiliary file: figures/repetition2.aux
+A level-1 auxiliary file: figures/skeleton.aux
 The style file: plainurl.bst
 Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
 Reallocated global_strs (elt_size=20001) to 20 items from 10.
@@ -9,7 +12,7 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: sections/lit.bib
 You've used 25 entries,
             2849 wiz_defined-function locations,
-            817 strings with 9113 characters,
+            820 strings with 9178 characters,
 and the built_in function-call counts, 11891 in all, are:
 = -- 1292
 > -- 364

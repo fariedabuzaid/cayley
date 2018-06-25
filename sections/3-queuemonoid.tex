@@ -2,7 +2,7 @@
 \subsection{Definition of the Monoid}
 The queue monoid models the behavior of a (reliable) fifo-queue whose entries come from an alphabet $A$. Consequently, the state of a queue is a word from $A^*$. The basic actions of our queue are writing of the symbol $a\in A$ of the queue (denoted by $a$) and reading the symbol $a\in A$ from the queue (denoted by $\ova$). Thereby, $\ovA$ is a disjoint copy of $A$ containing all reading actions $\ova$ and $\varSigma:=A\cup\ovA$ is the set of all basic actions. To simplify notation, for a word $u=a_1a_2\dots a_n\in A^*$ we write $\ovu$ for the word $\ov{a_1}\,\ov{a_2}\dots \ov{a_n}$.
 
-Formally, the action $a\in A$ append the letter $a$ to the state of the queue and the action $\ova\in\ovA$ tries to cancel the letter $a$ from the beginning of the current state of the queue. Thereby, if the state does not start with this symbol, the queue will end up in an error state which we denote by~$\bot$. Note that in contrast to (partially) lossy queues which we considered in \cite{KKP18,Koe18}, these queues cannot forget any part of their content. Hence, these ideas lead to the following definition:
+Formally, the action $a\in A$ appends the letter $a$ to the state of the queue and the action $\ova\in\ovA$ tries to cancel the letter $a$ from the beginning of the current state of the queue. Thereby, if the state does not start with this symbol, the queue will end up in an error state which we denote by~$\bot$. Note that in contrast to (partially) lossy queues which we considered in \cite{KKP18,Koe18}, these queues cannot forget any part of their content. Hence, these ideas lead to the following definition:
 
 \begin{definition}
 	Let $\bot\notin A^*$. The function $\opx\colon(A^*\cup\{\bot\})\times\varSigma^*\to(A^*\cup\{\bot\})$ is defined for each $q\in A^*$, $a,b\in A$, and $u\in\varSigma^*$ as follows:
@@ -48,12 +48,12 @@ Now, we want to recall some basic properties considering the equivalence relatio
 
 A very frequently used notation is the following: the \emph{projections to write and read actions}, resp., are defined as $\classfont{wrt},\classfont{rd}\colon\varSigma^*\to A^*$ by $\wrt{a}=\rd{\ova}=a$ and $\wrt{\ova}=\rd{a}=\varepsilon$ for all $a\in A$. In other words, $\wrt{u}$ can be derived from $u$ by deletion of all read actions and $\rd{u}$ can be obtained from $u$ by deletion of all the write actions and by suppression of the overlines. Due to Theorem~\ref{thm:equiv} all words contained in a single equivalence class of~$\equivx$ have the same projections. Hence we use them for equivalence classes as well. Though, equality of these projections of two words does not imply equivalence of these words. For example, $u=\ova a$ and $v=a\ova$ have the same projections $\wrt{u}=\rd{u}=a=\wrt{v}=\rd{v}$ but are not equivalent according to Theorem~\ref{thm:equiv}.
 
-The non-equivalence of the two words above is very easy to prove. Also (non-)equivalence of two more complicated words is decidable in polynomial time: for this purpose we compute normal forms of the equivalence classes of~$\equivx$. We do this by ordering the equations from Theorem~\ref{thm:equiv} from left to right resulting in a terminating and confluent semi-Thue system~$\Rx$ \cite[Lemma~4.1]{HusKZ17}. Then, for any word $u\in\varSigma^*$ there is a unique, irreducible word $\nfx{u}$ with $u\to^*\nfx{u}$, the so-called \emph{normal form} of $u$ resp. $[u]$. In this word $\nfx{u}$ the read actions from $u$ are moved to the left as far as the equations from above allow.
+The non-equivalence of the two words above is very easy to prove. Also (non-)equivalence of two arbitrary words is decidable in polynomial time: for this purpose we compute normal forms of the equivalence classes of~$\equivx$. We do this by ordering the equations from Theorem~\ref{thm:equiv} from left to right resulting in a terminating and confluent semi-Thue system~$\Rx$ \cite[Lemma~4.1]{HusKZ17}. Then, for any word $u\in\varSigma^*$ there is a unique, irreducible word $\nfx{u}$ with $u\to^*\nfx{u}$, the so-called \emph{normal form} of $u$ resp.\ of its equivalence class $[u]$. In this word $\nfx{u}$ the read actions from $u$ are moved to the left as far as the equations from above allow.
 
 \begin{example}\label{ex:nfx}
 	Let $a,b\in A$ with $a\neq b$ and $u=abb\ov{ab}$. Then we have
 	\[
-	abb\ov{ab}\to ab\ova b\ovb\to a\ova bb\ovb\to a\ova b\ovb b\,.
+	abb\ov{ab}\xrightarrow{(\ref{thm:equiv:i1})} ab\ova b\ovb\xrightarrow{(\ref{thm:equiv:i1})} a\ova bb\ovb\xrightarrow{(\ref{thm:equiv:i3})} a\ova b\ovb b\,.
 	\]
 	Since we cannot apply any rule from Theorem~\ref{thm:equiv} anymore, we have $\nfx{u}=a\ova b\ovb b$.
 \end{example}
@@ -83,13 +83,13 @@ In this subsection we first recall the definition of Cayley-graphs for arbitrary
 	for any $a\in\varGamma$.
 \end{definition}
 
-Similar to the right Cayley-graph, we may define the \emph{left Cayley-graph} of $\calM$ as the edge-labeled, directed graph $\lcayley{\calM}{\varGamma}=(\calM,(E_a)_{a\in\varGamma})$ with $F_a=\{(x,y)\in\calM\,|\,y=ax\}$ for any $a\in\varGamma$.
+Similar to the right Cayley-graph, we may define the \emph{left Cayley-graph} of $\calM$ as the edge-labeled, directed graph $\lcayley{\calM}{\varGamma}=(\calM,(F_a)_{a\in\varGamma})$ with $F_a=\{(x,y)\in\calM\,|\,y=ax\}$ for any $a\in\varGamma$.
 
 \begin{remark}
-	There is a strong relation between left and right Cayley-graphs of a monoid and the Green's relations which are first introduced and studied in \cite{Gre51}. Recall that $x\grR y$ iff $x\calM=y\calM$ for any $x,y\in\calM$ and, similarly, $x\grL y$ iff $\calM x=\calM y$. Then by \cite[Proposition V.1.1]{pin2010} we have $x\grR y$ ($x\grL y$) if, and only if, $x$ is strongly connected to $y$ in $\cayley{\calM}{\varGamma}$ ($\lcayley{\calM}{\varGamma}$, resp.).
+	There is a strong relation between left and right Cayley-graphs of a monoid and Green's relations which are first introduced and studied in \cite{Gre51}. Recall that $x\grR y$ iff $x\calM=y\calM$ for any $x,y\in\calM$ and, similarly, $x\grL y$ iff $\calM x=\calM y$. Then by \cite[Proposition V.1.1]{pin2010} we have $x\grR y$ ($x\grL y$) if, and only if, $x$ is strongly connected to $y$ in $\cayley{\calM}{\varGamma}$ ($\lcayley{\calM}{\varGamma}$, resp.).
 \end{remark}
 
-The concrete shape of the Cayley-graph of a monoid heavily depends on the chosen set of generators. For example, $\{1\}$ and $\{2,3\}$ are generating sets of $(\bbZ,+)$, but the resulting Cayley-graphs are not isomorphic (even if we remove the labels). Though, the chosen generating set has no influence on decidability and complexity of the FO and MSO theory of the Cayley-graph:
+The concrete shape of the Cayley-graph of a monoid heavily depends on the chosen set of generators. For example, $\{-1,1\}$ and $\{-2,3\}$ are generating sets of $(\bbZ,+)$, but the resulting Cayley-graphs are not isomorphic (even if we remove the labels). Though, the chosen generating set has no influence on decidability and complexity of the FO and MSO theory of the Cayley-graph since the both problems are logspace reducible on each other (which we denote by $\eqlog$):
 
 \begin{proposition}[{{\cite[Proposition~3.1]{KusL06}}}]
 	Let $\varGamma_1$ and $\varGamma_2$ be two finite generating sets of the monoid~$\calM$. Then
@@ -115,9 +115,9 @@ From now on we only consider the Cayley-graph of the queue monoid~$\Qx$. To simp
 	for all $u\in\varSigma^*$ and $a\in A$. In other words, $\delta$ reverses the order of the actions and inverts writing and reading of a letter~$a$. From \cite[Proposition~3.4]{HusKZ17} we know $u\equivx v$ iff $\delta(u)\equivx\delta(v)$. Hence, $\delta$ is an automorphism on $\Qx$ and $(p,q)\in E_\alpha$ iff $(\delta(p),\delta(q))\in F_{\delta(\alpha)}$ for all $p,q\in\Qx$ and $\alpha\in\varSigma$. Let $\phi\in\FOQ$ ($\phi\in\MSOQ$, resp.). We construct $\phi'$ by replacing any atom ``$E_\alpha(x,y)$'' in $\phi$ by ``$F_{\delta(\alpha)}(x,y)$''. Then
 	\[\cQ\models\phi[q_1,\dots,q_k] \iff \lcQ\models\phi'[\delta(q_1),\dots,\delta(q_k)]\] for any $q_1,\dots,q_k\in\Qx$. In particular, $\phi\in\FOTh{\cQ}$ iff $\phi'\in\FOTh{\lcQ}$ (resp. $\phi\in\MSOTh{\cQ}$ iff $\phi'\in\MSOTh{\lcQ}$). Finally, the converse reduction is symmetric to the one described above.
 	
-	Now, we prove (\ref{prop:cgqprops:i2}). Due to \cite[Corollary~4.7]{HusKZ17} we have $p\grR q$ iff $p=q$ for all $p,q\in\Qx$. Then, by the Remark above $p,q\in\Qx$ are strongly connected iff $p=q$, i.e., there are no cycles in $\cQ$.
+	Now, we prove (\ref{prop:cgqprops:i2}). Due to \cite[Corollary~4.7]{HusKZ17} we have $p\grR q$ iff $p=q$ for all $p,q\in\Qx$. Then, by the remark above $p,q\in\Qx$ are strongly connected iff $p=q$, i.e., there are no cycles in $\cQ$.
 	
-	Next, to prove (\ref{prop:cgqprops:i3}) let $n\in\bbN$ and $a,b\in A$ with $a\neq b$. Set $w_k=\ov{a^k}(a\ova)^{n-k}a^k$ for any $0\leq k\leq n$. Then $w_k\equivx w_\ell$ (i.e. $[w_k]=[w_\ell]$) iff $k=\ell$ for any $0\leq k,\ell\leq n$. By Theorem~\ref{thm:concat} we have $\chr{w_k\ov{b}}=(a^nb,\varepsilon,a^n)$, i.e. $w_k\ov{b}\equivx w_\ell\ov{b}$ for any $0\leq k,\ell\leq n$. Hence, we have $([w_k],[\ov{a^nb}a^n])\in E_{\ovb}$ for all $0\leq k\leq n$, i.e., the node $[\ov{a^nb}a^n]$ has in-dregree $>n$.
+	Next, to prove (\ref{prop:cgqprops:i3}) let $n\in\bbN$ and $a,b\in A$ with $a\neq b$. Set $w_k=\ov{a^k}(a\ova)^{n-k}a^k$ for any $0\leq k\leq n$. Then $w_k\equivx w_\ell$ (i.e. $[w_k]=[w_\ell]$) iff $k=\ell$ for any $0\leq k,\ell\leq n$. By Theorem~\ref{thm:concat} we have $\chr{w_k\ov{b}}=(a^nb,\varepsilon,a^n)$, i.e. $w_k\ov{b}\equivx w_\ell\ov{b}$ for any $0\leq k,\ell\leq n$. Hence, we have $([w_k],[\ov{a^nb}a^n])\in E_{\ovb}$ for all $0\leq k\leq n$, i.e., the node $[\ov{a^nb}a^n]$ has in-degree $>n$.
 \end{proof}
 
 By $\frakG_n$ we denote the \emph{$n\times n$-grid} for $n\in\bbN$. This is an undirected graph with $n^2$ many nodes which we denote by $v_{i,j}$ for any $1\leq i,j\leq n$. Thereby, we have an edge between $v_{i,j}$ and $v_{k,\ell}$ if, and only if, $|j-\ell|+|i-k|=1$ holds.
@@ -127,7 +127,7 @@ Additionally, for a $\varGamma$-labeled, directed graph $\frakG=(V,(E_a)_{a\in\v
 	$\frakG_n$ is an induced subgraph of $\ud{\cQ}$ for any $n\in\bbN$.
 \end{proposition}
 \begin{proof}
-	Let $a,b\in A$ be distinct. Then the submonoid~$\calM$ of $\Qx$ generated by $a$ and $\ovb$ is the free commutative monoid on $\{a,\ovb\}$ by Theorem~\ref{thm:equiv}(\ref{thm:equiv:i1}). Its Cayley-graph~$\cayley{\calM}{\{a,\ovb\}}$ is an infinite grid with labeled, directed edges (see Fig.~\ref{fig:grid}). Then, $\frakG_n$ is an induced subgraph of $\ud{\cayley{\calM}{\{a,\ovb\}}}$. Since in $\cQ$ are no edges with labels other than $a$ or $\ovb$ between the nodes from $\calM$, $\ud{\cayley{\calM}{\{a,\ovb\}}}$ is an induced subgraph of $\ud{\cQ}$ as well implying our claim.
+	Let $a,b\in A$ be distinct. Then the submonoid~$\calM$ of $\Qx$ generated by $a$ and $\ovb$ is the free commutative monoid on $\{a,\ovb\}$ by Theorem~\ref{thm:equiv}(\ref{thm:equiv:i1}). Its Cayley-graph~$\cayley{\calM}{\{a,\ovb\}}$ is an infinite grid with labeled, directed edges (see Fig.~\ref{fig:grid}). Then, $\frakG_n$ is an induced subgraph of $\ud{\cayley{\calM}{\{a,\ovb\}}}$. Since in $\cQ$ there are no edges with labels other than $a$ or $\ovb$ between the nodes from $\calM$, $\ud{\cayley{\calM}{\{a,\ovb\}}}$ is an induced subgraph of $\ud{\cQ}$ as well implying our claim.
 \end{proof}
 
 \begin{figure}
@@ -143,5 +143,5 @@ With the help of a famous result from Seese (cf.~\cite{See91}), we may now prove
 	$\MSOTh{\cQ}$ is undecidable.
 \end{corollary}
 \begin{proof}
-	Due to \cite{RobS84} each planar graph is minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{G}$ is interpretable in $\FOTh{\cQ}$, $\MSOTh{\cQ}$ is undecidable as well.
+	Due to \cite{RobS84} each planar graph is a minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{G}$ is interpretable in $\FOTh{\cQ}$, $\MSOTh{\cQ}$ is undecidable as well.
 \end{proof}
