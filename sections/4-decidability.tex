@@ -1,114 +1,115 @@
 \section{Decidability of the FO-Theory}
-In the following we denote the Cayley-graph of the queue monoid $\Qx$ induced by $A$ by $\frakC=(C,(E_\alpha)_{\alpha\in\Sigma})$. 
-For $a,b\in C$ let $a\Delta b = (\rd{a}, \wrt{a})\Delta (\rd{b}, \wrt{b})$ and we call $|a\Delta b|$ the ($\Delta$-)distance of $a$ and $b$. 
+Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
+For $p,q\in \Qx$ let $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$ and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. 
 \begin{definition}
-	Let $V$ be an $r$-skeleton. We say that $a\in C$ is \emph{compatible} with $V$ 
-	if $V$ has an instantiation $v$ such that $\rd{a}= \rd{v}x$ for some $x\in A^{\leq r}$ and 
-	$|\wrt{a} \Delta \wrt{v}| \leq r$.
+	Let $V$ be an $r$-skeleton. We say that $q\in\Qx$ is \emph{compatible} with $V$ 
+	if $V$ has an instantiation $v$ such that $\rd{q}= \rd{v}x$ for some $x\in A^{\leq r}$ and 
+	$|\wrt{q} \Delta \wrt{v}| \leq r$.
 \end{definition}
-Intuitively, $a$ being compatible to an $r$-skeleton $V$ means that we can obtain an element
-$a'$ with $r$-skeleton $V$ by deleting up to $r$ many  read actions and modifying the write
+Intuitively, $q$ being compatible to an $r$-skeleton $V$ means that we can obtain an element
+$q'$ with $r$-skeleton $V$ by deleting up to $r$ many read actions and modifying the write
 actions arbitrarily up to distance $r$. We use this notion in order to translate elements of the Cayley-graph
 into positions of an $r$-skeleton.
 
 \begin{definition}
-	For $a\in C$ with $|\mu(a)| \geq r$ let $\cpr_r(a)$ be the element $a'$  with $\wrt{a'} = \wrt{a}$, $\rd{a'}=\rd{a}\suf_{r}({\rd{a}})^{-1}$, and $\mu(a') = \mu(a) \suf_{r}({\mu({a})})^{-1}$.
+	For $q\in\Qx$ with $|\mddl{q}| \geq r$ let $\cpr_r(q)$ be the element $q'$  with $\wrt{q'} = \wrt{q}$, $\rd{q'}=\rd{q}\suf_{r}({\rd{q}})^{-1}$, and $\mddl{q'} = \mddl{q} \suf_{r}(\mddl{q})^{-1}$.
 \end{definition}
 
-We describe the way, in which we associate positions in an $r$-skeleton with elements of $C$ and vice versa. 
+We describe the way, in which we associate positions in an $r$-skeleton with elements of $\Qx$ and vice versa. 
 \begin{definition}
-	Let $a,b\in C$ and let $U$ and $V$ be the $3r$-skeletons of $\cpr_{2r}(a)$ and $\cpr_{2r}(b)$ respectively. If we suppose that $(p_1,\ldots,p_k)$ are positions in $V$ and $(q_1,\ldots,q_k)$ are positions in $U$ such that $(U,p_1,\ldots,p_k) \equiv_{\ell} (V,q_1,\ldots,q_k)$ for some $\ell \geq 1$. For $a'\in C$ with $|a'\Delta a| \leq r$ we associate a position $p_{k+1}$ in $U$ as follows:
-	Let $(u_1,\ldots, u_m)$ be the complete canon-decomposition of $\rd{\cpr_{2r}(a)}$ and $(v_1,\ldots,v_n)$. As $a'$ has distance at most $r$ from $a$ we have that $\rd{a'} = \rd{\cpr_{2r}(a)}x$
-	for some $x\in A^{\leq 2r}$. Therefore there is an $i\leq m$ such that $\mddl{a'} = u_ix$. Then $i$ is the position that is associated with $a'$.
+	Let $p,q\in \Qx$ and let $U$ and $V$ be the $3r$-skeletons of $\cpr_{2r}(p)$ and $\cpr_{2r}(q)$ respectively. If we suppose that $(m_1,\ldots,m_k)$ are positions in $V$ and $(n_1,\ldots,n_k)$ are positions in $U$ such that $(U,m_1,\ldots,m_k) \equiv_{\ell} (V,n_1,\ldots,n_k)$ for some $\ell \geq 1$. For $p'\in \Qx$ with $|p'\Delta p| \leq r$ we associate a position $m_{k+1}$ in $U$ as follows:
+	Let $(u_1,\ldots, u_m)$ be the complete canon-decomposition of $\rd{\cpr_{2r}(p)}$ and $(v_1,\ldots,v_n)$ be the complete canon-decomposition of $\rd{\cpr_{2r}(q)}$. As $p'$ has distance at most $r$ from $p$ we have that $\rd{p'} = \rd{\cpr_{2r}(p)}x$
+	for some $x\in A^{\leq 2r}$. Therefore there is an $i\leq m$ such that $\mddl{p'} = u_ix$. Then $i$ is the position that is associated with $p'$.
 	
-	Now let $q_{k+1}$ be such that $(U,p_1,\ldots,p_{k+1}) \equiv_{\ell-1} (V,q_1,\ldots,q_{k+1})$ we associate an element $b'$ with $q_{k+1}$ as follows:
-	Let $b'$ be the element with $\rd{b'} = \rd{\cpr_{2r}(b)}u_{p_{k+1}}^{-1}\mu(a')$, $\wrt{b'}\Delta\wrt{\cpr_r({b})} = \wrt{a'}\Delta\wrt{\cpr_{2r}({a})}$, and 
-	$\mu(b') = v_{q_{k+1}}u_{p_{k+1}}^{-1}\mu(a')$. Note that $b'$ is well defined since $V[j]$ is labeled by $\pref_{2^{r+2}}(u_i^{-1}\mu({a}))$. Therefore $v_j\pref_{2^{r+1}}(v_i^{-1}\mddl{a})$ is a prefix of $\wrt{b'}$ by construction.
+	Now let $n_{k+1}$ be such that $(U,m_1,\ldots,m_{k+1}) \equiv_{\ell-1} (V,n_1,\ldots,n_{k+1})$ we associate an element $q'$ with $n_{k+1}$ as follows:
+	Let $q'$ be the element with $\rd{q'} = \rd{\cpr_{2r}(q)}u_{m_{k+1}}^{-1}\mddl{p'}$, $\wrt{q'}\Delta\wrt{\cpr_r({q})} = \wrt{p'}\Delta\wrt{\cpr_{2r}({p})}$, and 
+	$\mddl{q'} = v_{m_{k+1}}u_{n_{k+1}}^{-1}\mddl{p'}$. Note that $q'$ is well defined since $V[j]$ is labeled by $\pref_{2^{r+2}}(u_i^{-1}\mddl{p})$. Therefore $v_j\pref_{2^{r+1}}(v_i^{-1}\mddl{p})$ is a prefix of $\wrt{q'}$ by construction.
 \end{definition}
-The basic idea behind this definition is to ensure that the neighborhood structure of the elements $a'$ and $b'$ is $\ell$-equivalent. We use this idea to  define a family of  equivalence relations $(E^r_m)_{r,m\in\bbN}$.
-For $r,m\in \bbN$ and $\vec{a},\vec{b}\in C^m$ let $\vec{a} E^r_m \vec{b}$ iff
-\begin{enumerate}[(1)]
-	\item \label{item:E_suffix} $\suf_{2^{r}}(\rd{b_i}) = \suf_{2^{r}}(\rd{a_i})$ and $\suf_{2^{r}}(\wrt{a_i}) = \suf_{2^{r}}(\wrt{b_i})$ for all $1\leq i\leq m$.
-	\item\label{item:E_distance} $|a_i \Delta a_j| =_{2^r} |b_i\Delta b_j|$ for all $1\leq i, j\leq m$ and if $|a_i\Delta a_j| \leq 2^r$ then also $a_i \Delta a_j = b_i\Delta b_j$. 
+The basic idea behind this definition is to ensure that the neighborhood structure of the elements $p'$ and $q'$ is $\ell$-equivalent. We use this idea to  define a family of  equivalence relations $(E^r_m)_{r,m\in\bbN}$.
+For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} E^r_m \vec{q}$ iff
+\begin{bracketenumerate}
+	\item\label{item:E_suffix} $\suf_{2^{r}}(\rd{p_i}) = \suf_{2^{r}}(\rd{q_i})$ and $\suf_{2^{r}}(\wrt{p_i}) = \suf_{2^{r}}(\wrt{q_i})$ for all $1\leq i\leq m$.
+	\item\label{item:E_distance} $|p_i \Delta p_j| =_{2^r} |q_i\Delta q_j|$ for all $1\leq i, j\leq m$ and if $|p_i\Delta p_j| \leq 2^r$ then also $p_i \Delta p_j = q_i\Delta q_j$. 
 	\item\label{item:E_partition} There is a partition $X_1,\ldots,X_k$ of $\{1,\ldots,m\}$ such that for $X\neq X'\in \{X_1,\ldots,X_k\}$ it holds that: 
-	\begin{enumerate}[(a)]
-		\item If $i\in X$, $j\in X'$ it holds that $|a_i\Delta a_j| > 2^r$ (and therefore $|b_i\Delta b_j| > 2^r$).
-		\item Let $i= \min X$. Then for all $j\in X$ it holds that $|a_i \Delta a_j| \leq \sum_{s= r+m-i}^{r} 2^s$ (and therefore also $|a_i \Delta a_j| \leq \sum_{s= r+m-i}^{r} 2^s$).      
-		\item\label{subitem:E_partition:equivalence} Let $i= \min X$ and let $U$ be the $3\cdot 2^{r+m-i+1}$-skeleton of $\cpr_{2^{r+m-i+2}}(a_i)$ and $V$ be the $3\cdot 2^{r+m-i+1}$-skeleton $\cpr_{2^{r+m-i+2}}(b_i)$. Then for all 
-		$j\in X$ we have that $a_j$ is compatible with $U$ and $b_j$ is compatible with $V$. Further if $p_1,\ldots, p_n$ are the positions in $U$ that are associated with  $\{a_j \mid j\in X_i \}$ and $q_1,\ldots, q_n$ are the positions in $U$ that are associated with  $\{b_j \mid j\in X_i \}$ then $(V,p_1,\ldots,p_n) \equiv_{r+1} (U,q_1,\ldots,q_n)$.          
-	\end{enumerate}  
-\end{enumerate} 
+	\begin{alphaenumerate}
+		\item If $i\in X$, $j\in X'$ it holds that $|p_i\Delta p_j| > 2^r$ (and therefore $|q_i\Delta q_j| > 2^r$).
+		\item Let $i= \min X$. Then for all $j\in X$ it holds that $|p_i \Delta p_j| \leq \sum_{s= r+m-i}^{r} 2^s$ (and therefore also $|q_i \Delta q_j| \leq \sum_{s= r+m-i}^{r} 2^s$).
+		\item\label{subitem:E_partition:equivalence} Let $i= \min X$ and let $U$ be the $3\cdot 2^{r+m-i+1}$-skeleton of $\cpr_{2^{r+m-i+2}}(p_i)$ and $V$ be the $3\cdot 2^{r+m-i+1}$-skeleton $\cpr_{2^{r+m-i+2}}(q_i)$. Then for all 
+		$j\in X$ we have that $p_j$ is compatible with $U$ and $q_j$ is compatible with $V$. Further if $m_1,\ldots, m_k$ are the positions in $U$ that are associated with $\{p_j \mid j\in X_i \}$ and $n_1,\ldots, n_k$ are the positions in $U$ that are associated with $\{q_j \mid j\in X_i \}$ then $(V,m_1,\ldots,m_k) \equiv_{r+1} (U,n_1,\ldots,n_k)$.
+	\end{alphaenumerate}  
+\end{bracketenumerate} 
 
 \begin{lemma}\label{lem:partial_isomorphism}
-	For all $m\in\bbN_{>0}$ and all $\vec{a},\vec{b} \in C^m$: If $\vec{a} E^0_m \vec{b}$ then the mapping $a_i \mapsto b_i$ is a partial isomorphism.
+	For all $m\in\bbN_{>0}$ and all $\vec{p},\vec{q} \in \Qx^m$: If $\vec{p} E^0_m \vec{q}$ then the mapping $p_i \mapsto q_i$ is a partial isomorphism.
 \end{lemma}
 \begin{proof}
-	We need to show that $(a_i,a_j)\in E_x \Rightarrow (b_i,b_j)\in E_x$  for all $i,j\leq m$ and all $x\in A$.
-	Let $\vec{a}, \vec{b} \in C^m$ with $\vec{a} E^0_m \vec{b}$. Suppose  $(a_i,a_j) \in E_x$ for some $x\in A$. Then $|a_i\Delta a_j| = 1$. Hence $a_i\Delta a_j = b_i\Delta b_j$ by (\ref{item:E_distance}). 
-	Since the distance between $a_i$ and $a_j$ and between $b_i$ and $b_j$ is $1$, there are $2^\ell$-skeletons (for some $\ell \geq m-\min\{i,j\}+2$) $U,V$ such that 
-	$a_i$ and $a_j$ can be translated into positions $p, p'$ in $U$ and  $b_i$ and $b_j$ can be translated into position $q, q'$ in $V$ such that $(U,p,p') \equiv_1 (V,q,q')$. 
-	There are two possible types of configurations for $a_i$ and $a_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{a_i} = \rd{a_j}$,
-	$\wrt{a_i}x = \wrt{a_j}$, and $\mu(a_i) = \mu(a_j)$. In this case $p=p'$ and therefore $q=q'$, which implies that $\rd{b_i} = \rd{b_j}$,
-	$\wrt{b_i}x = \wrt{b_j}$, and $\mu(b_i) = \mu(b_j)$. Therefore $(b_i,b_j) \in E_x$.
-	Second  it might be that $\rd{a_i}x = \rd{a_j}$,
-	$\wrt{a_i} = \wrt{a_j}$, and $\mu(a_j)x^{-1}$ is the largest suffix $w$ of $\mu(a_i)$ such that $wx$ is a prefix of $\wrt{a_i}$.  This property can be translated into a formula $\phi$
-	on $(U, p, p')$ of quantifier rank $1$. As $(U,p,p') \equiv_1 (V, q,q')$, $(V,q,q') \models \phi$ and therefore $(b_i,b_j)\in E_x$. 
+	We need to show that $(p_i,p_j)\in E_\alpha \Rightarrow (q_i,q_j)\in E_\alpha$  for all $i,j\leq m$ and all $\alpha\in \Sigma$.
+	Let $\vec{p}, \vec{q} \in \Qx^m$ with $\vec{p} E^0_m \vec{q}$. Suppose  $(p_i,p_j) \in E_\alpha$ for some $\alpha\in\Sigma$. Then $|p_i\Delta p_j| = 1$. Hence $p_i\Delta p_j = q_i\Delta q_j$ by (\ref{item:E_distance}). 
+	Since the distance between $p_i$ and $p_j$ and between $q_i$ and $q_j$ is $1$, there are $2^\ell$-skeletons (for some $\ell \geq m-\min\{i,j\}+2$) $U,V$ such that 
+	$p_i$ and $p_j$ can be translated into positions $m_1, m_2$ in $U$ and $q_i$ and $q_j$ can be translated into position $n_1,n_2$ in $V$ such that $(U,m_1,m_2) \equiv_1 (V,n_1,n_2)$. 
+	There are two possible types of configurations for $p_i$ and $p_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{p_i} = \rd{p_j}$,
+	$\wrt{p_i}\alpha = \wrt{p_j}$, and $\mddl{p_i} = \mddl{p_j}$. In this case $m_1=m_2$ and therefore $n_1=n_2$, which implies that $\rd{q_i} = \rd{q_j}$,
+	$\wrt{q_i}\alpha = \wrt{q_j}$, and $\mddl{q_i} = \mddl{q_j}$. Therefore $(q_i,q_j) \in E_\alpha$.
+	
+	Second, it might be that $\rd{p_i}a = \rd{p_j}$ (where $\alpha=\ov{a}$),
+	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into a formula $\phi$
+	on $(U, m_1, m_2)$ of quantifier rank $1$. As $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$, $(V,n_1,n_2) \models \phi$ and therefore $(q_i,q_j)\in E_\alpha$.
 \end{proof}
 
-In order to prove the main technical lemma we need to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach. 
+In order to prove the main technical lemma we need to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
 \begin{lemma}\label{lem:r-equiv_word_construction}
-	From a given an alphabet $\Sigma$, a word $v\in\Sigma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(2, p(r))$ with $L(\calA) = \{w\in \Sigma^\ast\mid w\equiv_r v \}$ .  
+	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(2, f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some polynomial $f$.
 \end{lemma}
 \begin{proof}[Proof sketch]
-	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Sigma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
-	$\exp_{r+1}(2, p(r))$ for some suitable polynomial $p$.
+	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Gamma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
+	$\exp_{r+1}(2, f(r))$ for some suitable polynomial $f$.
 \end{proof}
 
 
 \begin{lemma}\label{lem:EF_relations}
-	For all $m,r\in\bbN$ and all $\vec{a},\vec{b}\in C^m$:  
-	\[\vec{a} E^{r+1}_m \vec{b} \Rightarrow \forall a\in C \exists b\in \calN_{\exp_{r+2}(2,p(r))}(\vec{b}): (\vec{a}, a) E^{r}_{m+1} (\vec{b}, b)\]
-	for some polynomial $p$.
+	For all $m,r\in\bbN$ and all $\vec{p},\vec{q}\in \Qx^m$:  
+	\[\vec{p} E^{r+1}_m \vec{q} \Rightarrow \forall p\in \Qx \exists q\in \calN_{\exp_{r+2}(2,f(r))}(\vec{q}): (\vec{p}, p) E^{r}_{m+1} (\vec{q}, q)\]
+	for some polynomial $f$.
 \end{lemma}
 \begin{proof}
-	Let $\vec{a}, \vec{b} \in C^m$ with $(\vec{a}, \vec{b}) \in E^{r+1}_m$ and 
-	let $X_1,\ldots,X_k$ be a partition of $\{1,\ldots,m\}$ with the properties described in (\ref{item:E_partition}). Further let $X_i(\vec{a}) = \{a_j \mid j\in X_i \}$ and $X_i(\vec{b}) = \{b_j \mid j\in X_i \}$. Consider $a\in C$. We distinguish three cases.
-	If $a$ has distance $\leq 4\exp_{r+2}(2, p(r))$ from $\epsilon$ then we choose $b=a$.
+	Let $\vec{p}, \vec{q} \in \Qx^m$ with $(\vec{p}, \vec{q}) \in E^{r+1}_m$ and 
+	let $X_1,\ldots,X_k$ be a partition of $\{1,\ldots,m\}$ with the properties described in (\ref{item:E_partition}). Further let $X_i(\vec{p}) = \{p_j \mid j\in X_i \}$ and $X_i(\vec{q}) = \{q_j \mid j\in X_i \}$. Consider $p\in \Qx$. We distinguish three cases.
+	If $p$ has distance $\leq 4\exp_{r+2}(2, f(r))$ from $\epsilon$ then we choose $q=p$.
 	
-	From now on suppose $a$ has  distance $> 4\exp_{r+2}(2, p(r))$ from $\epsilon$.	
-	We consider the case that $a$ has distance $>2^r$ from every $a_i$.
-	Since the distance from $\epsilon$ is exactly $|\lambda(a)| + 2|\mu(a)| + |\rho(a)|$ it follows that $|\lambda(a)| > \exp_{r+2}(2,p(a))$ or $|\mu({a})| > \exp_{r+2}(2,p(a))$ or $|\rho(a)| > \exp_{r+2}(2,p(a))$. 
+	From now on suppose $p$ has distance $> 4\exp_{r+2}(2, f(r))$ from $\epsilon$.
+	We consider the case that $p$ has distance $>2^r$ from every $p_i$.
+	Since the distance from $\epsilon$ is exactly $|\strt{p}| + 2|\mddl{p}| + |\rght{p}|$ it follows that $|\strt{p}| > \exp_{r+2}(2,f(r))$ or $|\mddl{p}| > \exp_{r+2}(2,f(r))$ or $|\rght{p}| > \exp_{r+2}(2,f(r))$. 
 	%	 If $|\lambda(a)| > 2^r$ then we choose a $v\in \Sigma^\ast$ such that  
 	%    $\rd{a}\suf_{2^{r}}(\rd{a})^{-1} \sqcap \wrt{a} = v\,\rd{a}\suf_{2^{r}}(v\,\rd{a})^{-1} \sqcap \wrt{b}$. If $x$ is the first letter of $\wrt{a}$ then we can choose $v= y^\ell$ for some $y\neq x$ and some $\ell\in\bbN$. 
 	%    Let $b_\ell$ be the element with $\rd{b_\ell} = y^\ell \rd{a}$, $\wrt{b_\ell} = \wrt{a}$, and $\mu(b) = \mu(a)$.
 	%    As there are only $m$ other elements chosen so far, we can choose $\ell$ large enough so that the element $b$ has distance $>2^{r}$ from every $b_i$ and from $\epsilon$. If   
-	Basically, we want to use the $3\cdot 2^{r+1}$-skeleton of $a$ to construct a suitable answer $b$. However, we need to cut the last $2^{r+1}$ read actions in order to avoid certain problems that would occur if we want to translate elements in close proximity to $a$ into positions of the $3\cdot 2^{r+1}$-skeleton.   
-	Let $a'= \cpr_{2^{r+2}}(a)$.  Consider 
-	the $3\cdot 2^{r+1}$-skeleton $V = \calS_{3\cdot 2^{r+1}}(a')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+1}$-skeleton $W$ of length at most $\exp_{r+1}(2,p(r))$. From $W$ we construct the canonical $2^{r+2}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
+	Basically, we want to use the $3\cdot 2^{r+1}$-skeleton of $p$ to construct a suitable answer $q$. However, we need to cut the last $2^{r+1}$ read actions in order to avoid certain problems that would occur if we want to translate elements in close proximity to $p$ into positions of the $3\cdot 2^{r+1}$-skeleton.   
+	Let $p'= \cpr_{2^{r+2}}(p)$.  Consider 
+	the $3\cdot 2^{r+1}$-skeleton $V = \calS_{3\cdot 2^{r+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+1}$-skeleton $W$ of length at most $\exp_{r+1}(2,f(r))$. From $W$ we construct the canonical $2^{r+2}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
 	$2^{r+1}$ such that 
 	\begin{itemize}
-		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{a}\suf_{2^{r}}(\rd{a})^{-1} )$,
-		\item $\suf_{2^{r}}(wv) = \suf_{2^{r}}(\wrt{a})$,
-		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{a})$, and
+		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{p}\suf_{2^{r}}(\rd{p})^{-1} )$,
+		\item $\suf_{2^{r}}(wv) = \suf_{2^{r}}(\wrt{p})$,
+		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{p})$, and
 		\item $uw\sqcap wv = w$.
 	\end{itemize}
-	Let $(v_0,v_1,\ldots, v_m)$ be the complete canon-decomposition of $\wrt{a'}\sqcap \rd{a'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete canon-decomposition of $w$. Let $i$
-	be the index of $\mu(a')$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+1}}(a') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{2^{r+2}}(a'), i) \equiv_r (W,j)$.
-	Now let $b$ be the element associated to $j$.
+	Let $(v_0,v_1,\ldots, v_m)$ be the complete canon-decomposition of $\wrt{p'}\sqcap \rd{p'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete canon-decomposition of $w$. Let $i$
+	be the index of $\mddl{p'}$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+1}}(p') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{2^{r+2}}(p'), i) \equiv_r (W,j)$.
+	Now let $q$ be the element associated to $j$.
 	
 	%As the tuples $(\vec{a}, a)$ and $(\vec{a},b)$ fulfill the precondition of Lemma \ref{lem:EF_relations}, we can derive that the two tuples are $r$-equivalent. 
 	
-	Finally, if $a$ has distance $\leq 2^{r}$ from some $a_i$ then let $Y\in \{X_1,\ldots,X_k\}$ be such that $i\in Y$ and let $j=\min Y$. Let $U$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(a_j)$ and 
-	$V$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(b_j)$.
-	Then $a$ is compatible with $U$. Let $p_1,\ldots,p_n$ be the positions in $U$ that are associated with the elements $\{a_s \mid s\in Y\}$, $p_{n+1}$ the position in $U$ that is associated with $a$, and $q_1,\ldots,q_n$ be the positions associated with  $\{a_s \mid s\in Y\}$ in $V$. Since $(U,p_1,\ldots,p_n) \equiv_{r+2} (V,q_1,\ldots,q_n)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $q_{n+1}$ with $(U,p_1,\ldots,p_{n+1}) \equiv_{r+1} (V,q_1,\ldots,q_{n+1})$. From $q_{n+1}$ we compute the associated element $b$
-	in the  $(\sum_{s= r+m-i}^{r} 2^s)$-neighborhood of $b_j$.	
-	The construction of $b$ ensures that Properties (\ref{item:E_suffix}) to (\ref{item:E_partition}) are fulfilled for $(\vec{a}, a)$ and $(\vec{b}, b)$ by adding $m+1$ to $Y$. Hence $(\vec{a}, a) E^r_m (\vec{b}, b)$.   
+	Finally, if $p$ has distance $\leq 2^{r}$ from some $p_i$ then let $Y\in \{X_1,\ldots,X_k\}$ be such that $i\in Y$ and let $j=\min Y$. Let $U$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(p_j)$ and 
+	$V$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(q_j)$.
+	Then $p$ is compatible with $U$. Let $m_1,\ldots,m_\ell$ be the positions in $U$ that are associated with the elements $\{q_s \mid s\in Y\}$, $m_{\ell+1}$ the position in $U$ that is associated with $p$, and $n_1,\ldots,n_\ell$ be the positions associated with $\{q_s \mid s\in Y\}$ in $V$. Since $(U,m_1,\ldots,m_\ell) \equiv_{r+2} (V,n_1,\ldots,n_\ell)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $n_{\ell+1}$ with $(U,m_1,\ldots,m_{\ell+1}) \equiv_{r+1} (V,n_1,\ldots,n_{\ell+1})$. From $n_{\ell+1}$ we compute the associated element $q$
+	in the $(\sum_{s= r+m-i}^{r} 2^s)$-neighborhood of $q_j$.
+	The construction of $q$ ensures that Properties (\ref{item:E_suffix}) to (\ref{item:E_partition}) are fulfilled for $(\vec{p}, p)$ and $(\vec{q}, q)$ by adding $\ell+1$ to $Y$. Hence $(\vec{p}, p) E^r_m (\vec{q}, q)$.
 \end{proof}
 
 The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that $E^r_m$-equivalent tuples are also $r$-equivalent.
 
 \begin{corollary}\label{cor:equivalence}
-	For all $\vec{a}\in C^m$, $a\in C$, and $r\in\bbN$ there exists an element $b\in \calN_{\exp_{r+2}(2,p(r))}(\vec{a})$ with $(\frakC, \vec{a}, a) \equiv_r (\frakC,\vec{a}, b)$.
+	For all $\vec{p}\in \Qx^m$, $p\in \Qx$, and $r\in\bbN$ there exists an element $q\in \calN_{\exp_{r+2}(2,f(r))}(\vec{p})$ with $(\frakC, \vec{p}, p) \equiv_r (\frakC,\vec{p}, q)$ for some polynomial~$f$.
 \end{corollary}
 
 %\begin{lemma}
@@ -128,19 +129,19 @@ The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that
 
 
 \begin{lemma}\label{lem:neighborhood_size}
-	For every $a\in C$ and every $r$ there are at most $|A|^{4r} (\min\{|\rd{a}|, |\wrt{a}|\} + r)$ many elements in the $r$-neighborhood of a node $a\in C$. 
+	For every $p\in \Qx$ and every $r$ there are at most $|A|^{4r} (\min\{|\rd{p}|, |\wrt{p}|\} + r)$ many elements in the $r$-neighborhood of a node $p\in \Qx$. 
 \end{lemma}
 \begin{proof}
-	every element $b$ in the $r$-neighborhood of $a$ can be characterized by the tuple $a\Delta b = (u,v, w, x)\in (A^{\leq r})^4$ and $\mu(b)$. Once we have  fixed  
-	$a\Delta b \in (A^{\leq r})^4$ (and therefore fixed $\rd{b}$ and $\wrt{b}$) there are at most   $\min\{ |\rd{b}|, |\wrt{b}| \} \leq \min\{ |\rd{a}|, |\wrt{a}| \} + r$ possible values for $\mu(b)$.
+	Every element $q$ in the $r$-neighborhood of $p$ can be characterized by the tuple $p\Delta q = (u,v, w, x)\in (A^{\leq r})^4$ and $\mddl{q}$. Once we have fixed  
+	$p\Delta q \in (A^{\leq r})^4$ (and therefore fixed $\rd{q}$ and $\wrt{q}$) there are at most $\min\{ |\rd{q}|, |\wrt{q}| \} \leq \min\{ |\rd{p}|, |\wrt{p}| \} + r$ possible values for $\mddl{q}$.
 \end{proof}
 
 \begin{theorem}
 	$\FOTh{\frakC}$ is primitive recursive.
 \end{theorem}
 \begin{proof}
-	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,q(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
-	We see that the values $|\rd{a}|$ and $|\wrt{a}|$ are bounded by $r\exp_{r+1}(2,q(r))$
-	Hence, by Lemma \ref{lem:neighborhood_size}  the algorithm needs to consider at most $|A|^{4r} r(\exp_{r+1}(2,q(r)) +1)$ many Elements, which leads to a runtime of
-	$|\phi| \cdot (|A|^{4r} r(\exp_{r+1}(2,q(r)) +1))^r$, which is obviously a primitive recursive function. 
+	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
+	We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $r\exp_{r+1}(2,f(r))$
+	Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} r(\exp_{r+1}(2,f(r)) +1)$ many Elements, which leads to a runtime of
+	$|\phi| \cdot (|A|^{4r} r(\exp_{r+1}(2,f(r)) +1))^r$, which is obviously a primitive recursive function. 
 \end{proof}
