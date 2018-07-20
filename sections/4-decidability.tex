@@ -1,6 +1,12 @@
 \section{Decidability of the FO-Theory}
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
 For $p,q\in \Qx$ let $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$ and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. 
+
+Let us first give an intuitive description of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. More precisely we show that for every
+two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$
+for some fixed primitive recursive function $f$.
+This implies that in order to evaluate a formula $Qx\phi(\vec{p})$  we can restrict quantification    
+
 \begin{definition}
 	Let $V$ be an $r$-skeleton. We say that $q\in\Qx$ is \emph{compatible} with $V$ 
 	if $V$ has an instantiation $v$ such that $\rd{q}= \rd{v}x$ for some $x\in A^{\leq r}$ and 
@@ -13,6 +19,18 @@ into positions of an $r$-skeleton.
 
 \begin{definition}
 	For $q\in\Qx$ with $|\mddl{q}| \geq r$ let $\cpr_r(q)$ be the element $q'$  with $\wrt{q'} = \wrt{q}$, $\rd{q'}=\rd{q}\suf_{r}({\rd{q}})^{-1}$, and $\mddl{q'} = \mddl{q} \suf_{r}(\mddl{q})^{-1}$.
+	\begin{center}
+	\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
+	\path[draw, fill=red!10] (0,0) rectangle (5,0.25);
+	\path[draw, fill=blue!10] (1.5, 0) rectangle (6.5, -.25);
+	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (2.5, .25) -- node[above, yshift= 5pt] {$r$} (5, .25);
+	\node at (8, 0) {$\mapsto$};
+	\path[draw, fill=red!10] (9.5,0) rectangle (12,0.25);
+	\path[draw, fill=blue!10] (11, 0) rectangle (16, -.25);
+	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (12, .25) -- node[above, yshift= 5pt] {$r$} (14.5, .25);
+	\path[draw, dotted] (12, 0) rectangle (14.5, .25);
+	\end{tikzpicture}
+	\end{center}
 \end{definition}
 
 We describe the way, in which we associate positions in an $r$-skeleton with elements of $\Qx$ and vice versa. 
