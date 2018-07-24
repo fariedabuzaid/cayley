@@ -35,11 +35,11 @@ For $u,v\in A^\ast$ let $u\Delta v = (y,z)$, where $y,z$ are minimal such that t
 $\vec{v}\Delta\vec{w} = (v_1\Delta w_1,\ldots, v_k\Delta w_k) \in (A^\ast)^{2k}$ and $|\vec{w}| \coloneq \sum_{i=1}^{k}|w_i|$. 
 
 \begin{definition}
-	Let $u\in A^\ast$ be a word. A \emph{canon-decomposition} of $u$ is a sequence of words $\epsilon = u_0,u_1,\ldots, u_n = u$ such that for all $0\leq i < n$ it holds that
-	$u_i \precneq u_{i+1}$ and $u_i \sqsubsetneq u_{i+1}$ ($u_i \presuf u_{i+1}$ for short). A canon-decomposition $u_0,u_1,\ldots, u_n $ is \emph{complete} if there is no $1\leq i< n$ and $v\in A^\ast$ with $u_i \presuf v \presuf u_{i+1}$.
+	Let $u\in A^\ast$ be a word. A word $v\in A^*$ is a \emph{border} of $u$ (denoted by $v\presuf u$) if $v \precneq u$ and $v \sqsubsetneq u$. A \emph{border-decomposition} of $u$ is a sequence of words $\epsilon = u_0,u_1,\ldots, u_n = u$ such that for all $0\leq i < n$ it holds that
+	$u_i \presuf u_{i+1}$. A border-decomposition $u_0,u_1,\ldots, u_n $ is \emph{complete} if there is no $1\leq i< n$ and $v\in A^\ast$ with $u_i \presuf v \presuf u_{i+1}$.
 \end{definition}
 
-Hence, a complete canon-decomposition of $u\in A^*$ is the sequence of all prefixes of $u$ that are suffixes of $u$ as well. So, it is easy to observe that each word $u\in A^*$ has exactly one complete canon-decomposition.
+Hence, a complete border-decomposition of $u\in A^*$ is the sequence of all borders of $u$ ordered by word length. So, it is easy to observe that each word $u\in A^*$ has exactly one complete border-decomposition.
 
 %\begin{observation}
 %	Every word $w\in A^\ast$ has a unique complete canon-decomposition.
@@ -52,7 +52,7 @@ Hence, a complete canon-decomposition of $u\in A^*$ is the sequence of all prefi
 %\end{proof}
 
 \begin{example}
-	The  complete canon-decomposition of $ababa$ is $(\epsilon, a, aba, ababa)$.
+	The  complete border-decomposition of $ababa$ is $(\epsilon, a, aba, ababa)$.
 \end{example}
 
 %\begin{definition}
@@ -62,7 +62,7 @@ Hence, a complete canon-decomposition of $u\in A^*$ is the sequence of all prefi
 %\end{definition}
 
 %\begin{lemma}
-%	Let $\vec{u} = (u_0,\ldots,u_n)$ be a complete canon-decomposition. Then $\root{u_{i+1}} = u_{i+1}u_i^{-1}$ for all $0\leq i < n$. 
+%	Let $\vec{u} = (u_0,\ldots,u_n)$ be a complete border-decomposition. Then $\root{u_{i+1}} = u_{i+1}u_i^{-1}$ for all $0\leq i < n$. 
 %\end{lemma}
 %\begin{proof}
 %	Fix some $0\leq i < n$ and let $v:= u_{i+1}u_i^{-1}$. Let us verify first that $v$ is indeed a period of $u_{i+1}$. If $2|u_i| \leq |u_{i+1}|$ then $u_{i+1} = u_iwu_i$ for some $w\in\Sigma^\ast$. 
@@ -77,14 +77,14 @@ Hence, a complete canon-decomposition of $u\in A^*$ is the sequence of all prefi
 %	Then $u_i' \presuf u_{i+1}$ and $|u_i'| = |u_{i+1}| - \root{u_{i+1}} > |u_{i+1}| - |v| = |u_i|$. Hence $u_i\presuf u_i' \presuf u_{i+1}$ contradicting the completeness of $\vec{u}$! 
 %\end{proof}
 
-From the complete canon-decomposition of a word~$w$ we derive the so called skeleton of~$w$ containing the inner words $v$ of all canons $uvu$ in $w$.
+From the complete border-decomposition of a word~$w$ we derive the so called skeleton of~$w$ containing the inner words $v$ of all bordered words $uvu$ in $w$.
 
 \begin{definition}
-	Let $w\in A^\ast$ and $\vec{w} = (w_0,\ldots,w_n)$ be the complete canon-decomposition of $w$. The \emph{$r$-skeleton} of $w$, denoted by $\calS_r(w)$, is the word of length $n$ over the alphabet $\Gamma = A^{\leq r}$ with $\calS_r(w)[i] = \pref_r(w_i^{-1}w)$ for each $0\leq i\leq n-1$. Note that $w_i^{-1}w$ is always defined since $w_i\preceq w$.
+	Let $w\in A^\ast$ and $\vec{w} = (w_0,\ldots,w_n)$ be the complete border-decomposition of $w$. The \emph{$r$-skeleton} of $w$, denoted by $\calS_r(w)$, is the word of length $n$ over the alphabet $\Gamma = A^{\leq r}$ with $\calS_r(w)[i] = \pref_r(w_i^{-1}w)$ for each $0\leq i\leq n-1$. Note that $w_i^{-1}w$ is always defined since $w_i\preceq w$.
 \end{definition}
 
 \begin{example}
-	Let $u= bababa$ and $v=ababab$. Then $u\sqcap v = ababa$ and the complete canon-decomposition of $u\sqcap v$ is $(\epsilon, a, aba, ababa)$. The $2$-skeleton of $u\sqcap v$ is the word depicted below.
+	Let $u= bababa$ and $v=ababab$. Then $u\sqcap v = ababa$ and the complete border-decomposition of $u\sqcap v$ is $(\epsilon, a, aba, ababa)$. The $2$-skeleton of $u\sqcap v$ is the word depicted below.
 	\begin{center}
 		\begin{tikzpicture}[scale=0.85]
 			\node[] (0) {$ab$};
@@ -97,21 +97,21 @@ From the complete canon-decomposition of a word~$w$ we derive the so called skel
 	\end{center}
 \end{example}
 
-By definition the $i$-th element of the canon-decomposition of  $u\sqcap v$ corresponds to the $i$-th letter of the skeleton. We will use this correspondence to translate back and forth between 
+By definition the $i$-th element of the border-decomposition of $u\sqcap v$ corresponds to the $i$-th word in the skeleton (which we understand as letter). We will use this correspondence to translate back and forth between 
 an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph of a queue monoid and games played on certain skeletons which are derived from the game played on the Cayley-graph. 
 
 \begin{lemma}\label{lem:short_from_skeleton}
 	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$\todo{$|v|=\calO(r2^n)$?} and $\calS_r(w)=\calS_r(v)$.
 \end{lemma}
 \begin{proof}
-	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete canon-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are ready and we can assume $|\calS_r(w)[n-1]|$ from now on.
+	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete border-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are ready and we can assume $|\calS_r(w)[n-1]|$ from now on.
 	
 	We construct~$v$ inductively as follows: We set $v_0:=\epsilon$. Now let $a,b\in A$ be distinct with $\calS_r(w)[0]\in aA^*$. Then $x\presuf\calS_r(w)[0]b^{2n+r}$ implies $x=\epsilon$. Hence, we set, for $0\leq i<n$, $v_{i+1}:=v_ix_iv_i$ where $x_i=\calS_r(w)[i]\,b^{n-i}a^ib^{n+r}$. Finally, we set $v:=v_{n}$.
 	
 	Before we can prove $\calS_r(w)=\calS_r(v)$ we need to prove the following two properties of $(v_0,\dots,v_n)$:
 	\begin{alphaenumerate}
 		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and\label{prf:short_from_skeleton:i1}
-		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete canon-decomposition of $v$.\label{prf:short_from_skeleton:i2}
+		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.\label{prf:short_from_skeleton:i2}
 	\end{alphaenumerate}
 	\emph{Proof of (\ref{prf:short_from_skeleton:i1}).}\ We observe that $v_ix_i$ is a period of $v_{i+1}$ and we prove by induction on $0\leq i\leq n$ that this period is minimal. For $i=0$ this is trivial since $v_1\in aA^{r-1}b^{2n+r}$ and $a\neq b$. So now let $i>0$. We suppose that there is a period $p$ of $v_{i+1}$ with $|p|<|v_ix_i|$. Then, for $y_j:=x_j(b^{n+r})^{-1}$ for $0\leq j\leq i$, the word $v_{i+1}$ is an alternation of words $y_j$ and $b^{r+n}$ which are all of length $r+n$. Note that by construction we have $y_{j}\neq b^{n+r}$ (since each $y_{j}$ contains at least one $a$) as well as $y_{j}\neq y_{k}$ if $j\neq k$ for each $0\leq j,k\leq i$. Additionally, each second occurrence of a $y_j$-block is $y_1$. We now consider two cases:
 	
@@ -131,7 +131,7 @@ an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph of a queue monoi
 	
 	Now, assume $|p|$ is a divisor of $n+r$. Then we can understand the blocks of length $n+r$ as letters of the alphabet $\{b^{n+r},y_1,\dots,y_i\}$. Since there is no $y_i$-block in $v_i$ we have $|p|\geq|v_iy_i|$. Since $p$ starts with $y_1$ and $y_i$ is followed by $b^{n+r}$, $p$ has length at least $|v_ix_i|$.
 	
-	\emph{Proof of (\ref{prf:short_from_skeleton:i2}).}\ By construction, it is easy to see that $\vec{v}=(v_0,\dots,v_n)$ is a canon-decomposition of $v=v_n$. We prove now by induction on $0\leq i<n$ that $(v_0,\dots,v_{i+1})$ is a complete canon-decomposition of $v_i$. The case $i=0$ is easy to verify since $v_1\in aA^{r-1}b^{2n+r}$. So, let $i\geq1$. Assume there is $u\in A^*$ with $v_i\presuf u\presuf v_{i+1}$. Let $u$ be of minimal length satisfying this inequality. Then there are two possible cases:
+	\emph{Proof of (\ref{prf:short_from_skeleton:i2}).}\ By construction, it is easy to see that $\vec{v}=(v_0,\dots,v_n)$ is a border-decomposition of $v=v_n$. We prove now by induction on $0\leq i<n$ that $(v_0,\dots,v_{i+1})$ is a complete border-decomposition of $v_i$. The case $i=0$ is easy to verify since $v_1\in aA^{r-1}b^{2n+r}$. So, let $i\geq1$. Assume there is $u\in A^*$ with $v_i\presuf u\presuf v_{i+1}$. Let $u$ be of minimal length satisfying this inequality. Then there are two possible cases:
 	
 	First, suppose $|u|\geq|v_ix_i|$ holds, i.e., the prefix and suffix $u$ overlap in $v_i$ and the overlap contains at most $x_i$ (cf.\ Fig.~\ref{fig:skeleton}). Let $x,y\in A^*$ such that $u=xx_iv_i=y$. Then we have $|x|=|y|$ and $m:=xx_iy\presuf u$. Hence, by minimality of $u$ we have $|m|\leq|v_i|$ and therefore, by induction hypothesis, $m=v_k$ for some $0< k\leq i$. This implies
 	\[v_{k-1}x_{k-1}v_{k-1}=v_k=m=xx_iy\,.\]
@@ -148,11 +148,11 @@ an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph of a queue monoi
 	\[|p|=|v_{i+1}|-|u|<|v_{i+1}|-|v_i|=|v_ix_i|\,.\]
 	This is a contradiction to property~\ref{prf:short_from_skeleton:i1} stating that $v_ix_i$ is the minimal period of $v_{i+1}$.
 	
-	So, in both cases we have seen that there is no $v_i\presuf u\presuf v_{i+1}$, i.e., $(v_0,\dots,v_{i+1})$ is a complete canon-decomposition.
+	So, in both cases we have seen that there is no $v_i\presuf u\presuf v_{i+1}$, i.e., $(v_0,\dots,v_{i+1})$ is a complete border-decomposition.
 	
 	Finally, let $0\leq i<n$. Then we have
 	\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
 	for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
 \end{proof}
 
-Let $V\in (A^{\leq r})^*$ be the $r$-skeleton of some word $w\in A^*$. We call the word $v\in A^*$ constructed in the proof of Lemma~\ref{lem:short_from_skeleton} the \emph{(canonical) $r$-instantiation of $V$}.
+Let $V\in (A^{\leq r})^*$ be the $r$-skeleton of some word $w\in A^*$. We call the word $v\in A^*$ constructed in the proof of Lemma~\ref{lem:short_from_skeleton} the \emph{$r$-instantiation of $V$}.
