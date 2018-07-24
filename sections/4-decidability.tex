@@ -1,11 +1,12 @@
 \section{Decidability of the FO-Theory}
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
-For $p,q\in \Qx$ let $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$ and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. 
+For $p,q\in \Qx$ let $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$ and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. \todo{Neighborhood = $\Delta$-Neighborhood}
 
 Let us first give an intuitive description of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. More precisely we show that for every
 two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$
 for some fixed primitive recursive function $f$.
-This implies that in order to evaluate a formula $Qx\phi(\vec{p})$  we can restrict quantification    
+This implies that in order to evaluate a formula $Qx\phi(\vec{p})$ where $\phi$ has quantifier rank $r$ and $Q\in\{\exists,\forall\}$  we can restrict the quantification of $x$ to the $f(r+1)$-neighborhood of $\vec{p}$. Since the
+$r$-neighborhood of each element $p\in \Qx$ is finite for every fixed radius $r$, we can use the above observation to implement an effective decision procedure for the theory of $\calC$.   
 
 \begin{definition}
 	Let $V$ be an $r$-skeleton. We say that $q\in\Qx$ is \emph{compatible} with $V$ 
