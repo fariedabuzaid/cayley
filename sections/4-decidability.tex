@@ -36,7 +36,7 @@ into positions of an $r$-skeleton.
 We describe the way, in which we associate positions in an $r$-skeleton with elements of $\Qx$ and vice versa. 
 \begin{definition}
 	Let $p,q\in \Qx$ and let $U$ and $V$ be the $3r$-skeletons of $\cpr_{2r}(p)$ and $\cpr_{2r}(q)$ respectively. If we suppose that $(m_1,\ldots,m_k)$ are positions in $V$ and $(n_1,\ldots,n_k)$ are positions in $U$ such that $(U,m_1,\ldots,m_k) \equiv_{\ell} (V,n_1,\ldots,n_k)$ for some $\ell \geq 1$. For $p'\in \Qx$ with $|p'\Delta p| \leq r$ we associate a position $m_{k+1}$ in $U$ as follows:
-	Let $(u_1,\ldots, u_m)$ be the complete canon-decomposition of $\rd{\cpr_{2r}(p)}$ and $(v_1,\ldots,v_n)$ be the complete canon-decomposition of $\rd{\cpr_{2r}(q)}$. As $p'$ has distance at most $r$ from $p$ we have that $\rd{p'} = \rd{\cpr_{2r}(p)}x$
+	Let $(u_1,\ldots, u_m)$ be the complete border-decomposition of $\rd{\cpr_{2r}(p)}$ and $(v_1,\ldots,v_n)$ be the complete border-decomposition of $\rd{\cpr_{2r}(q)}$. As $p'$ has distance at most $r$ from $p$ we have that $\rd{p'} = \rd{\cpr_{2r}(p)}x$
 	for some $x\in A^{\leq 2r}$. Therefore there is an $i\leq m$ such that $\mddl{p'} = u_ix$. Then $i$ is the position that is associated with $p'$.
 	
 	Now let $n_{k+1}$ be such that $(U,m_1,\ldots,m_{k+1}) \equiv_{\ell-1} (V,n_1,\ldots,n_{k+1})$ we associate an element $q'$ with $n_{k+1}$ as follows:
@@ -103,7 +103,7 @@ In order to prove the main technical lemma we need to construct a ``small'' $r$-
 	%    As there are only $m$ other elements chosen so far, we can choose $\ell$ large enough so that the element $b$ has distance $>2^{r}$ from every $b_i$ and from $\epsilon$. If   
 	Basically, we want to use the $3\cdot 2^{r+1}$-skeleton of $p$ to construct a suitable answer $q$. However, we need to cut the last $2^{r+1}$ read actions in order to avoid certain problems that would occur if we want to translate elements in close proximity to $p$ into positions of the $3\cdot 2^{r+1}$-skeleton.   
 	Let $p'= \cpr_{2^{r+2}}(p)$.  Consider 
-	the $3\cdot 2^{r+1}$-skeleton $V = \calS_{3\cdot 2^{r+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+1}$-skeleton $W$ of length at most $\exp_{r+1}(2,f(r))$. From $W$ we construct the canonical $2^{r+2}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
+	the $3\cdot 2^{r+1}$-skeleton $V = \calS_{3\cdot 2^{r+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+1}$-skeleton $W$ of length at most $\exp_{r+1}(2,f(r))$. From $W$ we construct the $2^{r+2}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
 	$2^{r+1}$ such that 
 	\begin{itemize}
 		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{p}\suf_{2^{r}}(\rd{p})^{-1} )$,
@@ -111,7 +111,7 @@ In order to prove the main technical lemma we need to construct a ``small'' $r$-
 		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{p})$, and
 		\item $uw\sqcap wv = w$.
 	\end{itemize}
-	Let $(v_0,v_1,\ldots, v_m)$ be the complete canon-decomposition of $\wrt{p'}\sqcap \rd{p'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete canon-decomposition of $w$. Let $i$
+	Let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $\wrt{p'}\sqcap \rd{p'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
 	be the index of $\mddl{p'}$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+1}}(p') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{2^{r+2}}(p'), i) \equiv_r (W,j)$.
 	Now let $q$ be the element associated to $j$.
 	
