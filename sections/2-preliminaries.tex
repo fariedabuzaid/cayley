@@ -1,12 +1,44 @@
 \section{Preliminaries}
 For $m,n,r\in\bbN$ we write $m =_r n$ iff $m=n$ or $m,n>r$.
 
-\subsection{Graphs}
-Let $\frakG=(V,E)$ be a graph (possibly with some constants $c_1,\dots,c_n\in V$). 
-For $u,v\in V$ we denote by $d^\frakG(u,v)$ the length of a shortest path from $u$ to $v$, where we set $d(u,v) = \infty$ whenever $u$ and $v$ are not connected in $\frakG$.
-For $S\subseteq V$ we denote by $\frakG_{\upharpoonright S}$ the induced subgraph of $\frakG$ with vertex set $S$. 
-For a nonempty set $S\subseteq V$ and $r\in \bbN$ let $\calN_r^\frakG(S)$ denote the \emph{$r$-neighborhood} of $S$ (and the constants $c_1,\dots,c_n$) in $\frakG$, that is $\frakG_{\upharpoonright\{u\in V\mid \min\{d(u,v) \mid v\in S\cup\{c_1,\dots,c_n\}\} \leq r \}}$.
-For a tuple $\vec{u} = (u_1,\ldots, u_k) \in V^k$ we will also write $\calN^\frakG_r(\vec{u})$ instead of $\calN^\frakG_r(\{u_1,\ldots, u_k\})$.
+\subsection{Logic on Graphs}
+Let $A$ be a finite set of labels. An edge-labeled graph is a tuple $G=(V^G,(E_a^G)_{a\in A})$ where $V$ is the set of vertices and $E_a^G \subseteq V\times V$ is the set of $a$-labeled edges. 
+
+\emph{First-order formulas} (over the language of labeled graphs) are build up
+from variables $\{x_i \mid i\in \bbN \}$, the Boolean connectives
+$\{\lnot,\vee,\wedge, \to \}$, the edge relation symbols $\{E_a\mid a\in A\}$,
+quantifiers $\{\forall, \exists \}$, and the bracket symbols
+$\{(,) \}$. 
+We write $G\models \phi$ to denote that the formula $\phi$ is satisfied by the graph $G$.
+The \emph{quantifier rank} $\qr(\phi)$ of a formula $\phi$
+is the maximal nesting depth of quantifiers within $\phi$. Two graphs
+$G$ and $H$ are \emph{$r$-equivalent} (denoted $G\equiv_r H$) if they
+cannot be distinguished by any formula of quantifier rank $\le r$. 
+For a graph $G$ and two tuples $\vec{a}, \vec{b} \in (V^G)^k$ we write $\vec{a} \equiv_r^G \vec{b}$
+whenever $G\models \phi(\vec{a}) \Leftrightarrow G\models\phi(\vec{b})$ for all first-order formulas $\phi$ with $k$ free variables and
+quantifier rank at most $r$. For all the above notations we adopt the convention that we omit superscripts whenever this should not lead to any confusion. For instance we write $\vec{a} \equiv_r \vec{b}$ when the underlying graph $G$ is clear from the context. 
+
+The \emph{Ehrenfeucht-Fra\"\i{}ss\'e-game} is a game-theoretic
+characterisation of elementary equivalence. It is played on two graphs
+$G$ and $H$, where the two players, Spoiler and Duplicator, choose
+alternately elements of these two structures for a prescribed number
+of rounds. More precisely the $i$-th round of an $r$-round
+Ehrenfeucht-Fraisse-game on $G=(V^G,E^G)$ and $H=(V^H,E^H)$
+($G_r(G,H)$) has the following form: First Spoiler picks an element
+$a_i$ from $G$ or an element $b_i$ from H. Duplicator answers by
+choosing an element $b_i$ from $H$ or an element $a_i$ from $G$,
+respectively. Therefore the two players iteratively construct two
+tuples $(a_1,\ldots,a_r)\in (V^G)^r$ and
+$(b_1,\ldots,b_r)\in (V^H)^r$. Duplicator wins if the mapping
+$a_i\mapsto b_i$ is a partial isomorphism, that is if
+$a_i= a_j \Leftrightarrow b_i=b_j$ and
+$(a_i,a_j)\in E^G \Leftrightarrow (b_i,b_j) \in E^H$ for all
+$1\leq i,j\leq r$. Otherwise Spoiler wins.
+
+\begin{theorem}[\cite{Ehr61}]
+	Let $G$ and $H$ be two graphs. Then Duplicator has a winning
+	strategy in the game $G_r(G,H)$ if, and only if, $G\equiv_r H$.
+\end{theorem} 
 
 \subsection{Combinatorics on Words}
 Let $A$ be an alphabet. We use $\preceq$ to denote the \emph{prefix-relation} and $\sqsubseteq$ for the \emph{suffix-relation} on $A^\ast$.  If $u= vw$ we write $v^{-1}u = w$ and
