@@ -1,12 +1,19 @@
 \section{Decidability of the FO-Theory}
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
-For $p,q\in \Qx$ let $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$ and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. \todo{Neighborhood = $\Delta$-Neighborhood}
+In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
+For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
+$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the $(\Delta)$-neighborhood of $\vec{p}$ of radius $r$ ($r$-neighborhood). Note that we implicitly add the origin
+of $\frakC$ to $\vec{p}$ when we compute the neighborhood.
 
-Let us first give an intuitive description of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. More precisely we show that for every
-two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$
-for some fixed primitive recursive function $f$.
+Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
+two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$.
 This implies that in order to evaluate a formula $Qx\phi(\vec{p})$ where $\phi$ has quantifier rank $r$ and $Q\in\{\exists,\forall\}$  we can restrict the quantification of $x$ to the $f(r+1)$-neighborhood of $\vec{p}$. Since the
-$r$-neighborhood of each element $p\in \Qx$ is finite for every fixed radius $r$, we can use the above observation to implement an effective decision procedure for the theory of $\calC$.   
+$r$-neighborhood of each element $p\in \Qx$ is finite and effectively computable for every radius $r$, we can use the above observation to implement a decision procedure for the theory of $\calC$.   
+
+In order to achieve this goal we exploit the fact that first order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monid is in some sense less local.
+In fact, the neighborhood-structure of an element $p$ does not only depend suffixes of  bounded length of $\rd{p}$ and $\wrt{p}$. We solve this problem via the notion of skeletons. Our proof 
+reveals that   the $r$-type of the $2^{r+1}$-neighborhood of an element $p$ is basically determined by the $(r+1)$-type of the $3\cdot 2^{r+1}$-skeleton of $\rd{p} \sqcap \wrt{p}$. 
+
 
 \begin{definition}
 	Let $V$ be an $r$-skeleton. We say that $q\in\Qx$ is \emph{compatible} with $V$ 
@@ -62,17 +69,17 @@ For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} E^r_m \vec{q}$ iff
 	For all $m\in\bbN_{>0}$ and all $\vec{p},\vec{q} \in \Qx^m$: If $\vec{p} E^0_m \vec{q}$ then the mapping $p_i \mapsto q_i$ is a partial isomorphism.
 \end{lemma}
 \begin{proof}
-	We need to show that $(p_i,p_j)\in E_\alpha \Rightarrow (q_i,q_j)\in E_\alpha$  for all $i,j\leq m$ and all $\alpha\in \Sigma$.
-	Let $\vec{p}, \vec{q} \in \Qx^m$ with $\vec{p} E^0_m \vec{q}$. Suppose  $(p_i,p_j) \in E_\alpha$ for some $\alpha\in\Sigma$. Then $|p_i\Delta p_j| = 1$. Hence $p_i\Delta p_j = q_i\Delta q_j$ by (\ref{item:E_distance}). 
+	We need to show that $(p_i,p_j)\in E_a \Rightarrow (q_i,q_j)\in E_a$  for all $i,j\leq m$ and all $a\in \Sigma$.
+	Let $\vec{p}, \vec{q} \in \Qx^m$ with $\vec{p} E^0_m \vec{q}$. Suppose  $(p_i,p_j) \in E_a$ for some $a\in\Sigma$. Then $|p_i\Delta p_j| = 1$. Hence $p_i\Delta p_j = q_i\Delta q_j$ by (\ref{item:E_distance}). 
 	Since the distance between $p_i$ and $p_j$ and between $q_i$ and $q_j$ is $1$, there are $2^\ell$-skeletons (for some $\ell \geq m-\min\{i,j\}+2$) $U,V$ such that 
 	$p_i$ and $p_j$ can be translated into positions $m_1, m_2$ in $U$ and $q_i$ and $q_j$ can be translated into position $n_1,n_2$ in $V$ such that $(U,m_1,m_2) \equiv_1 (V,n_1,n_2)$. 
 	There are two possible types of configurations for $p_i$ and $p_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{p_i} = \rd{p_j}$,
-	$\wrt{p_i}\alpha = \wrt{p_j}$, and $\mddl{p_i} = \mddl{p_j}$. In this case $m_1=m_2$ and therefore $n_1=n_2$, which implies that $\rd{q_i} = \rd{q_j}$,
-	$\wrt{q_i}\alpha = \wrt{q_j}$, and $\mddl{q_i} = \mddl{q_j}$. Therefore $(q_i,q_j) \in E_\alpha$.
+	$\wrt{p_i}a = \wrt{p_j}$, and $\mddl{p_i} = \mddl{p_j}$. In this case $m_1=m_2$ and therefore $n_1=n_2$, which implies that $\rd{q_i} = \rd{q_j}$,
+	$\wrt{q_i}a = \wrt{q_j}$, and $\mddl{q_i} = \mddl{q_j}$. Therefore $(q_i,q_j) \in E_a$.
 	
-	Second, it might be that $\rd{p_i}a = \rd{p_j}$ (where $\alpha=\ov{a}$),
-	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into a formula $\phi$
-	on $(U, m_1, m_2)$ of quantifier rank $1$. As $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$, $(V,n_1,n_2) \models \phi$ and therefore $(q_i,q_j)\in E_\alpha$.
+	Second, it might be that $\rd{p_i}a = \rd{p_j}$ (where $a=\ov{b}$),
+	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into a formula $\phi$ 
+	on $(U, m_1, m_2)$ of quantifier rank $1$. As $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$, $(V,n_1,n_2) \models \phi$ and therefore $(q_i,q_j)\in E_a$.
 \end{proof}
 
 In order to prove the main technical lemma we need to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
@@ -120,8 +127,12 @@ In order to prove the main technical lemma we need to construct a ``small'' $r$-
 	
 	Finally, if $p$ has distance $\leq 2^{r}$ from some $p_i$ then let $Y\in \{X_1,\ldots,X_k\}$ be such that $i\in Y$ and let $j=\min Y$. Let $U$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(p_j)$ and 
 	$V$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(q_j)$.
-	Then $p$ is compatible with $U$. Let $m_1,\ldots,m_\ell$ be the positions in $U$ that are associated with the elements $\{q_s \mid s\in Y\}$, $m_{\ell+1}$ the position in $U$ that is associated with $p$, and $n_1,\ldots,n_\ell$ be the positions associated with $\{q_s \mid s\in Y\}$ in $V$. Since $(U,m_1,\ldots,m_\ell) \equiv_{r+2} (V,n_1,\ldots,n_\ell)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $n_{\ell+1}$ with $(U,m_1,\ldots,m_{\ell+1}) \equiv_{r+1} (V,n_1,\ldots,n_{\ell+1})$. From $n_{\ell+1}$ we compute the associated element $q$
+	\todo{Add: Distance of $p$ to $p_j$ is short} Then $p$ is compatible with $U$. Let $m_1,\ldots,m_\ell$ be the positions in $U$ that are associated with the elements $\{q_s \mid s\in Y\}$, $m_{\ell+1}$ the position in $U$ that is associated with $p$, and $n_1,\ldots,n_\ell$ be the positions associated with $\{q_s \mid s\in Y\}$ in $V$. Since $(U,m_1,\ldots,m_\ell) \equiv_{r+2} (V,n_1,\ldots,n_\ell)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $n_{\ell+1}$ with $(U,m_1,\ldots,m_{\ell+1}) \equiv_{r+1} (V,n_1,\ldots,n_{\ell+1})$. From $n_{\ell+1}$ we compute the associated element $q$
 	in the $(\sum_{s= r+m-i}^{r} 2^s)$-neighborhood of $q_j$.
+	\begin{figure}[h]
+		\centering\include{figures/proof_outline}
+		\caption{\label{fig:skeleton}Construction of $q$ from $p$ using $U$ and $V$.}
+	\end{figure}
 	The construction of $q$ ensures that Properties (\ref{item:E_suffix}) to (\ref{item:E_partition}) are fulfilled for $(\vec{p}, p)$ and $(\vec{q}, q)$ by adding $\ell+1$ to $Y$. Hence $(\vec{p}, p) E^r_m (\vec{q}, q)$.
 \end{proof}
 
