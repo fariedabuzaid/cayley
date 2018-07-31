@@ -145,7 +145,8 @@
 \renewcommand{\Gamma}{\varGamma}
 \renewcommand{\Sigma}{\varSigma}
 
-
+\declaretheorem[name=Theorem,numberlike=theorem]{mythm}
+\declaretheorem[name=Lemma,numberlike=theorem]{mylem}
 \begin{document}
 	\maketitle
 
@@ -161,6 +162,7 @@
 
 	\bibliographystyle{plainurl}
 	\bibliography{sections/lit}
+	    \input{sections/6-appendix}
 \end{document}
 
 %%% Local Variables:

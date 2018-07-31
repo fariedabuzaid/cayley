@@ -1,43 +1,41 @@
 \section{Preliminaries}
 For $m,n,r\in\bbN$ we write $m =_r n$ iff $m=n$ or $m,n>r$.
 
-\subsection{Logic on Graphs}
-Let $A$ be a finite set of labels. An edge-labeled graph is a tuple $G=(V^G,(E_a^G)_{a\in A})$ where $V$ is the set of vertices and $E_a^G \subseteq V\times V$ is the set of $a$-labeled edges. 
+\subsection{Logic on Graphs and Words}
+Let $A$ be a finite set of labels. An \emph{edge-labeled graph} is a tuple $G=(V^G,(E_a^G)_{a\in A})$ where $V$ is the set of vertices and $E_a^G \subseteq V\times V$ is the set of $a$-labeled edges. 
+A \emph{word-structure} over $A$ is a tuple $W = (\{0,\ldots, n-1\}, \leq^W, (P_a^W)_{a\in A})$ where $\leq^W$ is the usual order on $\{0,\ldots,n-1\}$, and $(P_a^W)_{a\in A}$ is a partition of $\{0,\ldots, n-1\}$ (some of the sets $P_a^W$ may be empty). Whenever we use logic to describe properties of a word $w$ then the formula is evaluated on the corresponding word structure $W$. 
 
-\emph{First-order formulas} (over the language of labeled graphs) are build up
-from variables $\{x_i \mid i\in \bbN \}$, the Boolean connectives
-$\{\lnot,\vee,\wedge, \to \}$, the edge relation symbols $\{E_a\mid a\in A\}$,
+Let $\tau = \{R_1,\ldots,R_m, c_1, \ldots, c_n\}$ where $R_i$ is a relation symbol of arity $r_i$ and $c_j$ is a constant symbol.
+\emph{First-order formulas} (over the vocabulary $\tau$) are build up
+from variables and constant symbols $\{x_i \mid i\in \bbN \}\cup \{c_1,\ldots,c_n\}$, the edge relation symbols $\{R_1,\ldots, R_m\}$, the equality symbol $=$, the Boolean connectives
+$\{\lnot,\vee,\wedge, \to \}$,
 quantifiers $\{\forall, \exists \}$, and the bracket symbols
 $\{(,) \}$. 
-We write $G\models \phi$ to denote that the formula $\phi$ is satisfied by the graph $G$.
+We write $G\models \phi$ to denote that the formula $\phi$ is satisfied by the structure $G$.
 The \emph{quantifier rank} $\qr(\phi)$ of a formula $\phi$
-is the maximal nesting depth of quantifiers within $\phi$. Two graphs
+is the maximal nesting depth of quantifiers within $\phi$. Two structures
 $G$ and $H$ are \emph{$r$-equivalent} (denoted $G\equiv_r H$) if they
 cannot be distinguished by any formula of quantifier rank $\le r$. 
-For a graph $G$ and two tuples $\vec{a}, \vec{b} \in (V^G)^k$ we write $\vec{a} \equiv_r^G \vec{b}$
-whenever $G\models \phi(\vec{a}) \Leftrightarrow G\models\phi(\vec{b})$ for all first-order formulas $\phi$ with $k$ free variables and
-quantifier rank at most $r$. For all the above notations we adopt the convention that we omit superscripts whenever this should not lead to any confusion. For instance we write $\vec{a} \equiv_r \vec{b}$ when the underlying graph $G$ is clear from the context. 
+For a structure $G$ and two tuples $\vec{p}, \vec{q} \in (V^G)^m$ we write $\vec{p} \equiv_r^G \vec{q}$ or say that $\vec{p}$ and $\vec{q}$ are $r$-equivalent in $G$
+whenever $G\models \phi(\vec{p}) \Leftrightarrow G\models\phi(\vec{q})$ for all first-order formulas $\phi$ with $m$ free variables and
+quantifier rank at most $r$. For all the above notations we adopt the convention that we omit superscripts whenever this should not lead to any confusion. For instance we write 
+$\vec{p} \equiv_r \vec{q}$ when the underlying structure $G$ is clear from the context. 
 
-\emph{Ehrenfeucht-Fra\"\i{}ss\'e-relations} for a graph $G = (V, (E_a)_{a\in A})$ are a system $(E^r_m)_{r,m\in\bbN}$ of equivalence relations where  is a game-theoretic
-characterisation of elementary equivalence. It is played on two graphs
-$G$ and $H$, where the two players, Spoiler and Duplicator, choose
-alternately elements of these two structures for a prescribed number
-of rounds. More precisely the $i$-th round of an $r$-round
-Ehrenfeucht-Fraisse-game on $G=(V^G,E^G)$ and $H=(V^H,E^H)$
-($G_r(G,H)$) has the following form: First Spoiler picks an element
-$a_i$ from $G$ or an element $b_i$ from H. Duplicator answers by
-choosing an element $b_i$ from $H$ or an element $a_i$ from $G$,
-respectively. Therefore the two players iteratively construct two
-tuples $(a_1,\ldots,a_r)\in (V^G)^r$ and
-$(b_1,\ldots,b_r)\in (V^H)^r$. Duplicator wins if the mapping
-$a_i\mapsto b_i$ is a partial isomorphism, that is if
-$a_i= a_j \Leftrightarrow b_i=b_j$ and
-$(a_i,a_j)\in E^G \Leftrightarrow (b_i,b_j) \in E^H$ for all
-$1\leq i,j\leq r$. Otherwise Spoiler wins.
+The $r$-type of a structure $G$ is the set of all first-order sentences $\phi$ of quantifier rank at most $r$ such that $G\models \phi$. It is well known that there are up to equivalence only
+finitely many sentences of quantifier rank at most $r$. Hence the $r$-type of a formula can be characterized by a sentence, which has also quantifier rank $r$. 
 
-\begin{theorem}[\cite{Ehr61}]
-	Let $G$ and $H$ be two graphs. Then Duplicator has a winning
-	strategy in the game $G_r(G,H)$ if, and only if, $G\equiv_r H$.
+\emph{Ehrenfeucht-Fra\"\i{}ss\'e-relations} for a graph $G = (V, (E_a)_{a\in A})$ are a system $(\calE^r_m)_{r,m\in\bbN}$ where  $\calE^r_m$ is an equivalence relation on $V^m$ and
+the following is true for all $r,m\in\bbN$ and $\vec{p},\vec{q} \in V^m$:
+\begin{itemize}
+	\item If $(p_1,\ldots,p_m) \calE^0_m (q_1,\ldots,q_m)$ then the mapping $p_i \mapsto q_i$ is a partial isomorphism, that is $p_i= p_j \Leftrightarrow q_i=q_j$ and
+	$(p_i,p_j)\in E_a \Leftrightarrow (q_i,q_j) \in E_a$ for all $1\leq i,j\leq m$ and all $a\in A$.
+	\item If $\vec{p} \calE^{r+1}_m \vec{q}$ then for every $p\in V$ there exists a $q\in V$ such that $(\vec{p}, p) \calE^r_{m+1} (\vec{q}, q)$.
+\end{itemize}
+
+Ehrenfeucht-Fra\"\i{}ss\'e-relations are useful to identify $r$-equivalent tuples in a graph. This is formalized in the following theorem.
+\begin{theorem}[\!\!\cite{Ehr61}]
+	Let $G$ be a graph, $(\calE^r_m)_{r,m\in\bbN}$ Ehrenfeucht-Fra\"\i{}ss\'e-relations for $G$, and $\vec{p}, \vec{q}$ $m$-tuples of nodes from $G$. If $\vec{p} \calE^r_m \vec{q}$ then 
+	$\vec{p} \equiv_r \vec{q}$.
 \end{theorem} 
 
 \subsection{Combinatorics on Words}
@@ -50,12 +48,19 @@ In a first lemma we prove that the complementary prefix and suffix of $u$ resp.~
 \begin{lemma}\label{lem:short_ends_construction}
 	Let $r\in\bbN$ and $u,v,w \in A^\ast$ with $uw\sqcap wv = w$. %such that the period of $w$ has length at least $2$. 
 	Then there are words $u',v'$ of length $\calO(r)$ such that 
+	
+	\begin{minipage}{0.45\linewidth}
 	\begin{itemize}
 		\item $\suf_r(uw) = \suf_r(u'w)$,
 		\item $\suf_r(wv) = \suf_r(wv')$,
-		\item $\pref_r(wv) = \pref_r(wv')$,
-		\item $u'w\sqcap wv' = w$.
 	\end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+    	\begin{itemize}
+    		\item $\pref_r(wv) = \pref_r(wv')$,
+    		\item $u'w\sqcap wv' = w$.
+    	\end{itemize}
+    \end{minipage}
 \end{lemma}
 \begin{proof}
 	Set $u'=\suf_r(u)$. Additionally, if $|v|\leq 2r$ set $v':=v$, and otherwise, set $v':=\pref_r(v)\suf_r(v)$. Then the first three equations are obviously satisfied. Now assume $u'w\sqcap wv'\neq w$, i.e., there is $w'\in A^*$ with $|w'|>|w|$, $w'\preceq wv'$, and $w'\sqsubseteq u'w$. Since $|u'w|\leq r+|w|$ we have $w'\preceq w\pref_r(v)\preceq wv$. Additionally, we have $w'\sqsubseteq u'w\sqsubseteq uw$ implying $|uw\sqcap wv|\geq|w'|>|w|$. This is a contradiction to the definition of~$w$.
@@ -113,10 +118,17 @@ From the complete border-decomposition of a word~$w$ we derive the so called ske
 
 \begin{definition}
 	Let $w\in A^\ast$ and $\vec{w} = (w_0,\ldots,w_n)$ be the complete border-decomposition of $w$. The \emph{$r$-skeleton} of $w$, denoted by $\calS_r(w)$, is the word of length $n$ over the alphabet $\Gamma = A^{\leq r}$ with $\calS_r(w)[i] = \pref_r(w_i^{-1}w)$ for each $0\leq i\leq n-1$. Note that $w_i^{-1}w$ is always defined since $w_i\preceq w$.
+	\begin{figure}[H]
+	\begin{center}
+		\input{figures/skeleton-def.tex}
+	\end{center}\label{fid:sekeltondef}\caption{Definition of $\calS_r(w).$}
+    \end{figure}
 \end{definition}
+Note that it is convenient for our purpose to consider $\calS_r(w)$ to be a word over an alphabet, which in itself consists of words of bounded length rather than to consider $\calS_r(w)$ as a sequence of words.
 
 \begin{example}
 	Let $u= bababa$ and $v=ababab$. Then $u\sqcap v = ababa$ and the complete border-decomposition of $u\sqcap v$ is $(\epsilon, a, aba, ababa)$. The $2$-skeleton of $u\sqcap v$ is the word depicted below.
+
 	\begin{center}
 		\begin{tikzpicture}[scale=0.85]
 			\node[] (0) {$ab$};
@@ -126,63 +138,26 @@ From the complete border-decomposition of a word~$w$ we derive the so called ske
 			\path[ ->,>=latex'] (0) edge (1)
 			(1) edge (2);
 		\end{tikzpicture}
-	\end{center}
+	\end{center}\label{fig:skeletonex}
 \end{example}
 
 By definition the $i$-th element of the border-decomposition of $u\sqcap v$ corresponds to the $i$-th word in the skeleton (which we understand as letter). We will use this correspondence to translate back and forth between 
 an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph of a queue monoid and games played on certain skeletons which are derived from the game played on the Cayley-graph. 
 
-\begin{lemma}\label{lem:short_from_skeleton}
-	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$\todo{$|v|=\calO(r2^n)$?} and $\calS_r(w)=\calS_r(v)$.
-\end{lemma}
+\begin{restatable}{mylem}{instantiation}\label{lem:short_from_skeleton}
+	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$ and $\calS_r(w)=\calS_r(v)$.
+\end{restatable}
 \begin{proof}
 	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete border-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are ready and we can assume $|\calS_r(w)[n-1]|$ from now on.
 	
 	We construct~$v$ inductively as follows: We set $v_0:=\epsilon$. Now let $a,b\in A$ be distinct with $\calS_r(w)[0]\in aA^*$. Then $x\presuf\calS_r(w)[0]b^{2n+r}$ implies $x=\epsilon$. Hence, we set, for $0\leq i<n$, $v_{i+1}:=v_ix_iv_i$ where $x_i=\calS_r(w)[i]\,b^{n-i}a^ib^{n+r}$. Finally, we set $v:=v_{n}$.
 	
-	Before we can prove $\calS_r(w)=\calS_r(v)$ we need to prove the following two properties of $(v_0,\dots,v_n)$:
+	One can show the following two properties:
 	\begin{alphaenumerate}
 		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and\label{prf:short_from_skeleton:i1}
 		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.\label{prf:short_from_skeleton:i2}
 	\end{alphaenumerate}
-	\emph{Proof of (\ref{prf:short_from_skeleton:i1}).}\ We observe that $v_ix_i$ is a period of $v_{i+1}$ and we prove by induction on $0\leq i\leq n$ that this period is minimal. For $i=0$ this is trivial since $v_1\in aA^{r-1}b^{2n+r}$ and $a\neq b$. So now let $i>0$. We suppose that there is a period $p$ of $v_{i+1}$ with $|p|<|v_ix_i|$. Then, for $y_j:=x_j(b^{n+r})^{-1}$ for $0\leq j\leq i$, the word $v_{i+1}$ is an alternation of words $y_j$ and $b^{r+n}$ which are all of length $r+n$. Note that by construction we have $y_{j}\neq b^{n+r}$ (since each $y_{j}$ contains at least one $a$) as well as $y_{j}\neq y_{k}$ if $j\neq k$ for each $0\leq j,k\leq i$. Additionally, each second occurrence of a $y_j$-block is $y_1$. We now consider two cases:
-	
-	First, assume that $|p|$ is not a divisor of $n+r$. If $|p|<n+r$ then the distance between each two occurrences of $a$ in $p^\omega$ is at most $|p|<n+r$ but $v_{i+1}$ contains at least one $b^{n+r}$-block. Hence, we have $|p|>n+r$. If $\lfloor\frac{|p|}{n+r}\rfloor$ is odd (cf.\ Fig.~\ref{fig:repetition:i1}), $p$ starts with $a$ and ends in a block of the form $b^{n+r}$, but does not contain all of these $n+r$ many $b$'s. Since $p$ start with an $a$, a first repetition of $p$ this first $a$ is different from the $b$ at this position in $v_{i+1}$, i.e., $p$ is not a period of $v_{i+1}$. Otherwise, if $\lfloor\frac{|p|}{n+r}\rfloor$ is even (cf.\ Fig.~\ref{fig:repetition:i2}), then the prefix of $p^{-1}v_{i+1}$ of length $|p|$ contains at most one $y_1$-block and this overlaps with a $b^{n+r}$-block. Hence, there is a position in the first repetition of $p$ containing a $b$ which is different from the $a$ at this position in $v_{i+1}$.
-	
-	\begin{figure}[h]
-		\begin{subfigure}{\textwidth}
-			\include{figures/repetition}
-			\subcaption{Case $\left\lfloor\frac{|p|}{n+r}\right\rfloor$ is odd\label{fig:repetition:i1}}
-		\end{subfigure}
-		\begin{subfigure}{\textwidth}
-			\include{figures/repetition2}
-			\subcaption{Case $\left\lfloor\frac{|p|}{n+r}\right\rfloor$ is even\label{fig:repetition:i2}}
-		\end{subfigure}
-		\caption{\label{fig:repetition}}
-	\end{figure}
-	
-	Now, assume $|p|$ is a divisor of $n+r$. Then we can understand the blocks of length $n+r$ as letters of the alphabet $\{b^{n+r},y_1,\dots,y_i\}$. Since there is no $y_i$-block in $v_i$ we have $|p|\geq|v_iy_i|$. Since $p$ starts with $y_1$ and $y_i$ is followed by $b^{n+r}$, $p$ has length at least $|v_ix_i|$.
-	
-	\emph{Proof of (\ref{prf:short_from_skeleton:i2}).}\ By construction, it is easy to see that $\vec{v}=(v_0,\dots,v_n)$ is a border-decomposition of $v=v_n$. We prove now by induction on $0\leq i<n$ that $(v_0,\dots,v_{i+1})$ is a complete border-decomposition of $v_i$. The case $i=0$ is easy to verify since $v_1\in aA^{r-1}b^{2n+r}$. So, let $i\geq1$. Assume there is $u\in A^*$ with $v_i\presuf u\presuf v_{i+1}$. Let $u$ be of minimal length satisfying this inequality. Then there are two possible cases:
-	
-	First, suppose $|u|\geq|v_ix_i|$ holds, i.e., the prefix and suffix $u$ overlap in $v_i$ and the overlap contains at most $x_i$ (cf.\ Fig.~\ref{fig:skeleton}). Let $x,y\in A^*$ such that $u=xx_iv_i=y$. Then we have $|x|=|y|$ and $m:=xx_iy\presuf u$. Hence, by minimality of $u$ we have $|m|\leq|v_i|$ and therefore, by induction hypothesis, $m=v_k$ for some $0< k\leq i$. This implies
-	\[v_{k-1}x_{k-1}v_{k-1}=v_k=m=xx_iy\,.\]
-	Since $|x|=|y|$ and $|x_i|=|x_{k-1}|$ we have $x_i=x_{k-1}$, which is a contradiction to the construction of the $x_i$'s.
-	
-	\begin{figure}[h]
-		\centering\include{figures/skeleton}
-		\caption{\label{fig:skeleton}}
-	\end{figure}
-	
-	Now, suppose $|u|<|v_ix_i|$. If $|u|\geq\frac{|v_{i+1}|}{2}$ (i.e., the prefix and suffix $u$ in $v_i$ overlap) then there is a word $m\in A^*$ such that $m\presuf u$ holds. Hence, by minimality of $u$ and by induction hypothesis we have $m=v_k$ for some $0\leq k\leq i$. Since $|m|<|x_i|=|x_1|$ we have $m=\varepsilon$, i.e., we have $|u|=\frac{|v_{i+1}|}{2}$.
-	
-	Suppose $|u|\leq\frac{|v_{i+1}|}{2}$ (i.e., the prefix and suffix $u$ in $v_i$ do not overlap). Then there is a word $p\in A^*$ such that $v_{i+1}=pu$. Since $u$ is a prefix of $v_{i+1}$ and $|p|>\frac{|v_{i+1}|}{2}$, $u$ also is a prefix of $p$. Hence, $p$ is a period of $v_{i+1}$ and we have
-	\[|p|=|v_{i+1}|-|u|<|v_{i+1}|-|v_i|=|v_ix_i|\,.\]
-	This is a contradiction to property~\ref{prf:short_from_skeleton:i1} stating that $v_ix_i$ is the minimal period of $v_{i+1}$.
-	
-	So, in both cases we have seen that there is no $v_i\presuf u\presuf v_{i+1}$, i.e., $(v_0,\dots,v_{i+1})$ is a complete border-decomposition.
-	
-	Finally, let $0\leq i<n$. Then we have
+Finally, let $0\leq i<n$. Then we have
 	\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
 	for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
 \end{proof}

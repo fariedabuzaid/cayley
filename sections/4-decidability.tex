@@ -1,15 +1,14 @@
 \section{Decidability of the FO-Theory}
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
 In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
-For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
+For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
 $\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the $(\Delta)$-neighborhood of $\vec{p}$ of radius $r$ ($r$-neighborhood). Note that we implicitly add the origin
 of $\frakC$ to $\vec{p}$ when we compute the neighborhood.
 
 Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
 two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$.
 This implies that in order to evaluate a formula $Qx\phi(\vec{p})$ where $\phi$ has quantifier rank $r$ and $Q\in\{\exists,\forall\}$  we can restrict the quantification of $x$ to the $f(r+1)$-neighborhood of $\vec{p}$. Since the
-$r$-neighborhood of each element $p\in \Qx$ is finite and effectively computable for every radius $r$, we can use the above observation to implement a decision procedure for the theory of $\calC$.   
-
+$r$-neighborhood of each element $p\in \Qx$ is finite and effectively computable for every radius $r$, we can use the above observation to implement a decision procedure for the theory of $\frakC$.   
 In order to achieve this goal we exploit the fact that first order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monid is in some sense less local.
 In fact, the neighborhood-structure of an element $p$ does not only depend suffixes of  bounded length of $\rd{p}$ and $\wrt{p}$. We solve this problem via the notion of skeletons. Our proof 
 reveals that   the $r$-type of the $2^{r+1}$-neighborhood of an element $p$ is basically determined by the $(r+1)$-type of the $3\cdot 2^{r+1}$-skeleton of $\rd{p} \sqcap \wrt{p}$. 
@@ -27,18 +26,19 @@ into positions of an $r$-skeleton.
 
 \begin{definition}
 	For $q\in\Qx$ with $|\mddl{q}| \geq r$ let $\cpr_r(q)$ be the element $q'$  with $\wrt{q'} = \wrt{q}$, $\rd{q'}=\rd{q}\suf_{r}({\rd{q}})^{-1}$, and $\mddl{q'} = \mddl{q} \suf_{r}(\mddl{q})^{-1}$.
-	\begin{center}
-	\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
-	\path[draw, fill=red!10] (0,0) rectangle (5,0.25);
-	\path[draw, fill=blue!10] (1.5, 0) rectangle (6.5, -.25);
-	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (2.5, .25) -- node[above, yshift= 5pt] {$r$} (5, .25);
-	\node at (8, 0) {$\mapsto$};
-	\path[draw, fill=red!10] (9.5,0) rectangle (12,0.25);
-	\path[draw, fill=blue!10] (11, 0) rectangle (16, -.25);
-	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (12, .25) -- node[above, yshift= 5pt] {$r$} (14.5, .25);
-	\path[draw, dotted] (12, 0) rectangle (14.5, .25);
-	\end{tikzpicture}
-	\end{center}
+	In other word $\cpr_r$ just cuts the last $r$ read actions.
+%	\begin{center}
+%	\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
+%	\path[draw, fill=red!10] (0,0) rectangle (5,0.25);
+%	\path[draw, fill=blue!10] (1.5, 0) rectangle (6.5, -.25);
+%	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (2.5, .25) -- node[above, yshift= 5pt] {$r$} (5, .25);
+%	\node at (8, 0) {$\mapsto$};
+%	\path[draw, fill=red!10] (9.5,0) rectangle (12,0.25);
+%	\path[draw, fill=blue!10] (11, 0) rectangle (16, -.25);
+%	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (12, .25) -- node[above, yshift= 5pt] {$r$} (14.5, .25);
+%	\path[draw, dotted] (12, 0) rectangle (14.5, .25);
+%	\end{tikzpicture}
+%	\end{center}
 \end{definition}
 
 We describe the way, in which we associate positions in an $r$-skeleton with elements of $\Qx$ and vice versa. 
@@ -54,50 +54,55 @@ We describe the way, in which we associate positions in an $r$-skeleton with ele
 The basic idea behind this definition is to ensure that the neighborhood structure of the elements $p'$ and $q'$ is $\ell$-equivalent. We use this idea to  define a family of  equivalence relations $(E^r_m)_{r,m\in\bbN}$.
 For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} E^r_m \vec{q}$ iff
 \begin{bracketenumerate}
-	\item\label{item:E_suffix} $\suf_{2^{r}}(\rd{p_i}) = \suf_{2^{r}}(\rd{q_i})$ and $\suf_{2^{r}}(\wrt{p_i}) = \suf_{2^{r}}(\wrt{q_i})$ for all $1\leq i\leq m$.
 	\item\label{item:E_distance} $|p_i \Delta p_j| =_{2^r} |q_i\Delta q_j|$ for all $1\leq i, j\leq m$ and if $|p_i\Delta p_j| \leq 2^r$ then also $p_i \Delta p_j = q_i\Delta q_j$. 
-	\item\label{item:E_partition} There is a partition $X_1,\ldots,X_k$ of $\{1,\ldots,m\}$ such that for $X\neq X'\in \{X_1,\ldots,X_k\}$ it holds that: 
+	\item\label{item:E_partition} There is a partition $X_1,\ldots,X_k$ of $\{1,\ldots,m\}$ such that for $X\neq X'\in \{X_1,\ldots,X_k\}$ it holds that with $\text{min} = \min X$: 
 	\begin{alphaenumerate}
-		\item If $i\in X$, $j\in X'$ it holds that $|p_i\Delta p_j| > 2^r$ (and therefore $|q_i\Delta q_j| > 2^r$).
-		\item Let $i= \min X$. Then for all $j\in X$ it holds that $|p_i \Delta p_j| \leq \sum_{s= r+m-i}^{r} 2^s$ (and therefore also $|q_i \Delta q_j| \leq \sum_{s= r+m-i}^{r} 2^s$).
-		\item\label{subitem:E_partition:equivalence} Let $i= \min X$ and let $U$ be the $3\cdot 2^{r+m-i+1}$-skeleton of $\cpr_{2^{r+m-i+2}}(p_i)$ and $V$ be the $3\cdot 2^{r+m-i+1}$-skeleton $\cpr_{2^{r+m-i+2}}(q_i)$. Then for all 
-		$j\in X$ we have that $p_j$ is compatible with $U$ and $q_j$ is compatible with $V$. Further if $m_1,\ldots, m_k$ are the positions in $U$ that are associated with $\{p_j \mid j\in X_i \}$ and $n_1,\ldots, n_k$ are the positions in $U$ that are associated with $\{q_j \mid j\in X_i \}$ then $(V,m_1,\ldots,m_k) \equiv_{r+1} (U,n_1,\ldots,n_k)$.
+		\item\label{item:part_distance} If $i\in X$, $j\in X'$ it holds that $|p_i\Delta p_j| > 2^r$ (and therefore $|q_i\Delta q_j| > 2^r$).
+		\item\label{item:E_suffix} $\suf_{2^{r+m-\text{min}+1}}(\rd{p_i}) = \suf_{2^{r+m-\text{min}+1}}(\rd{q_i})$ and \\$\suf_{2^{r+m-\text{min}+1}}(\wrt{p_i}) = \suf_{2^{r+m-\text{min}}}(\wrt{q_i})$ for all $i\in X$.
+		\item For all $j\in X$ it holds that $|p_\text{min} \Delta p_j| \leq \sum_{s= r}^{r+m-i} 2^s$ (and therefore also $|q_\text{min} \Delta q_j| \leq \sum_{s= r}^{r+m-\text{min}} 2^s$).
+		\item\label{subitem:E_partition:equivalence} Let $U$ be the $3\cdot 2^{r+m-\text{min}+1}$-skeleton of $\cpr_{2^{r+m-\text{min}+2}}(p_\text{min})$ and $V$ be the $3\cdot 2^{r+m-\text{min}+1}$-skeleton $\cpr_{2^{r+m-\text{min}+2}}(q_\text{min})$. Then for all 
+		$j\in X$ we have that either $\mu(p_j) = \mu(q_j)$ or $|\mu(p_j)| \geq 2^{r+m-\text{min}+1}$ and $p_j$ is compatible with $U$ and $q_j$ is compatible with $V$. Further if $m_1,\ldots, m_k$ are the positions in $U$ that are associated with $\{p_j \mid j\in X \}$ and $n_1,\ldots, n_k$ are the positions in $U$ that are associated with $\{q_j \mid j\in X \}$ then $(V,m_1,\ldots,m_k) \equiv_{r+1} (U,n_1,\ldots,n_k)$.
 	\end{alphaenumerate}  
 \end{bracketenumerate} 
-
+We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 \begin{lemma}\label{lem:partial_isomorphism}
 	For all $m\in\bbN_{>0}$ and all $\vec{p},\vec{q} \in \Qx^m$: If $\vec{p} E^0_m \vec{q}$ then the mapping $p_i \mapsto q_i$ is a partial isomorphism.
 \end{lemma}
 \begin{proof}
 	We need to show that $(p_i,p_j)\in E_a \Rightarrow (q_i,q_j)\in E_a$  for all $i,j\leq m$ and all $a\in \Sigma$.
 	Let $\vec{p}, \vec{q} \in \Qx^m$ with $\vec{p} E^0_m \vec{q}$. Suppose  $(p_i,p_j) \in E_a$ for some $a\in\Sigma$. Then $|p_i\Delta p_j| = 1$. Hence $p_i\Delta p_j = q_i\Delta q_j$ by (\ref{item:E_distance}). 
-	Since the distance between $p_i$ and $p_j$ and between $q_i$ and $q_j$ is $1$, there are $2^\ell$-skeletons (for some $\ell \geq m-\min\{i,j\}+2$) $U,V$ such that 
+	Let $X_1,\ldots, X_k$ be the partition from Property \ref{item:E_partition}. Since the distance between $p_i$ and $p_j$ and between $q_i$ and $q_j$ is $1$ we derive from Property (\ref{item:part_distance}) that $i$ and $j$ belong to the same 
+	$X\in\{X_1,\ldots, X_k\}$. Let $\ell = \min X$.
+	If $|\mu(p_i)| < 2^{r -\ell +1}$ then, by Property (\ref{subitem:E_partition:equivalence}) and (\ref{item:E_suffix}), $\mu(p_i) = \mu(q_i)$ and $(p_i, p_j) \in E_a \Leftrightarrow (q_i,q_j) \in E_a$.
+	Otherwise there are $3\cdot2^{r-\ell + 1}$-skeletons $U,V$ such that 
 	$p_i$ and $p_j$ can be translated into positions $m_1, m_2$ in $U$ and $q_i$ and $q_j$ can be translated into position $n_1,n_2$ in $V$ such that $(U,m_1,m_2) \equiv_1 (V,n_1,n_2)$. 
 	There are two possible types of configurations for $p_i$ and $p_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{p_i} = \rd{p_j}$,
 	$\wrt{p_i}a = \wrt{p_j}$, and $\mddl{p_i} = \mddl{p_j}$. In this case $m_1=m_2$ and therefore $n_1=n_2$, which implies that $\rd{q_i} = \rd{q_j}$,
 	$\wrt{q_i}a = \wrt{q_j}$, and $\mddl{q_i} = \mddl{q_j}$. Therefore $(q_i,q_j) \in E_a$.
 	
 	Second, it might be that $\rd{p_i}a = \rd{p_j}$ (where $a=\ov{b}$),
-	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into a formula $\phi$ 
-	on $(U, m_1, m_2)$ of quantifier rank $1$. As $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$, $(V,n_1,n_2) \models \phi$ and therefore $(q_i,q_j)\in E_a$.
+	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into the formula 
+	\[\phi(x_1, x_2) \coloneq x_2 \leq x_1 \land \bigvee_{s\in A^{\leq 3\cdot 2^\ell} : wa\preceq s} P_s(x_2) \land  \forall y: \left(x_2 < y < x_1 \to \bigwedge_{s\in A^{\leq 3\cdot 2^\ell} : wa\preceq s} \lnot P_s(y)\right)  \]
+	of quantifier rank $1$. Hence $U \models \phi(m_1,m_2)$  and since $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$ also $V \models \phi(n_1, n_2)$ and therefore $(q_i,q_j)\in E_a$.
 \end{proof}
 
 In order to prove the main technical lemma we need to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
 \begin{lemma}\label{lem:r-equiv_word_construction}
-	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(2, f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some polynomial $f$.
+	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(2, f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
 \end{lemma}
 \begin{proof}[Proof sketch]
 	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Gamma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
-	$\exp_{r+1}(2, f(r))$ for some suitable polynomial $f$.
+	$\exp_{r+1}(2, f(r))$ where $f(r)$ is an upper bound for the size of the formula $\phi$ (which can be chosen to be primitive recursive).
 \end{proof}
 
 
 \begin{lemma}\label{lem:EF_relations}
 	For all $m,r\in\bbN$ and all $\vec{p},\vec{q}\in \Qx^m$:  
 	\[\vec{p} E^{r+1}_m \vec{q} \Rightarrow \forall p\in \Qx \exists q\in \calN_{\exp_{r+2}(2,f(r))}(\vec{q}): (\vec{p}, p) E^{r}_{m+1} (\vec{q}, q)\]
-	for some polynomial $f$.
+	for some primitive recursive function $f$.
 \end{lemma}
 \begin{proof}
+	Let $f$ be the primitive recursive function from Lemma \ref{lem:r-equiv_word_construction}.
 	Let $\vec{p}, \vec{q} \in \Qx^m$ with $(\vec{p}, \vec{q}) \in E^{r+1}_m$ and 
 	let $X_1,\ldots,X_k$ be a partition of $\{1,\ldots,m\}$ with the properties described in (\ref{item:E_partition}). Further let $X_i(\vec{p}) = \{p_j \mid j\in X_i \}$ and $X_i(\vec{q}) = \{q_j \mid j\in X_i \}$. Consider $p\in \Qx$. We distinguish three cases.
 	If $p$ has distance $\leq 4\exp_{r+2}(2, f(r))$ from $\epsilon$ then we choose $q=p$.
@@ -113,12 +118,19 @@ In order to prove the main technical lemma we need to construct a ``small'' $r$-
 	Let $p'= \cpr_{2^{r+2}}(p)$.  Consider 
 	the $3\cdot 2^{r+1}$-skeleton $V = \calS_{3\cdot 2^{r+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+1}$-skeleton $W$ of length at most $\exp_{r+1}(2,f(r))$. From $W$ we construct the $2^{r+2}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
 	$2^{r+1}$ such that 
+	
+	\begin{minipage}{0.55\linewidth}
 	\begin{itemize}
 		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{p}\suf_{2^{r}}(\rd{p})^{-1} )$,
 		\item $\suf_{2^{r}}(wv) = \suf_{2^{r}}(\wrt{p})$,
-		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{p})$, and
-		\item $uw\sqcap wv = w$.
 	\end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.44\linewidth}
+    	\begin{itemize}
+    		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{p})$, and
+    		\item $uw\sqcap wv = w$.
+    	\end{itemize}
+    \end{minipage}
 	Let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $\wrt{p'}\sqcap \rd{p'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
 	be the index of $\mddl{p'}$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+1}}(p') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{2^{r+2}}(p'), i) \equiv_r (W,j)$.
 	Now let $q$ be the element associated to $j$.
@@ -127,7 +139,7 @@ In order to prove the main technical lemma we need to construct a ``small'' $r$-
 	
 	Finally, if $p$ has distance $\leq 2^{r}$ from some $p_i$ then let $Y\in \{X_1,\ldots,X_k\}$ be such that $i\in Y$ and let $j=\min Y$. Let $U$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(p_j)$ and 
 	$V$ be the $3\cdot 2^{r+m-j+1}$-skeleton of $\cpr_{2^{r+m-j+2}}(q_j)$.
-	\todo{Add: Distance of $p$ to $p_j$ is short} Then $p$ is compatible with $U$. Let $m_1,\ldots,m_\ell$ be the positions in $U$ that are associated with the elements $\{q_s \mid s\in Y\}$, $m_{\ell+1}$ the position in $U$ that is associated with $p$, and $n_1,\ldots,n_\ell$ be the positions associated with $\{q_s \mid s\in Y\}$ in $V$. Since $(U,m_1,\ldots,m_\ell) \equiv_{r+2} (V,n_1,\ldots,n_\ell)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $n_{\ell+1}$ with $(U,m_1,\ldots,m_{\ell+1}) \equiv_{r+1} (V,n_1,\ldots,n_{\ell+1})$. From $n_{\ell+1}$ we compute the associated element $q$
+	Since $|p_i\Delta p_j| \leq \sum_{s=r+1}^{r+m-j} 2^s$ and $|p\Delta p_i| \leq 2^r$ we conclude that $|p\Delta p_j| \leq \sum_{s=r}^{r+m-j} 2^s \leq 2^{r+m-j+1}$. Hence, $p$ is compatible with $U$. Let $m_1,\ldots,m_\ell$ be the positions in $U$ that are associated with the elements $\{q_s \mid s\in Y\}$, $m_{\ell+1}$ the position in $U$ that is associated with $p$, and $n_1,\ldots,n_\ell$ be the positions associated with $\{q_s \mid s\in Y\}$ in $V$. Since $(U,m_1,\ldots,m_\ell) \equiv_{r+2} (V,n_1,\ldots,n_\ell)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $n_{\ell+1}$ with $(U,m_1,\ldots,m_{\ell+1}) \equiv_{r+1} (V,n_1,\ldots,n_{\ell+1})$. From $n_{\ell+1}$ we compute the associated element $q$
 	in the $(\sum_{s= r+m-i}^{r} 2^s)$-neighborhood of $q_j$.
 	\begin{figure}[h]
 		\centering\include{figures/proof_outline}
@@ -166,12 +178,6 @@ The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that
 	$p\Delta q \in (A^{\leq r})^4$ (and therefore fixed $\rd{q}$ and $\wrt{q}$) there are at most $\min\{ |\rd{q}|, |\wrt{q}| \} \leq \min\{ |\rd{p}|, |\wrt{p}| \} + r$ possible values for $\mddl{q}$.
 \end{proof}
 
-\begin{theorem}
+\begin{restatable}{mythm}{decidable}
 	$\FOTh{\frakC}$ is primitive recursive.
-\end{theorem}
-\begin{proof}
-	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
-	We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $r\exp_{r+1}(2,f(r))$
-	Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} r(\exp_{r+1}(2,f(r)) +1)$ many Elements, which leads to a runtime of
-	$|\phi| \cdot (|A|^{4r} r(\exp_{r+1}(2,f(r)) +1))^r$, which is obviously a primitive recursive function. 
-\end{proof}
+\end{restatable}
