@@ -141,8 +141,9 @@ Note that it is convenient for our purpose to consider $\calS_r(w)$ to be a word
 	\end{center}\label{fig:skeletonex}
 \end{example}
 
-By definition the $i$-th element of the border-decomposition of $u\sqcap v$ corresponds to the $i$-th word in the skeleton (which we understand as letter). We will use this correspondence to translate back and forth between 
-an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph of a queue monoid and games played on certain skeletons which are derived from the game played on the Cayley-graph. 
+Skeletons will play a crucial role in Section \ref{sec:decidability}. 
+We will prove the decidability of the Cayley-graph of a queue-monoid by  translating back and forth between 
+an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph (presented as EF-relations) and games played on certain skeletons which are derived from the game played on the Cayley-graph. 
 
 \begin{restatable}{mylem}{instantiation}\label{lem:short_from_skeleton}
 	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$ and $\calS_r(w)=\calS_r(v)$.
