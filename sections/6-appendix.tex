@@ -53,12 +53,17 @@
 		\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
 		for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
 	\end{proof}
+	
+	\msoth*
+	\begin{proof}
+		Due to \cite{RobS84} each planar graph is a minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{G}$ is interpretable in $\FOTh{\cQ}$, $\MSOTh{\cQ}$ is undecidable as well.
+	\end{proof}
 
-\decidable*
-\begin{proof}
-	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
-	We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $r\exp_{r+1}(2,f(r))$
-	Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} r(\exp_{r+1}(2,f(r)) +1)$ many Elements, which leads to a runtime of
-	$|\phi| \cdot (|A|^{4r} r(\exp_{r+1}(2,f(r)) +1))^r$, which is obviously a primitive recursive function. 
-\end{proof}
+	\decidable*
+	\begin{proof}
+		We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
+		We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $r\exp_{r+1}(2,f(r))$
+		Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} r(\exp_{r+1}(2,f(r)) +1)$ many Elements, which leads to a runtime of
+		$|\phi| \cdot (|A|^{4r} r(\exp_{r+1}(2,f(r)) +1))^r$, which is obviously a primitive recursive function. 
+	\end{proof}
 \end{appendix}
