@@ -53,13 +53,10 @@ $r$ and $p$ slightly to circumvent this problem.
 \end{definition}
 
 Another important ingredient of our proof is to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
-\begin{lemma}[\cite{Tho97}]\label{lem:r-equiv_word_construction}
-	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(2, f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
-\end{lemma}
-\begin{proof}[Proof sketch]
-	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Gamma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
-	$\exp_{r+1}(2, f(r))$ where $f(r)$ is an upper bound for the size of the formula $\phi$ (which can be chosen to be primitive recursive).
-\end{proof}
+\begin{restatable}{mylem}{thomaszeug}[\cite{Tho97}]\label{lem:r-equiv_word_construction}
+	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
+\end{restatable}
+
 
 We use this idea to  define a family of  equivalence relations $(\calE^r_m)_{r,m\in\bbN}$.
 For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} \calE^r_m \vec{q}$ iff
@@ -69,10 +66,10 @@ For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} \calE^r_m \vec{q}$
 	\item\label{item:E_partition} There is a partition $X_1,\ldots,X_k$ of $\{1,\ldots,m\}$ such that for $X\neq X'\in \{X_1,\ldots,X_k\}$ it holds that with $\text{min} = \min X$: 
 	\begin{alphaenumerate}
 		\item\label{item:part_distance} If $i\in X$, $j\in X'$ it holds that $|p_i\Delta p_j| > 2^r$ (and therefore $|q_i\Delta q_j| > 2^r$).
-		\item\label{item:E_suffix} $\suf_{2^{r+m+1}}(\rd{p_i}) = \suf_{2^{r+m+1}}(\rd{q_i})$ and \\$\suf_{2^{r+m+1}}(\wrt{p_i}) = \suf_{2^{r+m}}(\wrt{q_i})$ for all $i\in X$.
+		\item\label{item:E_suffix} $\suf_{2^{r+m+2}}(\rd{p_i}) = \suf_{2^{r+m+2}}(\rd{q_i})$ and \\$\suf_{2^{r+m+2}}(\wrt{p_i}) = \suf_{2^{r+m+2}}(\wrt{q_i})$ for all $i\in X$.
 		\item For all $j\in X$ it holds that $|p_\text{min} \Delta p_j| \leq \sum_{s= r}^{r+m} 2^s$ (and therefore also $|q_\text{min} \Delta q_j| \leq \sum_{s= r}^{r+m} 2^s$).
 		\item\label{subitem:E_partition:equivalence} Let $U$ be the $3\cdot 2^{r+m+1}$-skeleton of $\cpr_{2^{r+m+2}}(p_\text{min})$ and $V$ be the $3\cdot 2^{r+m+1}$-skeleton $\cpr_{2^{r+m+2}}(q_\text{min})$. Then for all 
-		$j\in X$ we have that either $\mu(p_j) = \mu(q_j)$ or $|\mu(p_j)| \geq 2^{r+m+1}$ and $p_j$ is compatible with $U$ and $q_j$ is compatible with $V$. Further if $m_1,\ldots, m_k$ are the positions in $U$ that are associated with $\{p_j \mid j\in X \}$ and $n_1,\ldots, n_k$ are the positions in $U$ that are associated with $\{q_j \mid j\in X \}$ then $(V,m_1,\ldots,m_k) \equiv_{r+1} (U,n_1,\ldots,n_k)$.
+		$j\in X$ we have that either $\mu(p_j) = \mu(q_j)$ or $|\mu(p_j)| \geq 2^{r+m+2}$ and $p_j$ is compatible with $U$ and $q_j$ is compatible with $V$. Further if $m_1,\ldots, m_k$ are the positions in $U$ that are associated with $\{p_j \mid j\in X \}$ and $n_1,\ldots, n_k$ are the positions in $U$ that are associated with $\{q_j \mid j\in X \}$ then $(V,m_1,\ldots,m_k) \equiv_{r+1} (U,n_1,\ldots,n_k)$.
 	\end{alphaenumerate}  
 \end{bracketenumerate} 
 We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
@@ -84,7 +81,7 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	Let $\vec{p}, \vec{q} \in \Qx^m$ with $\vec{p} \calE^0_m \vec{q}$. Suppose  $(p_i,p_j) \in E_a$ for some $a\in\Sigma$. Then $|p_i\Delta p_j| = 1$. Hence $p_i\Delta p_j = q_i\Delta q_j$ by (\ref{item:E_distance}). 
 	Let $X_1,\ldots, X_k$ be the partition from Property \ref{item:E_partition}. Since the distance between $p_i$ and $p_j$ and between $q_i$ and $q_j$ is $1$ we derive from Property (\ref{item:part_distance}) that $i$ and $j$ belong to the same 
 	$X\in\{X_1,\ldots, X_k\}$. Let $\ell = \min X$.
-	If $|\mu(p_i)| < 2^{m  +1}$ then, by Property (\ref{subitem:E_partition:equivalence}) and (\ref{item:E_suffix}), $\mu(p_i) = \mu(q_i)$. In this case $(p_i, p_j) \in E_a \Leftrightarrow (q_i,q_j) \in E_a$  obviously holds.
+	If $|\mu(p_i)| < 2^{m  +2}$ then, by Property (\ref{subitem:E_partition:equivalence}) and (\ref{item:E_suffix}), $\mu(p_i) = \mu(q_i)$. In this case $(p_i, p_j) \in E_a \Leftrightarrow (q_i,q_j) \in E_a$  obviously holds.
 	Otherwise there are $3\cdot2^{m + 1}$-skeletons $U,V$ such that 
 	$p_i$ and $p_j$ can be translated into positions $m_1, m_2$ in $U$ and $q_i$ and $q_j$ can be translated into position $n_1,n_2$ in $V$ such that $(U,m_1,m_2) \equiv_1 (V,n_1,n_2)$. 
 	There are two possible types of configurations for $p_i$ and $p_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{p_i} = \rd{p_j}$,
@@ -92,7 +89,7 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	$\wrt{q_i}a = \wrt{q_j}$, and $\mddl{q_i} = \mddl{q_j}$. Therefore $(q_i,q_j) \in E_a$.
 	
 	Second, it might be that $\rd{p_i}a = \rd{p_j}$ (where $a=\ov{b}$),
-	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into the formula of quantifier rank $1$. Let $(w_0,\ldots, w_n)$ be the complete border-decomposition of $\cpr_{2^{m+2}}(p_\ell)$ and $v:= w_{m_1}^{-1}\mddl{p_1} \in A^{\leq 3\cdot 2^{m+1}}$. Then
+	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into the formula of quantifier rank $1$. Let $(w_0,\ldots, w_n)$ be the complete border-decomposition of $\cpr_{2^{m+2}}(p_\ell)$ and $v:= w_{m_1}^{-1}\mddl{p_i} \in A^{\leq 3\cdot 2^{m+1}}$. Then
 	\[\phi(x_1, x_2) \coloneq x_2 \leq x_1 \land \bigvee_{s\in A^{\leq 3\cdot 2^{m+1}} : (va)\preceq s} P_s(x_2) \land  \forall y: \left(x_2 < y < x_1 \to \bigwedge_{s\in A^{\leq 3\cdot 2^{m+1}} : va\preceq s} \lnot P_s(y)\right) . \]
 	 Hence $U \models \phi(m_1,m_2)$  and since $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$ also $V \models \phi(n_1, n_2)$ and therefore $(q_i,q_j)\in E_a$.
 \end{proof}
@@ -100,8 +97,8 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 
 \begin{lemma}\label{lem:EF_relations}
 	For all $m,r\in\bbN$ and all $\vec{p},\vec{q}\in \Qx^m$:  
-	\[\vec{p} \calE^{r+1}_m \vec{q} \Rightarrow \forall p\in \Qx \exists q\in \calN_{\exp_{r+2}(2,f(r+1))}(\vec{q}): (\vec{p}, p) \calE^{r}_{m+1} (\vec{q}, q)\]
-	for some primitive recursive function $f$.
+	\[\vec{p} \calE^{r+1}_m \vec{q} \Rightarrow \forall p\in \Qx \exists q\in \calN_{\exp_{r+3}(g(r+m))}(\vec{q}): (\vec{p}, p) \calE^{r}_{m+1} (\vec{q}, q)\]
+	for some primitive recursive function $g$.
 \end{lemma}
 \begin{proof}
 	Let $f$ be the primitive recursive function from Lemma \ref{lem:r-equiv_word_construction}.
@@ -113,32 +110,33 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	
 	From now on suppose $p$ has distance $> 4\exp_{r+2}(2, f(r))$ from $\epsilon$.
 	We consider the case that $p$ has distance $>2^r$ from every $p_i$.
-	Since the distance from $\epsilon$ is exactly $|\strt{p}| + 2|\mddl{p}| + |\rght{p}|$ it follows that $|\strt{p}| > \exp_{r+2}(2,f(r))$ or $|\mddl{p}| > \exp_{r+2}(2,f(r))$ or $|\rght{p}| > \exp_{r+2}(2,f(r))$. 
+	Since the distance from $\epsilon$ is exactly $|\strt{p}| + 2|\mddl{p}| + |\rght{p}|$ it follows that $|\strt{p}| > \exp_{r+2}(f(r))$ or $|\mddl{p}| > \exp_{r+2}(f(r))$ or $|\rght{p}| > \exp_{r+2}(f(r))$. 
 	%	 If $|\lambda(a)| > 2^r$ then we choose a $v\in \Sigma^\ast$ such that  
 	%    $\rd{a}\suf_{2^{r}}(\rd{a})^{-1} \sqcap \wrt{a} = v\,\rd{a}\suf_{2^{r}}(v\,\rd{a})^{-1} \sqcap \wrt{b}$. If $x$ is the first letter of $\wrt{a}$ then we can choose $v= y^\ell$ for some $y\neq x$ and some $\ell\in\bbN$. 
 	%    Let $b_\ell$ be the element with $\rd{b_\ell} = y^\ell \rd{a}$, $\wrt{b_\ell} = \wrt{a}$, and $\mu(b) = \mu(a)$.
 	%    As there are only $m$ other elements chosen so far, we can choose $\ell$ large enough so that the element $b$ has distance $>2^{r}$ from every $b_i$ and from $\epsilon$. If   
 %	Basically, we want to use the $3\cdot 2^{r+1}$-skeleton of $p$ to construct a suitable answer $q$. However, we need to cut the last $2^{r+1}$ read actions in order to avoid certain problems that would occur if we want to translate elements in close proximity to $p$ into positions of the $3\cdot 2^{r+1}$-skeleton.   
 	Let $p'= \cpr_{2^{r+m+2}}(p)$.  Consider 
-	the $3\cdot 2^{r+m+1}$-skeleton $V = \calS_{3\cdot 2^{r+m+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+m+1}$-skeleton $W$ of length at most $\exp_{r+2}(2,f(r+1))$ with $V \equiv_{r+1} W$. From $W$ we construct the $3\cdot 2^{r+m+1}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
-	$2^{r+1}$ such that 
+	the $3\cdot 2^{r+m+1}$-skeleton $V = \calS_{3\cdot 2^{r+m+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can find a $3\cdot 2^{r+m+1}$-skeleton $W$ of length at most $(m+1)\exp_{r+2}(f(r+1))$ with $V \equiv_{r+1} W$ and $3\cdot 2^{r+m+1}$-instantiation $w$ with $|w|\leq  c\cdot 2^{(m+1)\exp_{r+2}(f(r+1)) \cdot 3\cdot 2^{r+m+1}}  \leq \exp_{r+3}(g(r+m))$ (for a suitable primitive recursive function $g$). Using Lemma \ref{lem:short_ends_construction}, words $u,v$ of length at most 
+	$(m+1)2^{r+m+3}$ such that 
 	
-	\begin{minipage}{0.55\linewidth}
+	\begin{minipage}{0.6\linewidth}
 	\begin{itemize}
-		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{p}\suf_{2^{r}}(\rd{p})^{-1} )$,
-		\item $\suf_{2^{r}}(wv) = \suf_{2^{r}}(\wrt{p})$,
+		\item $\suf_{2^{r+m+2}}(uw) =$ \\$\suf_{2^{r+m+2}}(\rd{p}\suf_{2^{r+m+2}}(\rd{p})^{-1} )$
+		\item $\suf_{2^{r+m+2}}(wv) = \suf_{2^{r+m+2}}(\wrt{p})$
 	\end{itemize}
     \end{minipage}
-    \begin{minipage}{0.44\linewidth}
+    \begin{minipage}{0.4\linewidth}
     	\begin{itemize}
-    		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{p})$, and
+    		\item $\pref_{2^{r+m+2}}(wv) =$\\ $\pref_{2^{r+m+2}}(\wrt{p})$
     		\item $uw\sqcap wv = w$
     	\end{itemize}
     \end{minipage}
-    such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_1$.
-	Let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $\wrt{p'}\sqcap \rd{p'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
+    such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_i$.
+    We choose to $q$ to be such an element $x$. It remains to specify $\mddl{x}$. if $|\mddl{p}| \leq 2^{r+m+2}$ then choose $\mu(q) = \mu(p)$. Otherwise
+	Let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $p'$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
 	be the index of $\mddl{p'}$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+m+1}}(p') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{3\cdot 2^{r+m+1}}(p'), i) \equiv_r (W,j)$.
-	Now let $q$ be the element associated to $j$. Finally extend the partition by $X_{k+1} = \{m+1\}$.
+	Now choose $\mu(q) = w_j$. Finally extend the partition by $X_{k+1} = \{m+1\}$.
 	
 	%As the tuples $(\vec{a}, a)$ and $(\vec{a},b)$ fulfill the precondition of Lemma \ref{lem:EF_relations}, we can derive that the two tuples are $r$-equivalent. 
 	
@@ -156,7 +154,7 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that $\calE^r_m$-equivalent tuples are also $r$-equivalent.
 
 \begin{corollary}\label{cor:equivalence}
-	For all $\vec{p}\in \Qx^m$, $p\in \Qx$, and $r\in\bbN$ there exists an element $q\in \calN_{\exp_{r+2}(2,f(r))}(\vec{p})$ with $(\frakC, \vec{p}, p) \equiv_r (\frakC,\vec{p}, q)$ for some polynomial~$f$.
+	For all $\vec{p}\in \Qx^m$, $p\in \Qx$, and $r\in\bbN$ there exists an element $q\in \calN_{\exp_{r+3}(g(r+m))}(\vec{p})$ with $(\frakC, \vec{p}, p) \equiv_r (\frakC,\vec{p}, q)$ for some polynomial~$f$.
 \end{corollary}
 %\begin{lemma}
 %	There is a primitive-recursive function $f\colon \bbN \to \bbN$ such that for all $r\in\bbN_{>0}$, all $m$-tuples $\vec{a}\in C^m$, and all $a\in C$ there exists a $b \in \calN_{f(r)}(\vec{a})$ such that $(\calC, \vec{a}, a) \equiv_r (\calC, \vec{a}, b)$

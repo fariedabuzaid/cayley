@@ -58,6 +58,12 @@
 	\begin{proof}
 		Due to \cite{RobS84} each planar graph is a minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{G}$ is interpretable in $\FOTh{\cQ}$, $\MSOTh{\cQ}$ is undecidable as well.
 	\end{proof}
+  
+  \thomaszeug*
+  \begin{proof}[Proof sketch]
+  	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Gamma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
+  	$\exp_{r+1}(2, f(r))$ where $f(r)$ is an upper bound for the size of the formula $\phi$ (which can be chosen to be primitive recursive).
+  \end{proof}
 
    \begin{restatable}{mylem}{neighborhoodsize}\label{lem:neighborhood_size}
    	For every $p\in \Qx$ and every $r$ there are at most $|A|^{4r} (\min\{|\rd{p}|, |\wrt{p}|\} + r)$ many elements in the $r$-neighborhood of a node $p\in \Qx$. 
@@ -70,8 +76,8 @@
 	\decidable*
 	\begin{proof}
 		We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
-		We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $r\exp_{r+1}(2,f(r))$
-		Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} r(\exp_{r+1}(2,f(r)) +1)$ many Elements, which leads to a runtime of
-		$|\phi| \cdot (|A|^{4r} r(\exp_{r+1}(2,f(r)) +1))^r$, which is obviously a primitive recursive function. 
+		We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $\exp_{r+3}(g(r+m))$
+		Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} (\exp_{r+3}(g(r+m)) +1)$ many Elements, which leads to a runtime of
+		$|\phi| \cdot (|A|^{4r} (\exp_{r+3}(g(r+m)) +1))^r$, which is obviously a primitive recursive function. 
 	\end{proof}
 \end{appendix}
