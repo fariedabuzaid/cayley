@@ -33,7 +33,7 @@ the following is true for all $r,m\in\bbN$ and $\vec{p},\vec{q} \in V^m$:
 \end{itemize}
 
 Ehrenfeucht-Fra\"\i{}ss\'e-relations are useful to identify $r$-equivalent tuples in a graph. This is formalized in the following theorem.
-\begin{theorem}[\!\!\cite{Ehr61}]
+\begin{theorem}[\!\!\cite{Fra54,Ehr61}]
 	Let $G$ be a graph, $(\calE^r_m)_{r,m\in\bbN}$ Ehrenfeucht-Fra\"\i{}ss\'e-relations for $G$, and $\vec{p}, \vec{q}$ $m$-tuples of nodes from $G$. If $\vec{p} \calE^r_m \vec{q}$ then 
 	$\vec{p} \equiv_r \vec{q}$.
 \end{theorem} 
@@ -47,7 +47,7 @@ In a first lemma we prove that the complementary prefix and suffix of $u$ resp.~
 
 \begin{lemma}\label{lem:short_ends_construction}
 	Let $r\in\bbN$ and $u,v,w \in A^\ast$ with $uw\sqcap wv = w$. %such that the period of $w$ has length at least $2$. 
-	Then there are words $u',v'$ of length $\calO(r)$ such that 
+	Then there are words $u',v'$ of length $\leq 2r$ such that 
 	
 	\begin{minipage}{0.45\linewidth}
 	\begin{itemize}
@@ -121,7 +121,7 @@ From the complete border-decomposition of a word~$w$ we derive the so called ske
 	\begin{figure}[H]
 	\begin{center}
 		\input{figures/skeleton-def.tex}
-	\end{center}\label{fid:sekeltondef}\caption{Definition of $\calS_r(w).$}
+	\end{center}\label{fig:skeletondef}\caption{Definition of $\calS_r(w).$}
     \end{figure}
 \end{definition}
 Note that it is convenient for our purpose to consider $\calS_r(w)$ to be a word over an alphabet, which in itself consists of words of bounded length rather than to consider $\calS_r(w)$ as a sequence of words.
@@ -155,8 +155,8 @@ an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph (presented as EF
 	
 	One can show the following two properties:
 	\begin{alphaenumerate}
-		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and\label{prf:short_from_skeleton:i1}
-		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.\label{prf:short_from_skeleton:i2}
+		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and
+		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.
 	\end{alphaenumerate}
 Finally, let $0\leq i<n$. Then we have
 	\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
