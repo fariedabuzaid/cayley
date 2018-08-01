@@ -1,0 +1,168 @@
+\documentclass[a4paper,numberwithinsect,USenglish]{lipics-v2018}
+
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{stmaryrd}
+\usepackage{hyperref}
+\usepackage{amsopn}
+\usepackage{mathtools}
+\usepackage{algpseudocode}
+\usepackage{cite}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{mathabx}
+\usepackage{float}
+
+\usetikzlibrary{decorations,arrows,snakes}
+
+
+%opening
+\title{The Cayley-Graph of the Queue Monoid: Logic and Decidability}
+\titlerunning{The Cayley-Graph of the Queue Monoid: Logic and Decidability}
+
+\author{Faried Abu Zaid}{Technische Universität Ilmenau, Automata and Logics Group}{faried.abu-zaid@tu-ilmenau.de}{}{}
+\author{Chris Köcher}{Technische Universität Ilmenau, Automata and Logics Group}{chris.koecher@tu-ilmenau.de}{https://orcid.org/0000-0003-4575-9339}{}
+\authorrunning{F. Abu Zaid, C. Köcher}
+
+\Copyright{Faried Abu Zaid, Chris Köcher}
+
+\subjclass{Theory of computation $\rightarrow$ Logic, Theory of computation $\rightarrow$ Models of computation, Information systems $\rightarrow$ Data structures}
+\keywords{Queues, Transformation Monoid, Cayley-Graph, Logic, First-Order Theory, MSO Theory, Model Checking}
+
+%\funding{Partially supported by the DFG-Project ``Speichermechanismen als Monoide'', KU 1107/9-1.}
+
+
+%theorems
+\theoremstyle{plain}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{remark}
+\newtheorem*{notation}{Notation}
+
+\makeatletter
+\newcommand{\@abbrev}[3]{
+	\def\c@a@def##1{
+		\if ##1.
+		\relax
+		\else
+		\@ifdefinable{\@nameuse{#1##1}}{\@namedef{#1##1}{#2##1}}
+		\expandafter\c@a@def
+		\fi
+	}
+	\c@a@def #3.
+}
+
+
+\@abbrev{bb}{\mathbb}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\@abbrev{bf}{\mathbf}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{bit}{\boldsymbol}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{cal}{\mathcal}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\@abbrev{frak}{\mathfrak}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{rm}{\mathrm}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{scr}{\mathscr}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\@abbrev{sf}{\mathsf}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{ov}{\ov}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\makeatother
+
+% Math Operators, Abbreviations for certain Logic etc.
+\DeclareMathOperator{\code}{code}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tower}{tower}
+\DeclareMathOperator{\bin}{bin}
+\DeclareMathOperator{\un}{un}
+\DeclareMathOperator{\lexp}{lexp}
+\DeclareMathOperator{\rexp}{rexp}
+\DeclareMathOperator{\pref}{pref}
+\DeclareMathOperator{\suf}{suf}
+\DeclareMathOperator{\cpr}{rc}
+%definitions
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\classfont}[1]{\mathsf{#1}}
+\newcommand{\nf}{\classfont{nf}}
+\newcommand{\ol}{\classfont{ol}}
+\newcommand{\NF}{\classfont{NF}}
+\newcommand{\einschr}[2]{\ensuremath{#1|_{#2}}}
+\newcommand{\partition}[2]{\ensuremath{#1/_{\!#2}}}
+
+\newcommand{\shuffle}[2]{\!\left\langle#1,\ov{#2}\right\rangle\!}
+\newcommand{\rd}[1]{\mathsf{rd}(#1)}
+\newcommand{\wrt}[1]{\mathsf{wrt}(#1)}
+
+\newcommand{\strt}[1]{\ov{\pi}_1(#1)}
+\newcommand{\shffl}[1]{\ov{\pi}_2(#1)}
+
+\newcommand{\nfx}[2][]{\nf_{#1}(#2)}
+\newcommand{\NFx}[1][]{\NF_{#1}}
+\newcommand{\olx}[3][]{\ol_{#1}\!\left(#2,#3\right)}
+\newcommand{\equivx}[1][]{\equiv_{#1}}
+\newcommand{\Qx}{\calQ}
+\newcommand{\transx}[1][]{\vdash_{#1}}
+\newcommand{\opx}[1][]{\circ_{#1}}
+\newcommand{\Rx}[1][]{\mathcal{R}_{#1}}
+\newcommand{\leqx}[1][]{\leq_{#1}}
+\newcommand{\teilwx}[1][]{\preceq_{#1}}
+
+\newcommand{\chr}[1]{\chi(#1)}
+\newcommand{\Chr}[1]{\Chi}
+
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\wrti}[1]{\inv{\mathsf{wrt}}\!\left(#1\right)}
+\newcommand{\rdi}[1]{\inv{\mathsf{rd}}\!\left(#1\right)}
+
+\newcommand{\FO}{\classfont{FO}}
+\newcommand{\MSO}{\classfont{MSO}}
+\newcommand{\FOQ}{\FO[(E_\alpha)_{\alpha\in\varSigma}]}
+\newcommand{\MSOQ}{\MSO[(E_\alpha)_{\alpha\in\varSigma}]}
+
+\newcommand{\lft}[1]{\lambda(#1)}
+\newcommand{\mddl}[1]{\mu(#1)}
+\newcommand{\rght}[1]{\varrho(#1)}
+
+\newcommand{\cayley}[2]{\frakC(#1,#2)}
+\newcommand{\lcayley}[2]{\mathfrak{LC}(#1,#2)}
+\newcommand{\cQ}{\frakC}
+\newcommand{\lcQ}{\mathfrak{LC}}
+\newcommand{\FOTh}[1]{\classfont{FOTh}(#1)}
+\newcommand{\MSOTh}[1]{\classfont{MSOTh}(#1)}
+\newcommand{\grL}{\mathcal{L}}
+\newcommand{\grR}{\mathcal{R}}
+\newcommand{\presuf}{\mathbin{\substack{{\prec}\\{\sqsubsetneq}}}}
+\newcommand{\ud}[1]{\mathsf{ud}(#1)}
+
+\newcommand{\leqlog}{\leq_{\operatorname{log}}}
+\newcommand{\eqlog}{\approx_{\operatorname{log}}}
+
+\renewcommand{\root}[1]{\sqrt{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\rho}{\varrho}
+\renewcommand{\Gamma}{\varGamma}
+\renewcommand{\Sigma}{\varSigma}
+
+
+\begin{document}
+	\maketitle
+
+	\begin{abstract}
+		\input{sections/0-abstract}
+	\end{abstract}
+
+%	\input{sections/1-introduction}
+%	\input{sections/2-preliminaries}
+%	\input{sections/3-queuemonoid}
+%	\input{sections/4-decidability}
+%	\input{sections/5-conclusion}
+%
+%	\bibliographystyle{plainurl}
+%	\bibliography{sections/lit}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

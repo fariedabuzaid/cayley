@@ -1,15 +1,15 @@
 \section{Decidability of the FO-Theory}\label{sec:decidability}
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
 In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
-For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
-$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the $(\Delta)$-neighborhood of $\vec{p}$ of radius $r$ ($r$-neighborhood). Note that we implicitly add the origin
+For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the \emph{($\Delta$-)distance} of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
+$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the \emph{$(\Delta-)$neighborhood} of $\vec{p}$ of radius $r$ (\emph{$r$-neighborhood}). Note that we implicitly add the origin
 of $\frakC$ to $\vec{p}$ when we compute the neighborhood. Moreover we define the notion of a border-decomposition and an $r$-skeleton for an element $p\in\Qx$ as the border-decomposition and the $r$-skeleton of $\rd{p} \sqcap \wrt{p}$.
 
 Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
 two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$.
 This implies that in order to evaluate a formula $Qx\phi(\vec{p})$ where $\phi$ has quantifier rank $r$ and $Q\in\{\exists,\forall\}$  we can restrict the quantification of $x$ to the $f(r+1)$-neighborhood of $\vec{p}$. Since the
 $r$-neighborhood of each element $p\in \Qx$ is finite and effectively computable for every radius $r$, we can use the above observation to implement a decision procedure for the theory of $\frakC$.   
-In order to achieve this goal we exploit the fact that first order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monid is in some sense less local.
+In order to achieve this goal we exploit the fact that first-order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monid is in some sense less local.
 In fact, the neighborhood-structure of an element $p$ does not only depend suffixes of  bounded length of $\rd{p}$ and $\wrt{p}$ (as it would be the case for instance for the direct product of two free monids). We solve this problem via the notion of skeletons. Our proof 
 reveals that   the $r$-type of the $2^{r+1}$-neighborhood of an element $p$ is basically determined by the $(r+1)$-type of the $3\cdot 2^{r+1}$-skeleton of $\rd{p} \sqcap \wrt{p}$. This will be the core
 of our proof.
@@ -23,12 +23,12 @@ Let us start off by making some technical preparations in order to formulate the
 Intuitively, $q$ being compatible to an $r$-skeleton $V$ means that we can obtain an element
 $q'$ with $r$-skeleton $V$ by deleting up to $r$ many read actions and modifying the write
 actions arbitrarily up to distance $r$. We use this notion in order to translate elements of the Cayley-graph
-into positions of an $r$-skeleton. Next we describe how we translate back and forth between elements of the Caley-graph an positions in a skeleton.
-However we can not guarantee that every element in close proximity to a given element $p$ can be associated with a position in the $r$-skeleton of $p$ because small changes to the read and write actions might change the border decomposition dramatically. But we can modify
+into positions of an $r$-skeleton. Next we describe how we translate back and forth between elements of the Cayley-graph an positions in a skeleton.
+However we can not guarantee that every element in close proximity to a given element $p$ can be associated with a position in the $r$-skeleton of $p$ because small changes to the read and write actions might change the border-decomposition dramatically. But we can modify
 $r$ and $p$ slightly to circumvent this problem.  
 \begin{definition}
 	For $q\in\Qx$ with $|\rd{q}| \geq r$ let $\cpr_r(q)$ be the element $q'$  with $\wrt{q'} = \wrt{q}$, $\rd{q'}=\rd{q}\suf_{r}({\rd{q}})^{-1}$, and $\mu({q'}) = \rd{q'} \sqcap \wrt{q'}$.
-	In other word $\cpr_r$ just cuts the last $r$ read actions and pushes read and write actions as as far together as possible. 
+	In other word $\cpr_r$ just cuts the last $r$ read actions and pushes read and write actions as far together as possible. 
 	%	\begin{center}
 	%	\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
 	%	\path[draw, fill=red!10] (0,0) rectangle (5,0.25);
@@ -43,7 +43,7 @@ $r$ and $p$ slightly to circumvent this problem.
 	%	\end{center}
 \end{definition}
 \begin{definition}
-	Let $p,q\in \Qx$ and let $U$ and $V$ be the $3r$-skeletons of $\cpr_{2r}(p)$ and $\cpr_{2r}(q)$ respectively. If we suppose that $(m_1,\ldots,m_k)$ are positions in $V$ and $(n_1,\ldots,n_k)$ are positions in $U$ such that $(U,m_1,\ldots,m_k) \equiv_{\ell} (V,n_1,\ldots,n_k)$ for some $\ell \geq 1$. For $p'\in \Qx$ with $|p'\Delta p| \leq r$ and $|\mu(p')| \geq 2r$ we associate a position $m_{k+1}$ in $U$ as follows:
+	Let $p,q\in \Qx$ and let $U$ and $V$ be the $3r$-skeletons of $\cpr_{2r}(p)$ and $\cpr_{2r}(q)$, respectively. If we suppose that $(m_1,\ldots,m_k)$ are positions in $V$ and $(n_1,\ldots,n_k)$ are positions in $U$ such that $(U,m_1,\ldots,m_k) \equiv_{\ell} (V,n_1,\ldots,n_k)$ for some $\ell \geq 1$. For $p'\in \Qx$ with $|p'\Delta p| \leq r$ and $|\mu(p')| \geq 2r$ we associate a position $m_{k+1}$ in $U$ as follows:
 	Let $(u_1,\ldots, u_m)$ be the complete border-decomposition of $\rd{\cpr_{2r}(p)}$ and $(v_1,\ldots,v_n)$ be the complete border-decomposition of $\rd{\cpr_{2r}(q)}$. As $p'$ has distance at most $r$ from $p$ we have that $\rd{p'} = \rd{\cpr_{2r}(p)}x$
 	for some $x\in A^{\leq 2r}$. Therefore there is an $i\leq m$ such that $\mddl{p'} = u_ix$. Then $i$ is the position that is associated with $p'$.
 	
@@ -52,10 +52,12 @@ $r$ and $p$ slightly to circumvent this problem.
 	$\mddl{q'} = v_{m_{k+1}}u_{n_{k+1}}^{-1}\mddl{p'}$. Note that $q'$ is well defined since $V[j]$ is labeled by $\pref_{2^{r+2}}(u_i^{-1}\mddl{p})$. Therefore $v_j\pref_{2^{r+1}}(v_i^{-1}\mddl{p})$ is a prefix of $\wrt{q'}$ by construction.
 \end{definition}
 
+
 Another important ingredient of our proof is to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
-\begin{restatable}{mylem}{thomaszeug}[\cite{Tho97}]\label{lem:r-equiv_word_construction}
+\begin{restatable}{mylem}{thomaszeug}[\!\!\cite{Tho97}]\label{lem:r-equiv_word_construction}
 	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
 \end{restatable}
+
 
 
 We use this idea to  define a family of  equivalence relations $(\calE^r_m)_{r,m\in\bbN}$.
@@ -120,17 +122,19 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	the $3\cdot 2^{r+m+1}$-skeleton $V = \calS_{3\cdot 2^{r+m+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can find a $3\cdot 2^{r+m+1}$-skeleton $W$ of length at most $(m+1)\exp_{r+2}(f(r+1))$ with $V \equiv_{r+1} W$ and $3\cdot 2^{r+m+1}$-instantiation $w$ with $|w|\leq  c\cdot 2^{(m+1)\exp_{r+2}(f(r+1)) \cdot 3\cdot 2^{r+m+1}}  \leq \exp_{r+3}(g(r+m))$ (for a suitable primitive recursive function $g$). Using Lemma \ref{lem:short_ends_construction}, words $u,v$ of length at most 
 	$(m+1)2^{r+m+3}$ such that 
 	
+
 	\begin{minipage}{0.6\linewidth}
-	\begin{itemize}
+	\begin{enumerate}
 		\item $\suf_{2^{r+m+2}}(uw) =$ \\$\suf_{2^{r+m+2}}(\rd{p}\suf_{2^{r+m+2}}(\rd{p})^{-1} )$
 		\item $\suf_{2^{r+m+2}}(wv) = \suf_{2^{r+m+2}}(\wrt{p})$
-	\end{itemize}
+	\end{enumerate}
     \end{minipage}
     \begin{minipage}{0.4\linewidth}
-    	\begin{itemize}
+    	\begin{enumerate}
+    		\addtocounter{enumi}{2}
     		\item $\pref_{2^{r+m+2}}(wv) =$\\ $\pref_{2^{r+m+2}}(\wrt{p})$
     		\item $uw\sqcap wv = w$
-    	\end{itemize}
+    	\end{enumerate}
     \end{minipage}
     such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_i$.
     We choose to $q$ to be such an element $x$. It remains to specify $\mddl{x}$. if $|\mddl{p}| \leq 2^{r+m+2}$ then choose $\mu(q) = \mu(p)$. Otherwise
@@ -146,7 +150,7 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	in the $(\sum_{s= r+m}^{r} 2^s)$-neighborhood of $q_j$.
 	\begin{figure}[h]
 		\centering\include{figures/proof_outline}
-		\caption{\label{fig:skeleton}Construction of $q$ from $p$ using $U$ and $V$.}
+		\caption{\label{fig:construction}Construction of $q$ from $p$ using $U$ and $V$.}
 	\end{figure}
 	The construction of $q$ ensures that Properties (\ref{item:E_suffix}) to (\ref{item:E_partition}) are fulfilled for $(\vec{p}, p)$ and $(\vec{q}, q)$ by adding $\ell+1$ to $Y$. Hence $(\vec{p}, p) \calE^r_m (\vec{q}, q)$.
 \end{proof}
