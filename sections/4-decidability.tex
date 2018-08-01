@@ -2,7 +2,7 @@
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
 In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
 For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the ($\Delta$-)distance of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
-$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the $(\Delta)$-neighborhood of $\vec{p}$ of radius $r$ ($r$-neighborhood). Note that we implicitly add the origin
+$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the $(\Delta-)$neighborhood of $\vec{p}$ of radius $r$ ($r$-neighborhood). Note that we implicitly add the origin
 of $\frakC$ to $\vec{p}$ when we compute the neighborhood. Moreover we define the notion of a border-decomposition and an $r$-skeleton for an element $p\in\Qx$ as the border-decomposition and the $r$-skeleton of $\rd{p} \sqcap \wrt{p}$.
 
 Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
@@ -123,17 +123,18 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	the $3\cdot 2^{r+m+1}$-skeleton $V = \calS_{3\cdot 2^{r+m+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can construct a $3\cdot 2^{r+m+1}$-skeleton $W$ of length at most $\exp_{r+2}(2,f(r+1))$ with $V \equiv_{r+1} W$. From $W$ we construct the $3\cdot 2^{r+m+1}$-instantiation $w$. Using Lemma \ref{lem:short_ends_construction} we can choose words $u,v$ of length at most 
 	$2^{r+1}$ such that 
 	
-	\begin{minipage}{0.55\linewidth}
-	\begin{itemize}
+	\begin{minipage}{0.54\linewidth}
+	\begin{enumerate}[(i)]
 		\item $\suf_{2^{r}}(uw) = \suf_{2^{r}}(\rd{p}\suf_{2^{r}}(\rd{p})^{-1} )$,
 		\item $\suf_{2^{r}}(wv) = \suf_{2^{r}}(\wrt{p})$,
-	\end{itemize}
+	\end{enumerate}
     \end{minipage}
     \begin{minipage}{0.44\linewidth}
-    	\begin{itemize}
+    	\begin{enumerate}[(i)]
+    		\addtocounter{enumi}{2}
     		\item $\pref_{2^{r}}(wv) = \pref_{2^{r}}(\wrt{p})$, and
     		\item $uw\sqcap wv = w$
-    	\end{itemize}
+    	\end{enumerate}
     \end{minipage}
     such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_1$.
 	Let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $\wrt{p'}\sqcap \rd{p'}$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
