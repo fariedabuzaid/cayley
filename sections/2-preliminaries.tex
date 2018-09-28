@@ -22,7 +22,7 @@ quantifier rank at most $r$. For all the above notations we adopt the convention
 $\vec{p} \equiv_r \vec{q}$ when the underlying structure $G$ is clear from the context. 
 
 The \emph{$r$-type} of a structure $G$ is the set of all first-order sentences $\phi$ of quantifier rank at most $r$ such that $G\models \phi$. It is well known that there are up to equivalence only
-finitely many sentences of quantifier rank at most $r$. Hence the $r$-type of a formula can be characterized by a sentence, which has also quantifier rank $r$. 
+finitely many sentences of quantifier rank at most $r$. Hence the $r$-type of a structure can be characterized by a sentence, which has also quantifier rank $r$. 
 
 \emph{Ehrenfeucht-Fra\"\i{}ss\'e-relations} (resp. \emph{EF-relations}) for a graph $G = (V, (E_a)_{a\in A})$ are a system $(\calE^r_m)_{r,m\in\bbN}$ where  $\calE^r_m$ is an equivalence relation on $V^m$ and
 the following is true for all $r,m\in\bbN$ and $\vec{p},\vec{q} \in V^m$:
@@ -66,13 +66,13 @@ In a first lemma we prove that the complementary prefix and suffix of $u$ resp.~
 	Set $u'=\suf_r(u)$. Additionally, if $|v|\leq 2r$ set $v':=v$, and otherwise, set $v':=\pref_r(v)\suf_r(v)$. Then the first three equations are obviously satisfied. Now assume $u'w\sqcap wv'\neq w$, i.e., there is $w'\in A^*$ with $|w'|>|w|$, $w'\preceq wv'$, and $w'\sqsubseteq u'w$. Since $|u'w|\leq r+|w|$ we have $w'\preceq w\pref_r(v)\preceq wv$. Additionally, we have $w'\sqsubseteq u'w\sqsubseteq uw$ implying $|uw\sqcap wv|\geq|w'|>|w|$. This is a contradiction to the definition of~$w$.
 \end{proof}
 
-A \emph{period} of a word $u$ is a word $v$ such that $u \preceq v^\omega$. Obviously every word $u$ has a unique smallest period, which we denote by $\root{u}$. The \emph{left-exponent} of $u$ in $v$ is the largest number $n$ such that $v= u^nw$, and it is denoted by $\lexp(u,v)$. The \emph{right-remainder}, $v\mod u$,  of $v$ with respect to $u$ is defined as $(u^{\lexp(u,v)})^{-1}v$, that is the unique $w$ such that $v= u^{\lexp(u,v)}w$.  In particular we have $v= \root{v}^{\lexp(\root{v}, v)}(v \mod \root{v})$ for every $v\in A^\ast$. A word $u$ is \emph{primitive} if there is no $v$ with
+A \emph{period} of a word $u$ is a word $v$ such that $u \preceq v^\omega$. Obviously every word $u$ has a unique smallest period, which we denote by $\root{u}$. The \emph{left-exponent} of $u\neq\varepsilon$ in $v$ is the largest number $n$ such that $v= u^nw$, and it is denoted by $\lexp(u,v)$. The \emph{right-remainder}, $v\mod u$,  of $v$ with respect to $u$ is defined as $(u^{\lexp(u,v)})^{-1}v$, that is the unique $w$ such that $v= u^{\lexp(u,v)}w$.  In particular we have $v= \root{v}^{\lexp(\root{v}, v)}(v \mod \root{v})$ for every $v\in A^\ast$. A word $u$ is \emph{primitive} if there is no $v$ with
 $|v| < |u|$ and $u = v^n$ for some $n\in\bbN$.
 For $u,v\in A^\ast$ let $u\Delta v = (y,z)$, where $y,z$ are minimal such that there exists an $x$ with $u=xy$ and $v=xz$. For $\vec{v}, \vec{w}\in(A^\ast)^k$ let 
-$\vec{v}\Delta\vec{w} = (v_1\Delta w_1,\ldots, v_k\Delta w_k) \in (A^\ast)^{2k}$ and $|\vec{w}| \coloneq \sum_{i=1}^{k}|w_i|$. 
+$\vec{v}\Delta\vec{w} = (v_1\Delta w_1,\ldots, v_k\Delta w_k) \in ((A^\ast)^2)^k$ and $|\vec{w}| \coloneq \sum_{i=1}^{k}|w_i|$. 
 
 \begin{definition}
-	Let $u\in A^\ast$ be a word. A word $v\in A^*$ is a \emph{border} of $u$ (denoted by $v\presuf u$) if $v \precneq u$ and $v \sqsubsetneq u$. A \emph{border-decomposition} of $u$ is a sequence of words $\epsilon = u_0,u_1,\ldots, u_n = u$ such that for all $0\leq i < n$ it holds that
+	Let $u\in A^\ast$ be a word. A word $v\in A^*$ is a \emph{border} of $u$ (denoted by $v\presuf u$) if $v \preceq u$ and $v \sqsubseteq u$. A \emph{border-decomposition} of $u$ is a sequence of words $\epsilon = u_0,u_1,\ldots, u_n = u$ such that for all $0\leq i < n$ it holds that
 	$u_i \presuf u_{i+1}$. A border-decomposition $u_0,u_1,\ldots, u_n $ is \emph{complete} if there is no $1\leq i< n$ and $v\in A^\ast$ with $u_i \presuf v \presuf u_{i+1}$.
 \end{definition}
 
@@ -149,7 +149,7 @@ an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph (presented as EF
 	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$ and $\calS_r(w)=\calS_r(v)$.
 \end{restatable}
 \begin{proof}
-	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete border-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are ready and we can assume $|\calS_r(w)[n-1]|$ from now on.
+	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete border-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are done and we can assume $|\calS_r(w)[n-1]|=r$ from now on.
 	
 	We construct~$v$ inductively as follows: We set $v_0:=\epsilon$. Now let $a,b\in A$ be distinct with $\calS_r(w)[0]\in aA^*$. Then $x\presuf\calS_r(w)[0]b^{2n+r}$ implies $x=\epsilon$. Hence, we set, for $0\leq i<n$, $v_{i+1}:=v_ix_iv_i$ where $x_i=\calS_r(w)[i]\,b^{n-i}a^ib^{n+r}$. Finally, we set $v:=v_{n}$.
 	
@@ -158,9 +158,9 @@ an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph (presented as EF
 		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and
 		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.
 	\end{alphaenumerate}
-Finally, let $0\leq i<n$. Then we have
+	Finally, let $0\leq i<n$. Then we have
 	\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
-	for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
+	for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}|+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
 \end{proof}
 
 Let $V\in (A^{\leq r})^*$ be the $r$-skeleton of some word $w\in A^*$. We call the word $v\in A^*$ constructed in the proof of Lemma~\ref{lem:short_from_skeleton} the \emph{$r$-instantiation of $V$}.

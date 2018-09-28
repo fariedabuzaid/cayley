@@ -2,15 +2,15 @@
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
 In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
 For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the \emph{($\Delta$-)distance} of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
-$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k: |p_i\Delta q| \leq  r  \vee  |p| \leq r \}$ be the \emph{$(\Delta-)$neighborhood} of $\vec{p}$ of radius $r$ (\emph{$r$-neighborhood}). Note that we implicitly add the origin
+$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k\colon |p_i\Delta q| \leq r \vee |q| \leq r \}$ be the \emph{$(\Delta-)$neighborhood} of $\vec{p}$ of radius $r$ (\emph{$r$-neighborhood}). Note that we implicitly add the origin
 of $\frakC$ to $\vec{p}$ when we compute the neighborhood. Moreover we define the notion of a border-decomposition and an $r$-skeleton for an element $p\in\Qx$ as the border-decomposition and the $r$-skeleton of $\rd{p} \sqcap \wrt{p}$.
 
 Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
 two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$.
 This implies that in order to evaluate a formula $Qx\phi(\vec{p})$ where $\phi$ has quantifier rank $r$ and $Q\in\{\exists,\forall\}$  we can restrict the quantification of $x$ to the $f(r+1)$-neighborhood of $\vec{p}$. Since the
 $r$-neighborhood of each element $p\in \Qx$ is finite and effectively computable for every radius $r$, we can use the above observation to implement a decision procedure for the theory of $\frakC$.   
-In order to achieve this goal we exploit the fact that first-order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monid is in some sense less local.
-In fact, the neighborhood-structure of an element $p$ does not only depend suffixes of  bounded length of $\rd{p}$ and $\wrt{p}$ (as it would be the case for instance for the direct product of two free monids). We solve this problem via the notion of skeletons. Our proof 
+In order to achieve this goal we exploit the fact that first-order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monoid is in some sense less local.
+In fact, the neighborhood-structure of an element $p$ does not only depend on suffixes of  bounded length of $\rd{p}$ and $\wrt{p}$ (as it would be the case for instance for the direct product of two free monoids). We solve this problem via the notion of skeletons. Our proof 
 reveals that   the $r$-type of the $2^{r+1}$-neighborhood of an element $p$ is basically determined by the $(r+1)$-type of the $3\cdot 2^{r+1}$-skeleton of $\rd{p} \sqcap \wrt{p}$. This will be the core
 of our proof.
 
@@ -23,12 +23,12 @@ Let us start off by making some technical preparations in order to formulate the
 Intuitively, $q$ being compatible to an $r$-skeleton $V$ means that we can obtain an element
 $q'$ with $r$-skeleton $V$ by deleting up to $r$ many read actions and modifying the write
 actions arbitrarily up to distance $r$. We use this notion in order to translate elements of the Cayley-graph
-into positions of an $r$-skeleton. Next we describe how we translate back and forth between elements of the Cayley-graph an positions in a skeleton.
+into positions of an $r$-skeleton. Next we describe how we translate back and forth between elements of the Cayley-graph and positions in a skeleton.
 However we can not guarantee that every element in close proximity to a given element $p$ can be associated with a position in the $r$-skeleton of $p$ because small changes to the read and write actions might change the border-decomposition dramatically. But we can modify
 $r$ and $p$ slightly to circumvent this problem.  
 \begin{definition}
 	For $q\in\Qx$ with $|\rd{q}| \geq r$ let $\cpr_r(q)$ be the element $q'$  with $\wrt{q'} = \wrt{q}$, $\rd{q'}=\rd{q}\suf_{r}({\rd{q}})^{-1}$, and $\mu({q'}) = \rd{q'} \sqcap \wrt{q'}$.
-	In other word $\cpr_r$ just cuts the last $r$ read actions and pushes read and write actions as far together as possible. 
+	In other words, $\cpr_r$ just cuts the last $r$ read actions and pushes read and write actions as far together as possible. 
 	%	\begin{center}
 	%	\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
 	%	\path[draw, fill=red!10] (0,0) rectangle (5,0.25);
@@ -53,7 +53,7 @@ $r$ and $p$ slightly to circumvent this problem.
 \end{definition}
 
 
-Another important ingredient of our proof is to construct a ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
+Another important ingredient of our proof is to construct ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
 \begin{restatable}{mylem}{thomaszeug}[\!\!\cite{Tho97}]\label{lem:r-equiv_word_construction}
 	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
 \end{restatable}
@@ -138,7 +138,7 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
     \end{minipage}
     such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_i$.
     We choose to $q$ to be such an element $x$. It remains to specify $\mddl{x}$. if $|\mddl{p}| \leq 2^{r+m+2}$ then choose $\mu(q) = \mu(p)$. Otherwise
-	Let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $p'$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
+	let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $p'$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
 	be the index of $\mddl{p'}$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+m+1}}(p') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{3\cdot 2^{r+m+1}}(p'), i) \equiv_r (W,j)$.
 	Now choose $\mu(q) = w_j$. Finally extend the partition by $X_{k+1} = \{m+1\}$.
 	
