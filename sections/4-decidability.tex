@@ -2,7 +2,7 @@
 Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
 In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
 For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the \emph{($\Delta$-)distance} of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
-$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k\colon |p_i\Delta q| \leq r \vee |q| \leq r \}$ be the \emph{$(\Delta-)$neighborhood} of $\vec{p}$ of radius $r$ (\emph{$r$-neighborhood}). Note that we implicitly add the origin
+$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k\colon |p_i\Delta q| \leq r \vee |q| \leq r \}$ be the \emph{($\Delta$-)neighborhood} of $\vec{p}$ of radius $r$ (\emph{$r$-neighborhood}). Note that we implicitly add the origin
 of $\frakC$ to $\vec{p}$ when we compute the neighborhood. Moreover we define the notion of a border-decomposition and an $r$-skeleton for an element $p\in\Qx$ as the border-decomposition and the $r$-skeleton of $\rd{p} \sqcap \wrt{p}$.
 
 Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
@@ -53,9 +53,13 @@ $r$ and $p$ slightly to circumvent this problem.
 \end{definition}
 
 Another important ingredient of our proof is to construct ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
-\begin{restatable}{mylem}{thomaszeug}[\!\!\cite{Tho97}]\label{lem:r-equiv_word_construction}
+\begin{lemma}[\!\!\cite{Tho97}]\label{lem:r-equiv_word_construction}
 	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
-\end{restatable}
+\end{lemma}
+\begin{proof}[Proof sketch]
+	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Gamma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
+	$\exp_{r+1}(2, f(r))$ where $f(r)$ is an upper bound for the size of the formula $\phi$ (which can be chosen to be primitive recursive).
+\end{proof}
 
 We use this idea to  define a family of  equivalence relations $(\calE^r_m)_{r,m\in\bbN}$.
 For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} \calE^r_m \vec{q}$ iff
@@ -160,7 +164,22 @@ The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that
 %\begin{definition}
 %	For $a\in C$  let $\cut_r(a) \in C$ be the element.  
 %\end{definition}
-As the size of the $r$-neighborhood of an element $p$ can be bounded by a primitive recursive function in $r$, $\rd{p}$, and $\wrt{p}$ we obtain our main result.
-\begin{restatable}{mythm}{decidable}
+\begin{lemma}\label{lem:neighborhood_size}
+	For every $p\in \Qx$ and every $r$ there are at most $|A|^{4r} (\min\{|\rd{p}|, |\wrt{p}|\} + r)$ many elements in the $r$-neighborhood of a node $p\in \Qx$. 
+\end{lemma}
+\begin{proof}
+	Every element $q$ in the $r$-neighborhood of $p$ can be characterized by the tuple $p\Delta q = (u,v, w, x)\in (A^{\leq r})^4$ and $\mddl{q}$. Once we have fixed  
+	$p\Delta q \in (A^{\leq r})^4$ (and therefore fixed $\rd{q}$ and $\wrt{q}$) there are at most $\min\{ |\rd{q}|, |\wrt{q}| \} \leq \min\{ |\rd{p}|, |\wrt{p}| \} + r$ possible values for $\mddl{q}$.
+\end{proof}
+
+With this lemma we obtain our main result.
+
+\begin{theorem}
 	$\FOTh{\frakC}$ is primitive recursive.
-\end{restatable}
+\end{theorem}
+\begin{proof}
+	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
+	We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $\exp_{r+3}(g(r+m))$
+	Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} (\exp_{r+3}(g(r+m)) +1)$ many Elements, which leads to a runtime of
+	$|\phi| \cdot (|A|^{4r} (\exp_{r+3}(g(r+m)) +1))^r$, which is obviously a primitive recursive function. 
+\end{proof}
