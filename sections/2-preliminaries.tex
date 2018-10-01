@@ -47,20 +47,13 @@ In a first lemma we prove that the complementary prefix and suffix of $u$ resp.~
 
 \begin{lemma}\label{lem:short_ends_construction}
 	Let $r\in\bbN$ and $u,v,w \in A^\ast$ with $uw\sqcap wv = w$. %such that the period of $w$ has length at least $2$. 
-	Then there are words $u',v'$ of length $\leq 2r$ such that 
-	
-	\begin{minipage}{0.45\linewidth}
+	Then there are words $u',v'$ of length $\leq 2r$ such that
 	\begin{itemize}
 		\item $\suf_r(uw) = \suf_r(u'w)$,
 		\item $\suf_r(wv) = \suf_r(wv')$,
+		\item $\pref_r(wv) = \pref_r(wv')$, and
+		\item $u'w\sqcap wv' = w$.
 	\end{itemize}
-    \end{minipage}
-    \begin{minipage}{0.45\linewidth}
-    	\begin{itemize}
-    		\item $\pref_r(wv) = \pref_r(wv')$,
-    		\item $u'w\sqcap wv' = w$.
-    	\end{itemize}
-    \end{minipage}
 \end{lemma}
 \begin{proof}
 	Set $u'=\suf_r(u)$. Additionally, if $|v|\leq 2r$ set $v':=v$, and otherwise, set $v':=\pref_r(v)\suf_r(v)$. Then the first three equations are obviously satisfied. Now assume $u'w\sqcap wv'\neq w$, i.e., there is $w'\in A^*$ with $|w'|>|w|$, $w'\preceq wv'$, and $w'\sqsubseteq u'w$. Since $|u'w|\leq r+|w|$ we have $w'\preceq w\pref_r(v)\preceq wv$. Additionally, we have $w'\sqsubseteq u'w\sqsubseteq uw$ implying $|uw\sqcap wv|\geq|w'|>|w|$. This is a contradiction to the definition of~$w$.
@@ -128,7 +121,6 @@ Note that it is convenient for our purpose to consider $\calS_r(w)$ to be a word
 
 \begin{example}
 	Let $u= bababa$ and $v=ababab$. Then $u\sqcap v = ababa$ and the complete border-decomposition of $u\sqcap v$ is $(\epsilon, a, aba, ababa)$. The $2$-skeleton of $u\sqcap v$ is the word depicted below.
-
 	\begin{center}
 		\begin{tikzpicture}[scale=0.85]
 			\node[] (0) {$ab$};

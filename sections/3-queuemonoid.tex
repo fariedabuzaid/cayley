@@ -6,26 +6,15 @@ Formally, the action $a\in A$ appends the letter $a$ to the state of the queue a
 
 \begin{definition}
 	Let $\bot\notin A^*$. The function $\opx\colon(A^*\cup\{\bot\})\times\varSigma^*\to(A^*\cup\{\bot\})$ is defined for each $s\in A^*$, $a,b\in A$, and $u\in\varSigma^*$ as follows:
-	
-	\begin{minipage}{0.45\linewidth}
 	\begin{enumerate}[(1)]
 		\item $s\opx \varepsilon=s$
 		\item $s\opx au=sa\opx u$
-		
+		\item $bs\opx \ova u=\begin{cases}
+		s\opx u & \text{if }a=b\\
+		\bot & \text{otherwise}
+		\end{cases}$
+		\item $\varepsilon\opx \ova u=\bot\opx u=\bot$
 	\end{enumerate}
-    \end{minipage}
-    \begin{minipage}{0.45\linewidth}
-    	\begin{enumerate}[(1)]
-    		\addtocounter{enumi}{2}
-    		\item $bs\opx \ova u=\begin{cases}
-    		s\opx u & \text{if }a=b\\
-    		\bot & \text{otherwise}
-    		\end{cases}$
-    		\item $\varepsilon\opx \ova u=\bot\opx u=\bot$
-    	\end{enumerate}
-    \end{minipage}
-
-    
 \end{definition}
 
 With the help of this function we may now identify sequences of actions that are acting equally. This is finally used to define the monoid of queue actions.
@@ -50,24 +39,11 @@ Now, we want to recall some basic properties considering the equivalence relatio
 
 \begin{theorem}[{{\!\!\cite[Theorem 4.3]{HusKZ17}}}]\label{thm:equiv}
 	The equivalence relation $\equivx$ is the least congruence on the free monoid $\varSigma^*$ satisfying the following equations for all $a,b\in A$:
-	
-	\begin{minipage}{0.3\linewidth}
 	\begin{enumerate}[(1)]
 		\item $a\ovb\equivx\ovb a$ if $a\neq b$\label{thm:equiv:i1}
+		\item $a\ova\ovb\equivx\ova a\ovb$\label{thm:equiv:i2}
+		\item $ba\ova\equivx b\ova a$\label{thm:equiv:i3}\qed
 	\end{enumerate}
-   \end{minipage}
-   \begin{minipage}{0.3\linewidth}
-   	\begin{enumerate}[(1)]
-   		\addtocounter{enumi}{1}
-   		\item $a\ova\ovb\equivx\ova a\ovb$\label{thm:equiv:i2}
-   	\end{enumerate}
-   \end{minipage}
-   \begin{minipage}{0.3\linewidth}
-   	\begin{enumerate}[(1)]
-   		\addtocounter{enumi}{2}
-   		\item $ba\ova\equivx b\ova a$\label{thm:equiv:i3}\qed
-   	\end{enumerate}
-   \end{minipage}
 \end{theorem}
 
 A very frequently used notation is the following: the \emph{projections to write and read actions}, resp., are defined as $\classfont{wrt},\classfont{rd}\colon\varSigma^*\to A^*$ by $\wrt{a}=\rd{\ova}=a$ and $\wrt{\ova}=\rd{a}=\varepsilon$ for all $a\in A$. In other words, $\wrt{u}$ can be derived from $u$ by deletion of all read actions and $\rd{u}$ can be obtained from $u$ by deletion of all the write actions and by suppression of the overlines. Due to Theorem~\ref{thm:equiv} all words contained in a single equivalence class of~$\equivx$ have the same projections. Hence we use them for equivalence classes as well. Though, equality of these projections of two words does not imply equivalence of these words. For example, $u=\ova a$ and $v=a\ova$ have the same projections $\wrt{u}=\rd{u}=a=\wrt{v}=\rd{v}$ but are not equivalent since we have

@@ -52,13 +52,10 @@ $r$ and $p$ slightly to circumvent this problem.
 	$\mddl{q'} = v_{m_{k+1}}u_{n_{k+1}}^{-1}\mddl{p'}$. Note that $q'$ is well defined since $V[j]$ is labeled by $\pref_{2^{r+2}}(u_i^{-1}\mddl{p})$. Therefore $v_j\pref_{2^{r+1}}(v_i^{-1}\mddl{p})$ is a prefix of $\wrt{q'}$ by construction.
 \end{definition}
 
-
 Another important ingredient of our proof is to construct ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
 \begin{restatable}{mylem}{thomaszeug}[\!\!\cite{Tho97}]\label{lem:r-equiv_word_construction}
 	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
 \end{restatable}
-
-
 
 We use this idea to  define a family of  equivalence relations $(\calE^r_m)_{r,m\in\bbN}$.
 For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} \calE^r_m \vec{q}$ iff
@@ -121,21 +118,12 @@ We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
 	Let $p'= \cpr_{2^{r+m+2}}(p)$.  Consider 
 	the $3\cdot 2^{r+m+1}$-skeleton $V = \calS_{3\cdot 2^{r+m+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can find a $3\cdot 2^{r+m+1}$-skeleton $W$ of length at most $(m+1)\exp_{r+2}(f(r+1))$ with $V \equiv_{r+1} W$ and $3\cdot 2^{r+m+1}$-instantiation $w$ with $|w|\leq  c\cdot 2^{(m+1)\exp_{r+2}(f(r+1)) \cdot 3\cdot 2^{r+m+1}}  \leq \exp_{r+3}(g(r+m))$ (for a suitable primitive recursive function $g$). Using Lemma \ref{lem:short_ends_construction}, words $u,v$ of length at most 
 	$(m+1)2^{r+m+3}$ such that 
-	
-
-	\begin{minipage}{0.6\linewidth}
 	\begin{enumerate}
-		\item $\suf_{2^{r+m+2}}(uw) =$ \\$\suf_{2^{r+m+2}}(\rd{p}\suf_{2^{r+m+2}}(\rd{p})^{-1} )$
+		\item $\suf_{2^{r+m+2}}(uw) = \suf_{2^{r+m+2}}(\rd{p}\suf_{2^{r+m+2}}(\rd{p})^{-1} )$
 		\item $\suf_{2^{r+m+2}}(wv) = \suf_{2^{r+m+2}}(\wrt{p})$
+		\item $\pref_{2^{r+m+2}}(wv) = \pref_{2^{r+m+2}}(\wrt{p})$
+		\item $uw\sqcap wv = w$
 	\end{enumerate}
-    \end{minipage}
-    \begin{minipage}{0.4\linewidth}
-    	\begin{enumerate}
-    		\addtocounter{enumi}{2}
-    		\item $\pref_{2^{r+m+2}}(wv) =$\\ $\pref_{2^{r+m+2}}(\wrt{p})$
-    		\item $uw\sqcap wv = w$
-    	\end{enumerate}
-    \end{minipage}
     such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_i$.
     We choose to $q$ to be such an element $x$. It remains to specify $\mddl{x}$. if $|\mddl{p}| \leq 2^{r+m+2}$ then choose $\mu(q) = \mu(p)$. Otherwise
 	let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $p'$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
