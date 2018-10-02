@@ -1,0 +1,160 @@
+\section{Combinatorics on Words}
+Before diving into the proof of the Cayley-graph's first-order theory we have to prove some combinatorial statements concerning words.
+
+Let $\pref_r(u)$ denote the maximal prefix of $u$ of length at most $r$.
+In a first lemma we prove that the complementary prefix and suffix of $u$ resp.~$v$ wrt.~$u\sqcap v$ can be shortened to words of length at most $2r$ having the same prefixes and suffixes. In terms of $\cQ$'s first-order theory we only have to consider words $u\in\varSigma^*$ having ``short'' $\lft{u}$ and $\rght{u}$.
+
+\begin{lemma}\label{lem:short_ends_construction}
+	Let $r\in\bbN$ and $u,v,w \in A^\ast$ with $uw\sqcap wv = w$. %such that the period of $w$ has length at least $2$. 
+	Then there are words $u',v'$ of length $\leq 2r$ such that
+	\begin{itemize}
+		\item $\suf_r(uw) = \suf_r(u'w)$,
+		\item $\suf_r(wv) = \suf_r(wv')$,
+		\item $\pref_r(wv) = \pref_r(wv')$, and
+		\item $u'w\sqcap wv' = w$.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	Set $u'=\suf_r(u)$. Additionally, if $|v|\leq 2r$ set $v':=v$, and otherwise, set $v':=\pref_r(v)\suf_r(v)$. Then the first three equations are obviously satisfied. Now assume $u'w\sqcap wv'\neq w$, i.e., there is $w'\in A^*$ with $|w'|>|w|$, $w'\preceq wv'$, and $w'\sqsubseteq u'w$. Since $|u'w|\leq r+|w|$ we have $w'\preceq w\pref_r(v)\preceq wv$. Additionally, we have $w'\sqsubseteq u'w\sqsubseteq uw$ implying $|uw\sqcap wv|\geq|w'|>|w|$. This is a contradiction to the definition of~$w$.
+\end{proof}
+
+\begin{remark}
+	The condition $uw\sqcap wv=w$ in Lemma~\ref{lem:short_ends_construction} cannot be simplified to $u\sqcap v=\varepsilon$. For example, let $u=v=a$ and $w=baa$. Then only the first equation is satisfied.
+\end{remark}
+
+A \emph{period} of a word $u$ is a word $v$ such that $u \preceq v^\omega$. Obviously every word $u$ has a unique smallest period, which we denote by $\root{u}$. The \emph{left-exponent} of $u\neq\varepsilon$ in $v$ is the largest number $n$ such that $v= u^nw$, and it is denoted by $\lexp(u,v)$. The \emph{right-remainder}, $v\mod u$,  of $v$ with respect to $u$ is defined as $(u^{\lexp(u,v)})^{-1}v$, that is the unique $w$ such that $v= u^{\lexp(u,v)}w$.  In particular we have $v= \root{v}^{\lexp(\root{v}, v)}(v \mod \root{v})$ for every $v\in A^\ast$. A word $u$ is \emph{primitive} if there is no $v$ with
+$|v| < |u|$ and $u = v^n$ for some $n\in\bbN$.
+For $v,w\in A^\ast$ let $v\Delta w = (y,z)$, where $y,z$ are minimal such that there exists an $x$ with $v=xy$ and $w=xz$. For $\vec{v}, \vec{w}\in(A^\ast)^k$ let 
+$\vec{v}\Delta\vec{w} = (v_1\Delta w_1,\ldots, v_k\Delta w_k) \in ((A^\ast)^2)^k$ and $|\vec{w}| \coloneq \sum_{i=1}^{k}|w_i|$. 
+
+\begin{definition}
+	Let $u\in A^\ast$ be a word. A word $v\in A^*$ is a \emph{border} of $u$ (denoted by $v\presufeq u$) if $v \preceq u$ and $v \sqsubseteq u$. A \emph{border-decomposition} of $u$ is a sequence of words $\epsilon = u_0,u_1,\ldots, u_n = u$ such that for all $0\leq i < n$ it holds that
+	$u_i \presuf u_{i+1}$. A border-decomposition $u_0,u_1,\ldots, u_n $ is \emph{complete} if there is no $1\leq i< n$ and $v\in A^\ast$ with $u_i \presuf v \presuf u_{i+1}$.
+\end{definition}
+
+Hence, a complete border-decomposition of $u\in A^*$ is the sequence of all borders of $u$ ordered by word length. So, it is easy to observe that each word $u\in A^*$ has exactly one complete border-decomposition.
+
+%\begin{observation}
+%	Every word $w\in A^\ast$ has a unique complete canon-decomposition.
+%\end{observation}
+%\begin{proof}
+%	Obviously, every word $w$ possesses at least one complete canon-decomposition. Now suppose $\vec{u} = (u_0,\ldots,u_m)$ and $\vec{v}=(v_0,\ldots,v_n)$ are two distinct complete canon-decompositions of
+%	a word $w\in A^\ast$. W.l.o.g. assume that $n \leq m$. We claim that there is an $0\leq i \leq n$ with $u_i \neq v_i$. Because otherwise it follows from $w= u_n = v_n$ that    
+%	$\vec{u}$ and $\vec{v}$ have the same length $n$ and this, in turn, implies that they are identical since $u_i=v_i$ for all $0\leq i\leq n$. Now choose the smallest $i$ between $0$ and $n$ such that $u_i \neq v_i$. As $u_0 = \epsilon = v_0$ it holds that $i>0$. Hence $u_{i-1}, v_{i-1}$ are defined and $u_{i-1} = v_{i-1}$. Since $u_i, v_i \preceq w$ and $u_i \neq v_i$ it must be the case that $|u_i| \neq |v_i|$. Again w.l.o.g. assume that $|u_i| < |v_i|$. Then  $u_i, v_i \preceq w$, $u_i, v_i \sqsubseteq w$ and $|u_i| < |v_i|$, which implies $u_i \presuf v_i$. Therefore 
+%	$v_{i-1} = u_{i-1} \presuf u_i \presuf v_i$ in contradiction to the completeness of $\vec{v}$!
+%\end{proof}
+
+\begin{example}
+	The complete border-decomposition of $ababa$ is $(\epsilon, a, aba, ababa)$.
+\end{example}
+
+Let $u\in\Sigma^*$ be any element from the $\cQ$ and $(u_0,\dots,u_n)$ be the complete border-decomposition of $\rd{u}\sqcap\wrt{u}$. Then the characteristics $(\rd{u}\inv{u_i},u_i,\inv{u_i}\wrt{u})$ describe all the words having the same projections to write and read actions, resp., as $u$. In the decidability proof of $\FOTh{\cQ}$ we consider these words since these are all close to each other in $\cQ$.
+
+%\begin{definition}
+%	A word $u$ is \emph{periodic} if $u=v^n$ for some $v\in\Sigma^+$ and $n>1$. Otherwise $u$ is primitiv. We say that $u$ is almost periodic if $u= (vw)^nv$ for some $n\geq 1$,  $v\in \Sigma^\ast$, and $w\in\Sigma^+$.  We write $\sqrt{u}^{\ast}$ for the unique pair $(v,w) \in \Sigma^\ast\times\Sigma^+$ such that
+%   $vw$ is primitive and $u = (vw)^nv$ for some $n\geq 1$.
+%
+%\end{definition}
+
+%\begin{lemma}
+%	Let $\vec{u} = (u_0,\ldots,u_n)$ be a complete border-decomposition. Then $\root{u_{i+1}} = u_{i+1}u_i^{-1}$ for all $0\leq i < n$. 
+%\end{lemma}
+%\begin{proof}
+%	Fix some $0\leq i < n$ and let $v:= u_{i+1}u_i^{-1}$. Let us verify first that $v$ is indeed a period of $u_{i+1}$. If $2|u_i| \leq |u_{i+1}|$ then $u_{i+1} = u_iwu_i$ for some $w\in\Sigma^\ast$. 
+%	Hence $v= u_iw$ and $u_{i+1} \preceq (u_iw)^\omega = v^\omega$. Otherwise  $2|u_i| > |u_{i+1}|$ and therefore the $u_i$-prefix and the $u_i$-suffix of $u_{i+1}$ overlap. We can use this overlap to 
+%	show via a simple induction that the situation is as depicted in Fig.~\ref{fig:root}.
+%	\begin{figure}[h]
+%		\centering\include{figures/root}
+%		\caption{\label{fig:root}}
+%	\end{figure}
+%
+%	Now suppose that $|\root{u_{i+1}}| < |v|$. Then let $u_i' \coloneq \root{u_{i+1}}^{\lexp(\root{u_{i+1}}, u_{i+1}) -1}(u_{i+1} \mod \root{u_{i+1}})$.
+%	Then $u_i' \presuf u_{i+1}$ and $|u_i'| = |u_{i+1}| - \root{u_{i+1}} > |u_{i+1}| - |v| = |u_i|$. Hence $u_i\presuf u_i' \presuf u_{i+1}$ contradicting the completeness of $\vec{u}$! 
+%\end{proof}
+
+From the complete border-decomposition of a word~$w$ we derive the so called skeleton of~$w$ containing the inner words $v$ of all bordered words $uvu$ in $w$.
+
+\begin{definition}
+	Let $w\in A^\ast$ and $\vec{w} = (w_0,\ldots,w_n)$ be the complete border-decomposition of $w$. The \emph{$r$-skeleton} of $w$, denoted by $\calS_r(w)$, is the word of length $n$ over the alphabet $\Gamma = A^{\leq r}$ with $\calS_r(w)[i] = \pref_r(w_i^{-1}w)$ for each $0\leq i\leq n-1$. Note that $w_i^{-1}w$ is always defined since $w_i\preceq w$.
+	\begin{figure}[H]
+		\begin{center}
+			\input{figures/skeleton-def.tex}
+		\end{center}\label{fig:skeletondef}\caption{Definition of $\calS_r(w).$}
+	\end{figure}
+\end{definition}
+Note that it is convenient for our purpose to consider $\calS_r(w)$ to be a word over an alphabet, which in itself consists of words of bounded length rather than to consider $\calS_r(w)$ as a sequence of words.
+
+\begin{example}
+	Let $u= bababa$ and $v=ababab$. Then $u\sqcap v = ababa$ and the complete border-decomposition of $u\sqcap v$ is $(\epsilon, a, aba, ababa)$. The $2$-skeleton of $u\sqcap v$ is the word depicted below.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.85]
+		\node[] (0) {$ab$};
+		\node[ right=of 0] (1) {$ba$};
+		\node[ right=of 1] (2) {$ba$};
+		
+		\path[ ->,>=latex'] (0) edge (1)
+		(1) edge (2);
+		\end{tikzpicture}
+	\end{center}\label{fig:skeletonex}
+\end{example}
+
+Skeletons will play a crucial role in Section \ref{sec:decidability}. 
+We will prove the decidability of the Cayley-graph of a queue-monoid by  translating back and forth between 
+an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph (presented as EF-relations) and games played on certain skeletons which are derived from the game played on the Cayley-graph. 
+
+\begin{lemma}\label{lem:short_from_skeleton}
+	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$ and $\calS_r(w)=\calS_r(v)$.
+\end{lemma}
+\begin{proof}
+	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete border-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are ready and we can assume $|\calS_r(w)[n-1]|$ from now on.
+	
+	We construct~$v$ inductively as follows: We set $v_0:=\epsilon$. Now let $a,b\in A$ be distinct with $\calS_r(w)[0]\in aA^*$. Then $x\presuf\calS_r(w)[0]b^{2n+r}$ implies $x=\epsilon$. Hence, we set, for $0\leq i<n$, $v_{i+1}:=v_ix_iv_i$ where $x_i=\calS_r(w)[i]\,b^{n-i}a^ib^{n+r}$. Finally, we set $v:=v_{n}$.
+	
+	Before we can prove $\calS_r(w)=\calS_r(v)$ we need to prove the following two properties of $(v_0,\dots,v_n)$:
+	\begin{alphaenumerate}
+		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and\label{prf:short_from_skeleton:i1}
+		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.\label{prf:short_from_skeleton:i2}
+	\end{alphaenumerate}
+	\emph{Proof of (\ref{prf:short_from_skeleton:i1}).}\ We observe that $v_ix_i$ is a period of $v_{i+1}$ and we prove by induction on $0\leq i\leq n$ that this period is minimal. For $i=0$ this is trivial since $v_1\in aA^{r-1}b^{2n+r}$ and $a\neq b$. So now let $i>0$. We suppose that there is a period $p$ of $v_{i+1}$ with $|p|<|v_ix_i|$. Then, for $y_j:=x_j(b^{n+r})^{-1}$ for $0\leq j\leq i$, the word $v_{i+1}$ is an alternation of words $y_j$ and $b^{r+n}$ which are all of length $r+n$. Note that by construction we have $y_{j}\neq b^{n+r}$ (since each $y_{j}$ contains at least one $a$) as well as $y_{j}\neq y_{k}$ if $j\neq k$ for each $0\leq j,k\leq i$. Additionally, each second occurrence of a $y_j$-block is $y_1$. We now consider two cases:
+	
+	First, assume that $|p|$ is not a divisor of $n+r$. If $|p|<n+r$ then the distance between each two occurrences of $a$ in $p^\omega$ is at most $|p|<n+r$ but $v_{i+1}$ contains at least one $b^{n+r}$-block. Hence, we have $|p|>n+r$. If $\lfloor\frac{|p|}{n+r}\rfloor$ is odd (cf.\ Fig.~\ref{fig:repetition:i1}), $p$ starts with $a$ and ends in a block of the form $b^{n+r}$, but does not contain all of these $n+r$ many $b$'s. Since $p$ start with an $a$, a first repetition of $p$ this first $a$ is different from the $b$ at this position in $v_{i+1}$, i.e., $p$ is not a period of $v_{i+1}$. Otherwise, if $\lfloor\frac{|p|}{n+r}\rfloor$ is even (cf.\ Fig.~\ref{fig:repetition:i2}), then the prefix of $p^{-1}v_{i+1}$ of length $|p|$ contains at most one $y_1$-block and this overlaps with a $b^{n+r}$-block. Hence, there is a position in the first repetition of $p$ containing a $b$ which is different from the $a$ at this position in $v_{i+1}$.
+	
+	\begin{figure}[h]
+		\begin{subfigure}{\textwidth}
+			\include{figures/repetition}
+			\subcaption{Case $\left\lfloor\frac{|p|}{n+r}\right\rfloor$ is odd\label{fig:repetition:i1}}
+		\end{subfigure}
+		\begin{subfigure}{\textwidth}
+			\include{figures/repetition2}
+			\subcaption{Case $\left\lfloor\frac{|p|}{n+r}\right\rfloor$ is even\label{fig:repetition:i2}}
+		\end{subfigure}
+		\caption{\label{fig:repetition}}
+	\end{figure}
+	
+	Now, assume $|p|$ is a divisor of $n+r$. Then we can understand the blocks of length $n+r$ as letters of the alphabet $\{b^{n+r},y_1,\dots,y_i\}$. Since there is no $y_i$-block in $v_i$ we have $|p|\geq|v_iy_i|$. Since $p$ starts with $y_1$ and $y_i$ is followed by $b^{n+r}$, $p$ has length at least $|v_ix_i|$.
+	
+	\emph{Proof of (\ref{prf:short_from_skeleton:i2}).}\ By construction, it is easy to see that $\vec{v}=(v_0,\dots,v_n)$ is a border-decomposition of $v=v_n$. We prove now by induction on $0\leq i<n$ that $(v_0,\dots,v_{i+1})$ is a complete border-decomposition of $v_i$. The case $i=0$ is easy to verify since $v_1\in aA^{r-1}b^{2n+r}$. So, let $i\geq1$. Assume there is $u\in A^*$ with $v_i\presuf u\presuf v_{i+1}$. Let $u$ be of minimal length satisfying this inequality. Then there are two possible cases:
+	
+	First, suppose $|u|\geq|v_ix_i|$ holds, i.e., the prefix and suffix $u$ overlap in $v_i$ and the overlap contains at most $x_i$ (cf.\ Fig.~\ref{fig:skeleton}). Let $x,y\in A^*$ such that $u=xx_iv_i=y$. Then we have $|x|=|y|$ and $m:=xx_iy\presuf u$. Hence, by minimality of $u$ we have $|m|\leq|v_i|$ and therefore, by induction hypothesis, $m=v_k$ for some $0< k\leq i$. This implies
+	\[v_{k-1}x_{k-1}v_{k-1}=v_k=m=xx_iy\,.\]
+	Since $|x|=|y|$ and $|x_i|=|x_{k-1}|$ we have $x_i=x_{k-1}$, which is a contradiction to the construction of the $x_i$'s.
+	
+	\begin{figure}[h]
+		\centering\include{figures/skeleton}
+		\caption{\label{fig:skeleton}}
+	\end{figure}
+	
+	Now, suppose $|u|<|v_ix_i|$. If $|u|\geq\frac{|v_{i+1}|}{2}$ (i.e., the prefix and suffix $u$ in $v_i$ overlap) then there is a word $m\in A^*$ such that $m\presuf u$ holds. Hence, by minimality of $u$ and by induction hypothesis we have $m=v_k$ for some $0\leq k\leq i$. Since $|m|<|x_i|=|x_1|$ we have $m=\varepsilon$, i.e., we have $|u|=\frac{|v_{i+1}|}{2}$.
+	
+	Suppose $|u|\leq\frac{|v_{i+1}|}{2}$ (i.e., the prefix and suffix $u$ in $v_i$ do not overlap). Then there is a word $p\in A^*$ such that $v_{i+1}=pu$. Since $u$ is a prefix of $v_{i+1}$ and $|p|>\frac{|v_{i+1}|}{2}$, $u$ also is a prefix of $p$. Hence, $p$ is a period of $v_{i+1}$ and we have
+	\[|p|=|v_{i+1}|-|u|<|v_{i+1}|-|v_i|=|v_ix_i|\,.\]
+	This is a contradiction to property~\ref{prf:short_from_skeleton:i1} stating that $v_ix_i$ is the minimal period of $v_{i+1}$.
+	
+	So, in both cases we have seen that there is no $v_i\presuf u\presuf v_{i+1}$, i.e., $(v_0,\dots,v_{i+1})$ is a complete border-decomposition.
+	
+	Finally, let $0\leq i<n$. Then we have
+	\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
+	for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
+\end{proof}
+
+Let $V\in (A^{\leq r})^*$ be the $r$-skeleton of some word $w\in A^*$. We call the word $v\in A^*$ constructed in the proof of Lemma~\ref{lem:short_from_skeleton} the \emph{$r$-instantiation of $V$}.

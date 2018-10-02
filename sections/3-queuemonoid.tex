@@ -1,8 +1,8 @@
 \section{Queue Monoid and its Cayley-Graph}
-\subsection{Definition of the Monoid}
-The queue monoid models the behavior of a (reliable) fifo-queue whose entries come from an alphabet $A$. Consequently, the state of a queue is a word from $A^*$. The basic actions of our queue are writing of the symbol $a\in A$ of the queue (denoted by $a$) and reading the symbol $a\in A$ from the queue (denoted by $\ova$). Thereby, $\ovA$ is a disjoint copy of $A$ containing all reading actions $\ova$ and $\varSigma:=A\cup\ovA$ is the set of all basic actions. To simplify notation, for a word $u=a_1a_2\dots a_n\in A^*$ we write $\ovu$ for the word $\ov{a_1}\,\ov{a_2}\dots \ov{a_n}$.
+\paragraph*{Definition of the Monoid}
+The queue monoid models the behavior of a (reliable) fifo-queue whose entries come from an alphabet $A$. Consequently, the state of a queue is a word from $A^*$. The basic actions of our queue are writing of the symbol $a\in A$ of the queue (denoted by $a$) and reading the symbol $a\in A$ from the queue (denoted by $\ova$). Thereby, $\ovA$ is a disjoint copy of $A$ containing all reading actions $\ova$ and $\varSigma:=A\uplus\ovA$ is the set of all basic actions. To simplify notation, for a word $u=a_1a_2\dots a_n\in A^*$ we write $\ovu$ for the word $\ov{a_1}\,\ov{a_2}\dots \ov{a_n}$.
 
-Formally, the action $a\in A$ appends the letter $a$ to the state of the queue and the action $\ova\in\ovA$ tries to cancel the letter $a$ from the beginning of the current state of the queue. Thereby, if the state does not start with this symbol, the queue will end up in an error state which we denote by~$\bot$. Note that in contrast to (partially) lossy queues which we considered in \cite{KKP18,Koe18}, these queues cannot forget any part of their content. Hence, these ideas lead to the following definition:
+Formally, the action $a\in A$ appends the letter $a$ to the state of the queue and the action $\ova\in\ovA$ tries to cancel the letter $a$ from the beginning of the current state of the queue. Thereby, if the state does not start with this symbol, the queue will end up in an error state which we denote by~$\bot$. Note that in contrast to (partially) lossy queues which we considered in \cite{KKP18,Koe18}, these queues cannot forget any part of their content. Hence, these ideas lead to the following definition:\pagebreak
 
 \begin{definition}
 	Let $\bot\notin A^*$. The function $\opx\colon(A^*\cup\{\bot\})\times\varSigma^*\to(A^*\cup\{\bot\})$ is defined for each $s\in A^*$, $a,b\in A$, and $u\in\varSigma^*$ as follows:
@@ -25,7 +25,7 @@ With the help of this function we may now identify sequences of actions that are
 	is a congruence on the free monoid $\varSigma$. Hence, the
 	quotient $\Qx(A):=\partition{\varSigma^*}{\equivx}$ is a monoid
 	which we call the \emph{monoid of queue actions} or for short \emph{queue monoid}. 
-	The neutral element of $\Qx(A)$ is $[\epsilon]_\equiv = \{\epsilon\}$, wich we will denote simply by $\epsilon$.
+	The neutral element of $\Qx(A)$ is $[\epsilon]_{\equivx} = \{\epsilon\}$, which we will denote simply by $\epsilon$.
 \end{definition}
 
 Note that the queue monoids $\Qx(A)$ for alphabets $A$ of different size are not isomorphic. Though, all of the following results hold for any alphabet $A$ with $|A|\geq2$. Hence, we may fix an arbitrary alphabet $A$ from now on and write $\Qx$ instead of $\Qx(A)$.
@@ -34,7 +34,7 @@ Note that the queue monoids $\Qx(A)$ for alphabets $A$ of different size are not
 	Let $A=\{a\}$ be a singleton. Then a queue on this alphabet acts like a partially blind counter since $a^n\opx a=a^{n+1}$ and $a^{n+1}\opx\ova=a^n$. In other words, $\Qx(\{a\})$ is the bicyclic semigroup.
 \end{remark}
 
-\subsection{Basic Properties}
+\paragraph*{Basic Properties}
 Now, we want to recall some basic properties considering the equivalence relation~$\equivx$. The first important fact expresses the equivalence in terms of some commutations of write and read actions under certain contexts.
 
 \begin{theorem}[{{\!\!\cite[Theorem 4.3]{HusKZ17}}}]\label{thm:equiv}
@@ -49,7 +49,7 @@ Now, we want to recall some basic properties considering the equivalence relatio
 A very frequently used notation is the following: the \emph{projections to write and read actions}, resp., are defined as $\classfont{wrt},\classfont{rd}\colon\varSigma^*\to A^*$ by $\wrt{a}=\rd{\ova}=a$ and $\wrt{\ova}=\rd{a}=\varepsilon$ for all $a\in A$. In other words, $\wrt{u}$ can be derived from $u$ by deletion of all read actions and $\rd{u}$ can be obtained from $u$ by deletion of all the write actions and by suppression of the overlines. Due to Theorem~\ref{thm:equiv} all words contained in a single equivalence class of~$\equivx$ have the same projections. Hence we use them for equivalence classes as well. Though, equality of these projections of two words does not imply equivalence of these words. For example, $u=\ova a$ and $v=a\ova$ have the same projections $\wrt{u}=\rd{u}=a=\wrt{v}=\rd{v}$ but are not equivalent since we have
 \[\varepsilon\opx a\ova=\varepsilon\neq\bot=\varepsilon\opx\ova a\,.\]
 
-The non-equivalence of the two words above is very easy to prove. Also (non-)equivalence of two arbitrary words is decidable in polynomial time: for this purpose we compute normal forms of the equivalence classes of~$\equivx$. We do this by ordering the equations from Theorem~\ref{thm:equiv} from left to right resulting in a terminating and confluent semi-Thue system~$\Rx$ \cite[Lemma~4.1]{HusKZ17}. Then, for any word $u\in\varSigma^*$ there is a unique, irreducible word $\nfx{u}$ with $u\to^*\nfx{u}$, the so-called \emph{normal form} of $u$ resp.\ of its equivalence class $[u]$. In this word $\nfx{u}$ the read actions from $u$ are moved to the left as far as the equations from above allow.
+The non-equivalence of the two words above is very easy to prove. Also (non-)equivalence of two arbitrary words is decidable in polynomial time: for this purpose we compute normal forms of the equivalence classes of~$\equivx$. We do this by ordering the equations from Theorem~\ref{thm:equiv} from left to right resulting in a terminating and confluent semi-Thue system~$\Rx$ \cite[Lemma~4.1]{HusKZ17}. Then, for any word $u\in\varSigma^*$ there is a unique, irreducible word $\nfx{u}$ with $u\to^*\nfx{u}$, the so-called \emph{normal form} of $u$ resp.\ of its equivalence class $[u]_{\equivx}$. In this word $\nfx{u}$ the read actions from $u$ are moved to the left as far as the equations from above allow.
 
 \begin{example}\label{ex:nfx}
 	Let $a,b\in A$ with $a\neq b$ and $u=abb\ov{ab}$. Then we have
@@ -61,21 +61,28 @@ The non-equivalence of the two words above is very easy to prove. Also (non-)equ
 
 From the definition of~$\Rx$ we obtain that a word is in normal form if it starts with a sequence of read operations followed by an alternating sequence of write and read actions, where all of the read actions $\ova$ appear straight behind the write action $a$. Finally, the normal form ends with a sequence of write actions. Concretely, the set of all normal forms is
 \[\NFx:=\{\nfx{u}\,|\,u\in\varSigma^*\}=\ov{A}^*\{a\ova\,|\,a\in A\}^*A^*\,.\]
-Let $u\in\varSigma^*$. Then the normal form $\nfx{u}$ is uniquely defined by three words $u_1,u_2,u_3\in A^*$ such that $\nfx{u}=\ov{u_1}a_1\ov{a_1}\dots a_n\ov{a_n}u_3$ where $u_2=a_1\dots a_n$. Thereby, we denote the word $u_1$ by $\lft{u}$, the word $u_2$ by $\mddl{u}$, and $u_3$ by $\rght{u}$. Hence, we can define the \emph{characteristics} of~$u$ ($[u]$, resp.) by the triple 
+Let $u\in\varSigma^*$. Then the normal form $\nfx{u}$ is uniquely defined by three words $u_1,u_2,u_3\in A^*$ such that $\nfx{u}=\ov{u_1}a_1\ov{a_1}\dots a_n\ov{a_n}u_3$ where $u_2=a_1\dots a_n$. Thereby, we denote the word $u_1$ by $\lft{u}$, the word $u_2$ by $\mddl{u}$, and $u_3$ by $\rght{u}$. Hence, we can define the \emph{characteristics} of~$u$ ($[u]_{\equivx}$, resp.) by the triple 
 $\chr{u}:=(\lft{u},\mddl{u},\rght{u})$.
 Hence, from these characteristics $\chr{u}$ we can obtain the projections of~$u$ on its write and read actions as well: $\wrt{u}=\mddl{u}\rght{u}$ and $\rd{u}=\lft{u}\mddl{u}$.
 
-From now on, we will use these characteristics to represent the elements of~$\Qx$. In other words, we may understand $\Qx$ as a triple of words (i.e., $(A^*)^3$) with a special type of concatenation which is described in the following Theorem:
+From now on, we will use these characteristics to represent the elements of~$\Qx$. In other words, we may understand $\Qx$ as a triple of words (i.e., $(A^*)^3$) with a special type of concatenation. The concatenation of any transformation $u\in\varSigma^*$ with a single letter is described in the lemma below.
+\begin{lemma}\label{lem:concat}
+	Let $u\in\varSigma^*$ and $a\in A$. Then we have
+	\[\chr{ua}=(\lft{u},\mddl{u},\rght{u}a)\quad\text{and}\quad \chr{u\ova}=(\rd{u}a\inv{s},s,\inv{s}\wrt{u})\]
+	where $s=\mddl{u}a\sqcap\wrt{u}$.
+\end{lemma}
+
+Iterating Lemma~\ref{lem:concat} we obtain the following Theorem:
 
 \begin{theorem}[{{\!\!\cite[Theorem 5.3]{HusKZ17}}}]\label{thm:concat}
 	Let $u,v\in\varSigma^*$. Then
-	$\chr{uv}=(\lft{u}r,s,t\rght{v})$
-	where $s=\mddl{u}\rd{v}\sqcap\wrt{u}\mddl{v}$, $rs=\mddl{u}\rd{v}$, and $st=\wrt{u}\mddl{v}$.\qed
+	$\chr{uv}=(\rd{uv}\inv{s},s,\inv{s}\wrt{uv})$
+	where $s=\mddl{u}\rd{v}\sqcap\wrt{u}\mddl{v}$.\qed
 \end{theorem}
 
-In other words, the multiplication of two words $u,v\in\varSigma^*$ can be understood as follows: at first we move the read actions from $\ov{\rd{v}}$ to the left such that each of its letters is directly preceded by exactly one write actions. If this is not possible (because $\lft{v}$ is longer than $\rght{u}$) we move the letters from $\ov{\mddl{u}\lft{v}}$ to the left until there is an alternating word of write and read actions. Now, if there is an infix $a\ovb$ with $a\neq b$ all of these read actions move one position to the left. We iterate this last step until there is no such infix. It is easy to see, that the new alternating word contains equal subsequences of write and read actions, respectively. Thereby, the read actions are the longest suffix of $\ov{\mddl{u}\rd{v}}$ and the write actions the longest prefix of $\wrt{u}\mddl{v}$ such that the equality of these subsequences holds.
+In other words, the multiplication of two words $u,v\in\varSigma^*$ can be understood as follows: at first we move the read actions from $\ov{\rd{v}}$ to the left such that each of its letters is directly preceded by exactly one write action. If this is not possible (because $\lft{v}$ is longer than $\rght{u}$) we move the letters from $\ov{\mddl{u}\lft{v}}$ to the left until there is an alternating word of write and read actions. Now, if there is an infix $a\ovb$ with $a\neq b$ all of these read actions move one position to the left. We iterate this last step until there is no such infix. It is easy to see, that the new alternating word contains equal subsequences of write and read actions, respectively. Thereby, the read actions are the longest suffix of $\ov{\mddl{u}\rd{v}}$ and the write actions the longest prefix of $\wrt{u}\mddl{v}$ such that the equality of these subsequences holds (this is $\mddl{u}\rd{v}\sqcap\wrt{u}\mddl{v}$).
 
-\subsection{The Monoid's Cayley-Graph}
+\paragraph*{The Monoid's Cayley-Graph}
 In this subsection we first recall the definition of Cayley-graphs for arbitrary, finitely generated monoids. Afterwards, we give some common properties as well as some special characteristics of the queue monoid's Cayley-graph.
 
 \begin{definition}
@@ -106,14 +113,14 @@ From now on we only consider the Cayley-graph of the queue monoid~$\Qx$. To simp
 	The following statements hold:
 	\begin{enumerate}[(1)]
 		\item $\FOTh{\cQ}\eqlog\FOTh{\lcQ}$ and $\MSOTh{\cQ}\eqlog\MSOTh{\lcQ}$.\label{prop:cgqprops:i1}
-		\item $\cQ$ is an acyclic graph with root $[\varepsilon]$.\label{prop:cgqprops:i2}
+		\item $\cQ$ is an acyclic graph with root $\varepsilon$.\label{prop:cgqprops:i2}
 		\item $\cQ$ has unbounded (in-)degree.\label{prop:cgqprops:i3}
 	\end{enumerate}
 \end{proposition}
 \begin{proof}
 	At first, we prove (\ref{prop:cgqprops:i1}). Let the duality function $\delta\colon\varSigma^*\to\varSigma^*$ be defined as follows:
 	\[\delta(\varepsilon)=\varepsilon,\ \delta(au)=\delta(u)\ova\,,\text{ and }\delta(\ova u)=\delta(u)a\]
-	for all $u\in\varSigma^*$ and $a\in A$. In other words, $\delta$ reverses the order of the actions and inverts writing and reading of a letter~$a$. From \cite[Proposition~3.4]{HusKZ17} we know $u\equivx v$ iff $\delta(u)\equivx\delta(v)$. Hence, $\delta$ is an automorphism on $\Qx$ and $(p,q)\in E_\alpha$ iff $(\delta(p),\delta(q))\in F_{\delta(\alpha)}$ for all $p,q\in\Qx$ and $\alpha\in\varSigma$. Let $\phi\in\FOQ$ ($\phi\in\MSOQ$, resp.). We construct $\phi'$ by replacing any atom ``$E_\alpha(x,y)$'' in $\phi$ by ``$F_{\delta(\alpha)}(x,y)$''. Then
+	for all $u\in\varSigma^*$ and $a\in A$. In other words, $\delta$ reverses the order of the actions and inverts writing and reading of a letter~$a$. From \cite[Proposition~3.4]{HusKZ17} we know $u\equivx v$ iff $\delta(u)\equivx\delta(v)$. Hence, $\delta$ is an anti-morphism on $\Qx$ and $(p,q)\in E_\alpha$ iff $(\delta(p),\delta(q))\in F_{\delta(\alpha)}$ for all $p,q\in\Qx$ and $\alpha\in\varSigma$. Let $\phi\in\FOQ$ ($\phi\in\MSOQ$, resp.). We construct $\phi'$ by replacing any atom ``$E_\alpha(x,y)$'' in $\phi$ by ``$F_{\delta(\alpha)}(x,y)$''. Then
 	$\cQ\models\phi(q_1,\dots,q_k) \iff \lcQ\models\phi'(\delta(q_1),\dots,\delta(q_k))$ for any $q_1,\dots,q_k\in\Qx$. In particular, $\phi\in\FOTh{\cQ}$ iff $\phi'\in\FOTh{\lcQ}$ (resp. $\phi\in\MSOTh{\cQ}$ iff $\phi'\in\MSOTh{\lcQ}$). Finally, the converse reduction is symmetric to the one described above.
 	
 	Now, we prove (\ref{prop:cgqprops:i2}). Due to \cite[Corollary~4.7]{HusKZ17} we have $p\grR q$ iff $p=q$ for all $p,q\in\Qx$. Then, by the remark above $p,q\in\Qx$ are strongly connected iff $p=q$, i.e., there are no cycles in $\cQ$.
@@ -132,7 +139,7 @@ Additionally, for a $\varGamma$-labeled, directed graph $\frakG=(V,(E_a)_{a\in\v
 	Then, $\frakG_n$ is an induced subgraph of $\ud{\cayley{\calM}{\{a,\ovb\}}}$. Since in $\cQ$ there are no edges with labels other than $a$ or $\ovb$ between the nodes from $\calM$, $\ud{\cayley{\calM}{\{a,\ovb\}}}$ is an induced subgraph of $\ud{\cQ}$ as well implying our claim.
 \end{proof}
 
-\begin{figure}
+\begin{figure}[h]
 	\begin{center}
 		\input{figures/grid}
 	\end{center}
@@ -145,5 +152,5 @@ With the help of a famous result from Seese (cf.~\cite{See91}), we may now prove
 	$\MSOTh{\cQ}$ is undecidable.
 \end{corollary}
 \begin{proof}
-	Due to \cite{RobS84} each planar graph is a minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{G}$ is interpretable in $\FOTh{\cQ}$, $\MSOTh{\cQ}$ is undecidable as well.
+	Due to \cite{RobS84} each planar graph is a minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{\cQ}$ is first-order interpretable in $\cQ$, $\MSOTh{\cQ}$ is undecidable as well.
 \end{proof}
