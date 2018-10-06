@@ -1,0 +1,1015 @@
+\documentclass[a4paper,numberwithinsect,USenglish]{lipics-v2018}
+
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{stmaryrd}
+\usepackage{hyperref}
+\usepackage{amsopn}
+\usepackage{mathtools}
+\usepackage{algpseudocode}
+\usepackage{cite}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{mathabx}
+\usepackage{float}
+
+\usetikzlibrary{decorations,arrows,snakes}
+
+
+%opening
+\title{The Cayley-Graph of the Queue Monoid: Logic and Decidability}
+\titlerunning{The Cayley-Graph of the Queue Monoid: Logic and Decidability}
+
+\author{Faried Abu Zaid}{Camelot Management Consultants, CoE Artificial Intelligence for Information Management, Munich}{faza@camelot-mc.com}{}{The presented work was conducted while the first author was affiliated with the Technische Universität Ilmenau.}
+\author{Chris Köcher}{Technische Universität Ilmenau, Automata and Logics Group}{chris.koecher@tu-ilmenau.de}{https://orcid.org/0000-0003-4575-9339}{}
+\authorrunning{F. Abu Zaid, C. Köcher}
+
+\Copyright{Faried Abu Zaid, Chris Köcher}
+
+\subjclass{Theory of computation $\rightarrow$ Logic, Theory of computation $\rightarrow$ Models of computation, Information systems $\rightarrow$ Data structures}
+\keywords{Queues, Transformation Monoid, Cayley-Graph, Logic, First-Order Theory, MSO Theory, Model Checking}
+
+%\funding{Partially supported by the DFG-Project ``Speichermechanismen als Monoide'', KU 1107/9-1.}
+
+\EventEditors{Sumit Ganguly and Paritosh Pandya}
+\EventNoEds{2}
+\EventLongTitle{38th IARCS Annual Conference on Foundations of Software Technology and Theoretical Computer Science (FSTTCS 2018)}
+\EventShortTitle{FSTTCS 2018}
+\EventAcronym{FSTTCS}
+\EventYear{2018}
+\EventDate{December 11--13, 2018}
+\EventLocation{Ahmedabad, India}
+\EventLogo{}
+\SeriesVolume{122}
+\ArticleNo{9}
+
+%theorems
+\theoremstyle{plain}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\declaretheorem[name=Theorem,numberlike=theorem]{mythm}
+\declaretheorem[name=Lemma,numberlike=theorem]{mylem}
+\declaretheorem[name=Corollary,numberlike=theorem]{mycor}
+
+\theoremstyle{remark}
+\newtheorem*{notation}{Notation}
+
+\makeatletter
+\newcommand{\@abbrev}[3]{
+	\def\c@a@def##1{
+		\if ##1.
+		\relax
+		\else
+		\@ifdefinable{\@nameuse{#1##1}}{\@namedef{#1##1}{#2##1}}
+		\expandafter\c@a@def
+		\fi
+	}
+	\c@a@def #3.
+}
+
+
+\@abbrev{bb}{\mathbb}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\@abbrev{bf}{\mathbf}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{bit}{\boldsymbol}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{cal}{\mathcal}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\@abbrev{frak}{\mathfrak}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{rm}{\mathrm}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{scr}{\mathscr}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\@abbrev{sf}{\mathsf}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\@abbrev{ov}{\ov}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+\makeatother
+
+% Math Operators, Abbreviations for certain Logic etc.
+\DeclareMathOperator{\code}{code}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tower}{tower}
+\DeclareMathOperator{\bin}{bin}
+\DeclareMathOperator{\un}{un}
+\DeclareMathOperator{\lexp}{lexp}
+\DeclareMathOperator{\rexp}{rexp}
+\DeclareMathOperator{\pref}{pref}
+\DeclareMathOperator{\suf}{suf}
+\DeclareMathOperator{\cpr}{rc}
+\DeclareMathOperator{\qr}{qr}
+%definitions
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\classfont}[1]{\mathsf{#1}}
+\newcommand{\nf}{\classfont{nf}}
+\newcommand{\ol}{\classfont{ol}}
+\newcommand{\NF}{\classfont{NF}}
+\newcommand{\einschr}[2]{\ensuremath{#1|_{#2}}}
+\newcommand{\partition}[2]{\ensuremath{#1/_{\!#2}}}
+
+\newcommand{\shuffle}[2]{\!\left\langle#1,\ov{#2}\right\rangle\!}
+\newcommand{\rd}[1]{\mathsf{rd}(#1)}
+\newcommand{\wrt}[1]{\mathsf{wrt}(#1)}
+
+\newcommand{\strt}[1]{\ov{\pi}_1(#1)}
+\newcommand{\shffl}[1]{\ov{\pi}_2(#1)}
+
+\newcommand{\nfx}[2][]{\nf_{#1}(#2)}
+\newcommand{\NFx}[1][]{\NF_{#1}}
+\newcommand{\olx}[3][]{\ol_{#1}\!\left(#2,#3\right)}
+\newcommand{\equivx}[1][]{\equiv_{#1}}
+\newcommand{\Qx}{\calQ}
+\newcommand{\transx}[1][]{\vdash_{#1}}
+\newcommand{\opx}[1][]{\circ_{#1}}
+\newcommand{\Rx}[1][]{\mathcal{R}_{#1}}
+\newcommand{\leqx}[1][]{\leq_{#1}}
+\newcommand{\teilwx}[1][]{\preceq_{#1}}
+
+\newcommand{\chr}[1]{\chi(#1)}
+\newcommand{\Chr}[1]{\Chi}
+
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\wrti}[1]{\inv{\mathsf{wrt}}\!\left(#1\right)}
+\newcommand{\rdi}[1]{\inv{\mathsf{rd}}\!\left(#1\right)}
+
+\newcommand{\FO}{\classfont{FO}}
+\newcommand{\MSO}{\classfont{MSO}}
+\newcommand{\FOQ}{\FO[(E_\alpha)_{\alpha\in\varSigma}]}
+\newcommand{\MSOQ}{\MSO[(E_\alpha)_{\alpha\in\varSigma}]}
+
+\newcommand{\lft}[1]{\lambda(#1)}
+\newcommand{\mddl}[1]{\mu(#1)}
+\newcommand{\rght}[1]{\varrho(#1)}
+
+\newcommand{\cayley}[2]{\frakC(#1,#2)}
+\newcommand{\lcayley}[2]{\mathfrak{LC}(#1,#2)}
+\newcommand{\cQ}{\frakC}
+\newcommand{\lcQ}{\mathfrak{LC}}
+\newcommand{\FOTh}[1]{\classfont{FOTh}(#1)}
+\newcommand{\MSOTh}[1]{\classfont{MSOTh}(#1)}
+\newcommand{\grL}{\mathcal{L}}
+\newcommand{\grR}{\mathcal{R}}
+\newcommand{\presuf}{\mathbin{\substack{{\prec}\\{\sqsubsetneq}}}}
+\newcommand{\presufeq}{\mathbin{\substack{{\prec}\\{\sqsubseteq}}}}
+\newcommand{\ud}[1]{\mathsf{ud}(#1)}
+
+\newcommand{\leqlog}{\leq_{\operatorname{log}}}
+\newcommand{\eqlog}{\approx_{\operatorname{log}}}
+
+\renewcommand{\root}[1]{\sqrt{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\rho}{\varrho}
+\renewcommand{\Gamma}{\varGamma}
+\renewcommand{\Sigma}{\varSigma}
+
+\begin{document}
+	\maketitle
+
+	\begin{abstract}
+		We investigate the decidability of logical aspects of graphs that arise as Cayley-graphs of the so-called queue monoids. These monoids model the behavior of the classical (reliable) fifo-queues. We answer a question raised by Huschenbett, Kuske, and Zetzsche and prove the decidability of the first-order theory of these graphs with the help of an - at least for the authors - new combination of the well-known method from Ferrante and Rackoff and an automata-based approach. On the other hand, we prove that the monadic second-order of the queue monoid's Cayley-graph is undecidable.
+	\end{abstract}
+
+	\section{Introduction}
+	Data structures are one of the most important concepts in nearly all areas of computer science. Important data structures are, e.g., finite memories, counters, and (theoretically) infinite Turing-tapes. But the most fundamental ones are stacks and queues. And although these two data structures look very similar as they have got the same set of operations on them (i.e.\ writing and reading of a letter), they differ from the computability's point of view: if we equip finite automata with both data structures, then the ones with stacks compute exactly the context-free languages (these are the well-known pushdown automata). But if we equip a finite automaton with queues (in literature they are called queue automata, communicating automata, or channel systems) then we obtain a Turing-complete computation model (cf.~\cite{BraZ83,Bol06}). This strong model can be weakened with various extensions, e.g., if the queue is allowed to forget some of its contents (cf.~\cite{AbdJ96,CecFP96,MasS02}) or if letters of low priority can be superseded by letters with higher priority (cf.~\cite{HaaSS14}).
+	
+	One possible approach to analyze the difference of the behavior of the data structures is to model them as a monoid of transformations. Then, finite memories induce finite monoids, counters induce the integers with addition, stacks induce the polycyclic monoids (cf. \cite{Sak86,kambites2009}), and queues induce the so-called queue monoids which were first introduced in~\cite{HusKZ17}. And while the transformation monoids of the other data structures are very well-understood, we still do not know much about the queue monoid. Further results on the queue monoid (with and without lossiness) can be found in~\cite{KKP18,Koe18}. Here, we only consider the reliable queue monoids. Concretely, we study the Cayley-graph of this monoid.
+	
+	Cayley-graphs are a natural translation of finitely generated groups and monoids into graph theory and is a fundamental tool to handle these algebraic constructs in combinatorics, topology, and automata theory. Concretely, these are labeled, directed graphs with labels from a fixed generating set $\varGamma$ of the monoid $\calM$. Thereby, the elements from $\calM$ are the graph's nodes and there is an $a$-labeled edge (where $a\in\varGamma$) from $x\in\calM$ to $y\in\calM$ iff $xa=y$ holds in $\calM$. For groups, we already know many results on their Cayley-graphs. For example, the group's Cayley-graph has decidable first-order theory if, and only if, its existential first-order theory is decidable and if, and only if, the group's word problem is decidable \cite{KusL05}. Moreover, a group's Cayley-graph has decidable monadic second-order theory if, and only if, the group is context-free (that is, if the group's word problem is context-free) \cite{MulS85,KusL05}. Besides these results, Kharlampovich et al.\ considered in \cite{KKM14} so-called Cayley-graph automatic groups (these are the groups having an automatic Cayley-graph in the sense of \cite{KN95}) which links to the rich theory of automatic structures.
+	
+	Unfortunately, there are not that many studies on Cayley-graphs of monoids. In particular, there are monoids with decidable word problem but undecidable existential first-order theory of their Cayley-graph \cite{NarO90,KusL06}. For finite monoids the Cayley-graphs are finite and, hence, the first- and second-order theories are complete for polynomial space and exponential space, respectively ~\cite{Graedel03}. For polycyclic monoids the Cayley-graphs are automatic, complete $|A|$-ary trees (where $A$ is the underlying alphabet) with an additional node every other node is connected with (this is the zero element resp. error state). Therefore, due to \cite{DelKT03,KusL06} the Cayley-graphs monadic second-order theory is decidable (the first-order theory is even in $\classfont{2EXPSPACE}$ by~\cite{KusL11}).
+	
+	In this paper we want to consider logics on the Cayley-graph of the queue monoid. Concretely, we will see that this graph's first-order theory is decidable by giving a primitive recursive (but non-elementary) algorithm which combines two well-known methods from model theory in a (at least for the authors) new way: the method of Ferrante and Rackoff~\cite{FerR79} and an automata-based approach. This gives an answer on a question raised by Huschenbett, Kuske, and Zetzsche~\cite{HusKZ17}. There, they conjectured the undecidability of its first-order logic implying that the graph is not automatic in the sense of~\cite{KN95}. Moreover, we will prove the undecidability of the monadic second-order theory with the help of a well-known result from Seese~\cite{See91}.
+	
+	\section{Preliminaries}
+	Let $A$ be an alphabet. We use $\preceq$ to denote the \emph{prefix-relation} and $\sqsubseteq$ for the \emph{suffix-relation} on $A^\ast$. If $u= vw$ we write $v^{-1}u = w$ and
+	$uw^{-1} = v$. Thereby, $v$ is the \emph{complementary prefix} of $w$ wrt.\ $u$ and $w$ the \emph{complementary suffix} of $v$ wrt.\ $u$. For $u,v\in A^\ast$ let $u \sqcap v$ denote the largest suffix of $u$ that is also a prefix of $v$.
+	
+	For $m,n,r\in\bbN$ we write $m =_r n$ iff $m=n$ or $m,n>r$. The function $\exp_{r}(n)$ is inductively defined by $\exp_0(n) = n$ and $\exp_{r+1}(n) = 2^{\exp_r(n)}$.
+	
+	\paragraph*{Logic on Graphs and Words}
+	Let $A$ be a finite set of labels. An \emph{edge-labeled graph} is a tuple $G=(V^G,(E_a^G)_{a\in A})$ where $V$ is the set of vertices and $E_a^G \subseteq V\times V$ is the set of $a$-labeled edges. 
+	A \emph{word-structure} over $A$ is a tuple $W = (\{0,\ldots, n-1\}, \leq^W, (P_a^W)_{a\in A})$ where $\leq^W$ is the usual order on $\{0,\ldots,n-1\}$, and $(P_a^W)_{a\in A}$ is a partition of $\{0,\ldots, n-1\}$ (some of the sets $P_a^W$ may be empty). Whenever we use logic to describe properties of a word $w$ then the formula is evaluated on the corresponding word structure $W$. 
+	
+	Let $\tau = \{R_1,\ldots,R_m, c_1, \ldots, c_n\}$ where $R_i$ is a relation symbol of arity $r_i$ and $c_j$ is a constant symbol.
+	\emph{First-order formulas} (over the vocabulary $\tau$) are build up
+	from variables and constant symbols $\{x_i \mid i\in \bbN \}\cup \{c_1,\ldots,c_n\}$, the edge relation symbols $\{R_1,\ldots, R_m\}$, the equality symbol $=$, the Boolean connectives
+	$\{\lnot,\vee,\wedge, \to \}$,
+	quantifiers $\{\forall, \exists \}$, and the bracket symbols
+	$\{(,) \}$. 
+	We write $G\models \phi$ to denote that the formula $\phi$ is satisfied by the structure $G$.
+	The \emph{quantifier rank} $\qr(\phi)$ of a formula $\phi$
+	is the maximal nesting depth of quantifiers within $\phi$. Two structures
+	$G$ and $H$ are \emph{$r$-equivalent} (denoted $G\equiv_r H$) if they
+	cannot be distinguished by any formula of quantifier rank $\le r$. 
+	For a structure $G$ and two tuples $\vec{p}, \vec{q} \in (V^G)^m$ we write $\vec{p} \equiv_r^G \vec{q}$ or say that $\vec{p}$ and $\vec{q}$ are $r$-equivalent in $G$
+	whenever $G\models \phi(\vec{p}) \Leftrightarrow G\models\phi(\vec{q})$ for all first-order formulas $\phi$ with $m$ free variables and
+	quantifier rank at most $r$. For all the above notations we adopt the convention that we omit superscripts whenever this should not lead to any confusion. For instance we write 
+	$\vec{p} \equiv_r \vec{q}$ when the underlying structure $G$ is clear from the context. 
+	
+	The \emph{$r$-type} of a structure $G$ is the set of all first-order sentences $\phi$ of quantifier rank at most $r$ such that $G\models \phi$. It is well known that there are up to equivalence only
+	finitely many sentences of quantifier rank at most $r$. Hence the $r$-type of a structure can be characterized by a sentence, which has also quantifier rank $r$. 
+	
+	\emph{Ehrenfeucht-Fra\"\i{}ss\'e-relations} (resp. \emph{EF-relations}) for a graph $G = (V, (E_a)_{a\in A})$ are a system $(\calE^r_m)_{r,m\in\bbN}$ where  $\calE^r_m$ is an equivalence relation on $V^m$ and
+	the following is true for all $r,m\in\bbN$ and $\vec{p},\vec{q} \in V^m$:
+	\begin{itemize}
+		\item If $(p_1,\ldots,p_m) \calE^0_m (q_1,\ldots,q_m)$ then the mapping $p_i \mapsto q_i$ is a partial isomorphism, that is $p_i= p_j \Leftrightarrow q_i=q_j$ and
+		$(p_i,p_j)\in E_a \Leftrightarrow (q_i,q_j) \in E_a$ for all $1\leq i,j\leq m$ and all $a\in A$.
+		\item If $\vec{p} \calE^{r+1}_m \vec{q}$ then for every $p\in V$ there exists a $q\in V$ such that $(\vec{p}, p) \calE^r_{m+1} (\vec{q}, q)$.
+	\end{itemize}
+	
+	Ehrenfeucht-Fra\"\i{}ss\'e-relations are useful to identify $r$-equivalent tuples in a graph. This is formalized in the following theorem.
+	\begin{theorem}[\!\!\cite{Fra54,Ehr61}]
+		Let $G$ be a graph, $(\calE^r_m)_{r,m\in\bbN}$ Ehrenfeucht-Fra\"\i{}ss\'e-relations for $G$, and $\vec{p}, \vec{q}$ $m$-tuples of nodes from $G$. If $\vec{p} \calE^r_m \vec{q}$ then 
+		$\vec{p} \equiv_r \vec{q}$.
+	\end{theorem}
+
+\section{Queue Monoid and its Cayley-Graph}
+\paragraph*{Definition of the Monoid}
+The queue monoid models the behavior of a (reliable) fifo-queue whose entries come from an alphabet $A$. Consequently, the state of a queue is a word from $A^*$. The basic actions of our queue are writing of the symbol $a\in A$ of the queue (denoted by $a$) and reading the symbol $a\in A$ from the queue (denoted by $\ova$). Thereby, $\ovA$ is a disjoint copy of $A$ containing all reading actions $\ova$ and $\varSigma:=A\uplus\ovA$ is the set of all basic actions. To simplify notation, for a word $u=a_1a_2\dots a_n\in A^*$ we write $\ovu$ for the word $\ov{a_1}\,\ov{a_2}\dots \ov{a_n}$.
+
+Formally, the action $a\in A$ appends the letter $a$ to the state of the queue and the action $\ova\in\ovA$ tries to cancel the letter $a$ from the beginning of the current state of the queue. Thereby, if the state does not start with this symbol, the queue will end up in an error state which we denote by~$\bot$. Note that in contrast to (partially) lossy queues which we considered in \cite{KKP18,Koe18}, these queues cannot forget any part of their content. Hence, these ideas lead to the following definition:
+
+\begin{definition}
+	Let $\bot\notin A^*$. The function $\opx\colon(A^*\cup\{\bot\})\times\varSigma^*\to(A^*\cup\{\bot\})$ is defined for each $s\in A^*$, $a,b\in A$, and $u\in\varSigma^*$ as follows:
+	\begin{enumerate}[(1)]
+		\item $s\opx \varepsilon=s$
+		\item $s\opx au=sa\opx u$
+		\item $bs\opx \ova u=\begin{cases}
+		s\opx u & \text{if }a=b\\
+		\bot & \text{otherwise}
+		\end{cases}$
+		\item $\varepsilon\opx \ova u=\bot\opx u=\bot$
+	\end{enumerate}
+\end{definition}
+
+With the help of this function we may now identify sequences of actions that are acting equally. This is finally used to define the monoid of queue actions.
+
+\begin{definition}
+	Let $u,v\in\varSigma^*$. Then $u$ and $v$ \emph{act equally} (denoted by ${u\equivx v}$) if $s\opx u=s\opx v$ holds for each $s\in A^*$.
+	Since $s\opx uv=(s\opx u)\opx v$, the resulting relation $\equivx$
+	is a congruence on the free monoid $\varSigma$. Hence, the
+	quotient $\Qx(A):=\partition{\varSigma^*}{\equivx}$ is a monoid
+	which we call the \emph{monoid of queue actions} or for short \emph{queue monoid}. 
+	The neutral element of $\Qx(A)$ is $[\epsilon]_{\equivx} = \{\epsilon\}$, which we will denote simply by $\epsilon$.
+\end{definition}
+
+Note that the queue monoids $\Qx(A)$ for alphabets $A$ of different size are not isomorphic. Though, all of the following results hold for any alphabet $A$ with $|A|\geq2$. Hence, we may fix an arbitrary alphabet $A$ from now on and write $\Qx$ instead of $\Qx(A)$.
+
+\begin{remark}
+	Let $A=\{a\}$ be a singleton. Then a queue on this alphabet acts like a partially blind counter since $a^n\opx a=a^{n+1}$ and $a^{n+1}\opx\ova=a^n$. In other words, $\Qx(\{a\})$ is the bicyclic semigroup.
+\end{remark}
+
+\paragraph*{Basic Properties}
+Now, we want to recall some basic properties considering the equivalence relation~$\equivx$. The first important fact expresses the equivalence in terms of some commutations of write and read actions under certain contexts.
+
+\begin{theorem}[{{\!\!\cite[Theorem 4.3]{HusKZ17}}}]\label{thm:equiv}
+	The equivalence relation $\equivx$ is the least congruence on the free monoid $\varSigma^*$ satisfying the following equations for all $a,b\in A$:
+	\begin{enumerate}[(1)]
+		\item $a\ovb\equivx\ovb a$ if $a\neq b$\label{thm:equiv:i1}
+		\item $a\ova\ovb\equivx\ova a\ovb$\label{thm:equiv:i2}
+		\item $ba\ova\equivx b\ova a$\label{thm:equiv:i3}\qed
+	\end{enumerate}
+\end{theorem}
+
+A very frequently used notation is the following: the \emph{projections to write and read actions}, resp., are defined as $\classfont{wrt},\classfont{rd}\colon\varSigma^*\to A^*$ by $\wrt{a}=\rd{\ova}=a$ and $\wrt{\ova}=\rd{a}=\varepsilon$ for all $a\in A$. In other words, $\wrt{u}$ can be derived from $u$ by deletion of all read actions and $\rd{u}$ can be obtained from $u$ by deletion of all the write actions and by suppression of the overlines. Due to Theorem~\ref{thm:equiv} all words contained in a single equivalence class of~$\equivx$ have the same projections. Hence we use them for equivalence classes as well. Though, equality of these projections of two words does not imply equivalence of these words. For example, $u=\ova a$ and $v=a\ova$ have the same projections $\wrt{u}=\rd{u}=a=\wrt{v}=\rd{v}$ but are not equivalent since we have
+\[\varepsilon\opx a\ova=\varepsilon\neq\bot=\varepsilon\opx\ova a\,.\]
+
+The non-equivalence of the two words above is very easy to prove. Also (non-)equivalence of two arbitrary words is decidable in polynomial time: for this purpose we compute normal forms of the equivalence classes of~$\equivx$. We do this by ordering the equations from Theorem~\ref{thm:equiv} from left to right resulting in a terminating and confluent semi-Thue system~$\Rx$ \cite[Lemma~4.1]{HusKZ17}. Then, for any word $u\in\varSigma^*$ there is a unique, irreducible word $\nfx{u}$ with $u\to^*\nfx{u}$, the so-called \emph{normal form} of $u$ resp.\ of its equivalence class $[u]_{\equivx}$. In this word $\nfx{u}$ the read actions from $u$ are moved to the left as far as the equations from above allow.
+
+\begin{example}\label{ex:nfx}
+	Let $a,b\in A$ with $a\neq b$ and $u=abb\ov{ab}$. Then we have
+	\[
+	abb\ov{ab}\xrightarrow{(\ref{thm:equiv:i1})} ab\ova b\ovb\xrightarrow{(\ref{thm:equiv:i1})} a\ova bb\ovb\xrightarrow{(\ref{thm:equiv:i3})} a\ova b\ovb b\,.
+	\]
+	Since we cannot apply any rule from Theorem~\ref{thm:equiv} anymore, we have $\nfx{u}=a\ova b\ovb b$.
+\end{example}
+
+From the definition of~$\Rx$ we obtain that a word is in normal form if it starts with a sequence of read operations followed by an alternating sequence of write and read actions, where all of the read actions $\ova$ appear straight behind the write action $a$. Finally, the normal form ends with a sequence of write actions. Concretely, the set of all normal forms is
+\[\NFx:=\{\nfx{u}\,|\,u\in\varSigma^*\}=\ov{A}^*\{a\ova\,|\,a\in A\}^*A^*\,.\]
+Let $u\in\varSigma^*$. Then the normal form $\nfx{u}$ is uniquely defined by three words $u_1,u_2,u_3\in A^*$ such that $\nfx{u}=\ov{u_1}a_1\ov{a_1}\dots a_n\ov{a_n}u_3$ where $u_2=a_1\dots a_n$. Thereby, we denote the word $u_1$ by $\lft{u}$, the word $u_2$ by $\mddl{u}$, and $u_3$ by $\rght{u}$. Hence, we can define the \emph{characteristics} of~$u$ ($[u]_{\equivx}$, resp.) by the triple 
+$\chr{u}:=(\lft{u},\mddl{u},\rght{u})$.
+Hence, from these characteristics $\chr{u}$ we can obtain the projections of~$u$ on its write and read actions as well: $\wrt{u}=\mddl{u}\rght{u}$ and $\rd{u}=\lft{u}\mddl{u}$.
+
+From now on, we will use these characteristics to represent the elements of~$\Qx$. In other words, we may understand $\Qx$ as a triple of words (i.e., $(A^*)^3$) with a special type of concatenation. The concatenation of any transformation $u\in\varSigma^*$ with a single letter is described in the lemma below.
+\begin{lemma}\label{lem:concat}
+	Let $u\in\varSigma^*$ and $a\in A$. Then we have
+	\[\chr{ua}=(\lft{u},\mddl{u},\rght{u}a)\quad\text{and}\quad \chr{u\ova}=(\rd{u}a\inv{s},s,\inv{s}\wrt{u})\]
+	where $s=\mddl{u}a\sqcap\wrt{u}$.
+\end{lemma}
+
+Iterating Lemma~\ref{lem:concat} we obtain the following Theorem:
+
+\begin{theorem}[{{\!\!\cite[Theorem 5.3]{HusKZ17}}}]\label{thm:concat}
+	Let $u,v\in\varSigma^*$. Then
+	$\chr{uv}=(\rd{uv}\inv{s},s,\inv{s}\wrt{uv})$
+	where $s=\mddl{u}\rd{v}\sqcap\wrt{u}\mddl{v}$.\qed
+\end{theorem}
+
+In other words, the multiplication of two words $u,v\in\varSigma^*$ can be understood as follows: at first we move the read actions from $\ov{\rd{v}}$ to the left such that each of its letters is directly preceded by exactly one write action. If this is not possible (because $\lft{v}$ is longer than $\rght{u}$) we move the letters from $\ov{\mddl{u}\lft{v}}$ to the left until there is an alternating word of write and read actions. Now, if there is an infix $a\ovb$ with $a\neq b$ all of these read actions move one position to the left. We iterate this last step until there is no such infix. It is easy to see, that the new alternating word contains equal subsequences of write and read actions, respectively. Thereby, the read actions are the longest suffix of $\ov{\mddl{u}\rd{v}}$ and the write actions the longest prefix of $\wrt{u}\mddl{v}$ such that the equality of these subsequences holds (this is $\mddl{u}\rd{v}\sqcap\wrt{u}\mddl{v}$).
+
+\paragraph*{The Monoid's Cayley-Graph}
+In this subsection we first recall the definition of Cayley-graphs for arbitrary, finitely generated monoids. Afterwards, we give some common properties as well as some special characteristics of the queue monoid's Cayley-graph.
+
+\begin{definition}
+	Let $\calM$ be a monoid generated by a finite set $\varGamma\subseteq\calM$. The \emph{(right) Cayley-graph} of $\calM$ is the edge-labeled, directed graph $\cayley{\calM}{\varGamma}:=(\calM,(E_a)_{a\in\varGamma})$ with
+	$E_a=\{(x,y)\in\calM\,|\,y=xa\}$
+	for each $a\in\varGamma$.
+\end{definition}
+
+Similar to the right Cayley-graph, we may define the \emph{left Cayley-graph} of $\calM$ as the edge-labeled, directed graph $\lcayley{\calM}{\varGamma}=(\calM,(F_a)_{a\in\varGamma})$ with $F_a=\{(x,y)\in\calM\,|\,y=ax\}$ for all $a\in\varGamma$.
+
+\begin{remark}
+	There is a strong relation between left and right Cayley-graphs of a monoid and Green's relations which are first introduced and studied in \cite{Gre51}. Recall that $x\grR y$ iff $x\calM=y\calM$ for every $x,y\in\calM$ and, similarly, $x\grL y$ iff $\calM x=\calM y$. Then by \cite[Proposition V.1.1]{pin2010} we have $x\grR y$ ($x\grL y$) if, and only if, $x$ is strongly connected to $y$ in $\cayley{\calM}{\varGamma}$ ($\lcayley{\calM}{\varGamma}$, resp.).
+\end{remark}
+
+The concrete shape of the Cayley-graph of a monoid heavily depends on the chosen set of generators. For example, $\{-1,1\}$ and $\{-2,3\}$ are generating sets of $(\bbZ,+)$, but the resulting Cayley-graphs are not isomorphic (even if we remove the labels). Though, the chosen generating set has no influence on decidability and complexity of the FO and MSO theory of the Cayley-graph since the both problems are logspace reducible on each other (which we denote by $\eqlog$):
+
+\begin{proposition}[{{\!\!\cite[Proposition~3.1]{KusL06}}}]
+	Let $\varGamma_1$ and $\varGamma_2$ be two finite generating sets of the monoid~$\calM$. Then
+	\begin{enumerate}[(1)]
+		\item $\FOTh{\cayley{\calM}{\varGamma_1}}\eqlog\FOTh{\cayley{\calM}{\varGamma_2}}$ and
+		\item $\MSOTh{\cayley{\calM}{\varGamma_1}}\eqlog\MSOTh{\cayley{\calM}{\varGamma_2}}$.\qed
+	\end{enumerate}
+\end{proposition}
+
+From now on we only consider the Cayley-graph of the queue monoid~$\Qx$. To simplify notation we write $\cQ$ instead of $\cayley{\Qx}{\varSigma}$ and $\lcQ$ instead of $\lcayley{\Qx}{\varSigma}$. First we prove some properties of $\cQ$ and $\lcQ$.
+
+\begin{proposition}\label{prop:cgqprops}
+	The following statements hold:
+	\begin{enumerate}[(1)]
+		\item $\FOTh{\cQ}\eqlog\FOTh{\lcQ}$ and $\MSOTh{\cQ}\eqlog\MSOTh{\lcQ}$.\label{prop:cgqprops:i1}
+		\item $\cQ$ is an acyclic graph with root $\varepsilon$.\label{prop:cgqprops:i2}
+		\item $\cQ$ has unbounded (in-)degree.\label{prop:cgqprops:i3}
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	At first, we prove (\ref{prop:cgqprops:i1}). Let the duality function $\delta\colon\varSigma^*\to\varSigma^*$ be defined as follows:
+	\[\delta(\varepsilon)=\varepsilon,\ \delta(au)=\delta(u)\ova\,,\text{ and }\delta(\ova u)=\delta(u)a\]
+	for all $u\in\varSigma^*$ and $a\in A$. In other words, $\delta$ reverses the order of the actions and inverts writing and reading of a letter~$a$. From \cite[Proposition~3.4]{HusKZ17} we know $u\equivx v$ iff $\delta(u)\equivx\delta(v)$. Hence, $\delta$ is an anti-morphism on $\Qx$ and $(p,q)\in E_\alpha$ iff $(\delta(p),\delta(q))\in F_{\delta(\alpha)}$ for all $p,q\in\Qx$ and $\alpha\in\varSigma$. Let $\phi\in\FOQ$ ($\phi\in\MSOQ$, resp.). We construct $\phi'$ by replacing any atom ``$E_\alpha(x,y)$'' in $\phi$ by ``$F_{\delta(\alpha)}(x,y)$''. Then
+	$\cQ\models\phi(q_1,\dots,q_k) \iff \lcQ\models\phi'(\delta(q_1),\dots,\delta(q_k))$ for any $q_1,\dots,q_k\in\Qx$. In particular, $\phi\in\FOTh{\cQ}$ iff $\phi'\in\FOTh{\lcQ}$ (resp. $\phi\in\MSOTh{\cQ}$ iff $\phi'\in\MSOTh{\lcQ}$). Finally, the converse reduction is symmetric to the one described above.
+	
+	Now, we prove (\ref{prop:cgqprops:i2}). Due to \cite[Corollary~4.7]{HusKZ17} we have $p\grR q$ iff $p=q$ for all $p,q\in\Qx$. Then, by the remark above $p,q\in\Qx$ are strongly connected iff $p=q$, i.e., there are no cycles in $\cQ$.
+	
+	Next, to prove (\ref{prop:cgqprops:i3}) let $n\in\bbN$ and $a,b\in A$ with $a\neq b$. Set $w_k=\ov{a^k}(a\ova)^{n-k}a^k$ for any $0\leq k\leq n$. Then $w_k\equivx w_\ell$ (i.e. $[w_k]=[w_\ell]$) iff $k=\ell$ for any $0\leq k,\ell\leq n$. By Theorem~\ref{thm:concat} we have $\chr{w_k\ov{b}}=(a^nb,\varepsilon,a^n)$, i.e. $w_k\ov{b}\equivx w_\ell\ov{b}$ for any $0\leq k,\ell\leq n$. Hence, we have $([w_k],[\ov{a^nb}a^n])\in E_{\ovb}$ for all $0\leq k\leq n$, i.e., the node $[\ov{a^nb}a^n]$ has in-degree $>n$.
+\end{proof}
+
+By $\frakG_n$ we denote the \emph{$n\times n$-grid} for $n\in\bbN$. This is an undirected graph with $n^2$ many nodes which we denote by $v_{i,j}$ for any $1\leq i,j\leq n$. Thereby, we have an edge between $v_{i,j}$ and $v_{k,\ell}$ if, and only if, $|j-\ell|+|i-k|=1$ holds.
+Additionally, for a $\varGamma$-labeled, directed graph $\frakG=(V,(E_a)_{a\in\varGamma})$ we denote the unlabeled and undirected version by $\ud{\frakG}=(V,E)$. Here, we have an edge $(v,w)\in E$ if, and only if, there is an $a\in\varGamma$ such that $(v,w)\in E_a$ or $(w,v)\in E_a$. Then, in $\ud{\cQ}$ we can find $\frakG_n$ for any $n\in\bbN$:
+
+\begin{proposition}\label{prop:grid}
+	$\frakG_n$ is an induced subgraph of $\ud{\cQ}$ for any $n\in\bbN$.
+\end{proposition}
+\begin{proof}
+	Let $a,b\in A$ be distinct. Then the submonoid~$\calM$ of $\Qx$ generated by $a$ and $\ovb$ is the free commutative monoid on $\{a,\ovb\}$ by Theorem~\ref{thm:equiv}(\ref{thm:equiv:i1}). Its Cayley-graph~$\cayley{\calM}{\{a,\ovb\}}$ is an infinite grid with labeled, directed edges. %(see Fig.~\ref{fig:grid}). 
+	Then, $\frakG_n$ is an induced subgraph of $\ud{\cayley{\calM}{\{a,\ovb\}}}$. Since in $\cQ$ there are no edges with labels other than $a$ or $\ovb$ between the nodes from $\calM$, $\ud{\cayley{\calM}{\{a,\ovb\}}}$ is an induced subgraph of $\ud{\cQ}$ as well implying our claim.
+\end{proof}
+
+\begin{figure}[h]
+	\begin{center}
+		\begin{tikzpicture}[>=latex',every node/.style={scale=0.65},scale=0.85]
+		\tikzstyle{every node} = [inner sep =1pt];
+		
+		\node (0x0) at (0,0) {$\varepsilon$};
+		\node (1x0) at (1,0) {$a$};
+		\node (2x0) at (2,0) {$a^2$};
+		\node (nx0) at (4.5,0) {$a^n$};
+		
+		\node (0x1) at (0,-1) {$\ovb$};
+		\node (1x1) at (1,-1) {$\ovb a$};
+		\node (2x1) at (2,-1) {$\ovb a^2$};
+		\node (nx1) at (4.5,-1) {$\ovb a^n$};
+		
+		\node (0x2) at (0,-2) {$\ovb^2$};
+		\node (1x2) at (1,-2) {$\ovb^2 a$};
+		\node (2x2) at (2,-2) {$\ovb^2 a^2$};
+		\node (nx2) at (4.5,-2) {$\ovb^2 a^n$};
+		
+		\node (0xn) at (0,-4.5) {$\ovb^n$};
+		\node (1xn) at (1,-4.5) {$\ovb^n a$};
+		\node (2xn) at (2,-4.5) {$\ovb^n a^2$};
+		\node (nxn) at (4.5,-4.5) {$\ovb^n a^n$};
+		
+		\draw[->] (0x0) -- (1x0) node[midway,above] {$a$};
+		\draw[->] (1x0) -- (2x0) node[midway,above] {$a$};
+		\draw[->] (2x0) -- (3,0) node[midway,above] {$a$};
+		\draw[dotted] (3,0) -- (3.5,0);
+		\draw[->] (3.5,0) -- (nx0) node[midway,above] {$a$};
+		\draw[->] (nx0) -- (5.5,0) node[midway,above] {$a$};
+		\draw[dotted] (5.5,0) -- (6,0);
+		
+		\draw[->] (0x1) -- (1x1) node[midway,above] {$a$};
+		\draw[->] (1x1) -- (2x1) node[midway,above] {$a$};
+		\draw[->] (2x1) -- (3,-1) node[midway,above] {$a$};
+		\draw[dotted] (3,-1) -- (3.5,-1);
+		\draw[->] (3.5,-1) -- (nx1) node[midway,above] {$a$};
+		\draw[->] (nx1) -- (5.5,-1) node[midway,above] {$a$};
+		\draw[dotted] (5.5,-1) -- (6,-1);
+		
+		\draw[->] (0x2) -- (1x2) node[midway,above] {$a$};
+		\draw[->] (1x2) -- (2x2) node[midway,above] {$a$};
+		\draw[->] (2x2) -- (3,-2) node[midway,above] {$a$};
+		\draw[dotted] (3,-2) -- (3.5,-2);
+		\draw[->] (3.5,-2) -- (nx2) node[midway,above] {$a$};
+		\draw[->] (nx2) -- (5.5,-2) node[midway,above] {$a$};
+		\draw[dotted] (5.5,-2) -- (6,-2);
+		
+		\draw[->] (0xn) -- (1xn) node[midway,above] {$a$};
+		\draw[->] (1xn) -- (2xn) node[midway,above] {$a$};
+		\draw[->] (2xn) -- (3,-4.5) node[midway,above] {$a$};
+		\draw[dotted] (3,-4.5) -- (3.5,-4.5);
+		\draw[->] (3.5,-4.5) -- (nxn) node[midway,above] {$a$};
+		\draw[->] (nxn) -- (5.5,-4.5) node[midway,above] {$a$};
+		\draw[dotted] (5.5,-4.5) -- (6,-4.5);
+		
+		\draw[->] (0x0) -- (0x1) node[midway,left] {$\ovb$};
+		\draw[->] (1x0) -- (1x1) node[midway,left] {$\ovb$};
+		\draw[->] (2x0) -- (2x1) node[midway,left] {$\ovb$};
+		\draw[->] (nx0) -- (nx1) node[midway,left] {$\ovb$};
+		
+		\draw[->] (0x1) -- (0x2) node[midway,left] {$\ovb$};
+		\draw[->] (1x1) -- (1x2) node[midway,left] {$\ovb$};
+		\draw[->] (2x1) -- (2x2) node[midway,left] {$\ovb$};
+		\draw[->] (nx1) -- (nx2) node[midway,left] {$\ovb$};
+		
+		\draw[->] (0x2) -- (0,-3) node[midway,left] {$\ovb$};
+		\draw[->] (1x2) -- (1,-3) node[midway,left] {$\ovb$};
+		\draw[->] (2x2) -- (2,-3) node[midway,left] {$\ovb$};
+		\draw[->] (nx2) -- (4.5,-3) node[midway,left] {$\ovb$};
+		
+		\draw[dotted] (0,-3) -- (0,-3.5);
+		\draw[dotted] (1,-3) -- (1,-3.5);
+		\draw[dotted] (2,-3) -- (2,-3.5);
+		\draw[dotted] (4.5,-3) -- (4.5,-3.5);
+		
+		\draw[->] (0,-3.5) -- (0xn) node[midway,left] {$\ovb$};
+		\draw[->] (1,-3.5) -- (1xn) node[midway,left] {$\ovb$};
+		\draw[->] (2,-3.5) -- (2xn) node[midway,left] {$\ovb$};
+		\draw[->] (4.5,-3.5) -- (nxn) node[midway,left] {$\ovb$};
+		
+		\draw[->] (0xn) -- (0,-5.5) node[midway,left] {$\ovb$};
+		\draw[->] (1xn) -- (1,-5.5) node[midway,left] {$\ovb$};
+		\draw[->] (2xn) -- (2,-5.5) node[midway,left] {$\ovb$};
+		\draw[->] (nxn) -- (4.5,-5.5) node[midway,left] {$\ovb$};
+		
+		\draw[dotted] (0,-5.5) -- (0,-6);
+		\draw[dotted] (1,-5.5) -- (1,-6);
+		\draw[dotted] (2,-5.5) -- (2,-6);
+		\draw[dotted] (4.5,-5.5) -- (4.5,-6);
+		\end{tikzpicture}
+	\end{center}
+	\caption{$\cQ$ restricted to the nodes reachable by $a$- and $\ovb$-edges, only.}\label{fig:grid}
+\end{figure}
+
+With the help of a famous result from Seese (cf.~\cite{See91}), we may now prove the undecidability of the monadic second-order theory of the queue monoid's Cayley-graph.
+
+\begin{corollary}
+	$\MSOTh{\cQ}$ is undecidable.
+\end{corollary}
+\begin{proof}
+	Due to \cite{RobS84} each planar graph is a minor of some grid $\frakG_n$. Since each $\frakG_n$ is an induced subgraph of $\ud{\cQ}$ by Proposition~\ref{prop:grid}, each planar graph is minor of an induced subgraph of $\ud{\cQ}$. Hence, by \cite[Theorem~5]{See91} $\MSOTh{\ud{\cQ}}$ is undecidable. Since $\ud{\cQ}$ is first-order interpretable in $\cQ$, $\MSOTh{\cQ}$ is undecidable as well.
+\end{proof}
+
+	
+\section{Combinatorics on Words}
+Before diving into the proof of the Cayley-graph's first-order theory we have to prove some combinatorial statements concerning words.
+
+Let $\pref_r(u)$ denote the maximal prefix of $u$ of length at most $r$.
+In a first lemma we prove that the complementary prefix and suffix of $u$ resp.~$v$ wrt.~$u\sqcap v$ can be shortened to words of length at most $2r$ having the same prefixes and suffixes. In terms of $\cQ$'s first-order theory we only have to consider words $u\in\varSigma^*$ having ``short'' $\lft{u}$ and $\rght{u}$.
+
+\begin{lemma}\label{lem:short_ends_construction}
+	Let $r\in\bbN$ and $u,v,w \in A^\ast$ with $uw\sqcap wv = w$. %such that the period of $w$ has length at least $2$. 
+	Then there are words $u',v'$ of length $\leq 2r$ such that
+	\begin{itemize}
+		\item $\suf_r(uw) = \suf_r(u'w)$,
+		\item $\suf_r(wv) = \suf_r(wv')$,
+		\item $\pref_r(wv) = \pref_r(wv')$, and
+		\item $u'w\sqcap wv' = w$.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	Set $u'=\suf_r(u)$. Additionally, if $|v|\leq 2r$ set $v':=v$, and otherwise, set $v':=\pref_r(v)\suf_r(v)$. Then the first three equations are obviously satisfied. Now assume $u'w\sqcap wv'\neq w$, i.e., there is $w'\in A^*$ with $|w'|>|w|$, $w'\preceq wv'$, and $w'\sqsubseteq u'w$. Since $|u'w|\leq r+|w|$ we have $w'\preceq w\pref_r(v)\preceq wv$. Additionally, we have $w'\sqsubseteq u'w\sqsubseteq uw$ implying $|uw\sqcap wv|\geq|w'|>|w|$. This is a contradiction to the definition of~$w$.
+\end{proof}
+
+\begin{remark}
+	The condition $uw\sqcap wv=w$ in Lemma~\ref{lem:short_ends_construction} cannot be simplified to $u\sqcap v=\varepsilon$. For example, let $u=v=a$ and $w=baa$. Then only the first equation is satisfied.
+\end{remark}
+
+A \emph{period} of a word $u$ is a word $v$ such that $u \preceq v^\omega$. Obviously every word $u$ has a unique smallest period, which we denote by $\root{u}$. The \emph{left-exponent} of $u\neq\varepsilon$ in $v$ is the largest number $n$ such that $v= u^nw$, and it is denoted by $\lexp(u,v)$. The \emph{right-remainder}, $v\mod u$,  of $v$ with respect to $u$ is defined as $(u^{\lexp(u,v)})^{-1}v$, that is the unique $w$ such that $v= u^{\lexp(u,v)}w$.  In particular we have $v= \root{v}^{\lexp(\root{v}, v)}(v \mod \root{v})$ for every $v\in A^\ast$. A word $u$ is \emph{primitive} if there is no $v$ with
+$|v| < |u|$ and $u = v^n$ for some $n\in\bbN$.
+For $v,w\in A^\ast$ let $v\Delta w = (y,z)$, where $y,z$ are minimal such that there exists an $x$ with $v=xy$ and $w=xz$. For $\vec{v}, \vec{w}\in(A^\ast)^k$ let 
+$\vec{v}\Delta\vec{w} = (v_1\Delta w_1,\ldots, v_k\Delta w_k) \in ((A^\ast)^2)^k$ and $|\vec{w}| \coloneq \sum_{i=1}^{k}|w_i|$. 
+
+\begin{definition}
+	Let $u\in A^\ast$ be a word. A word $v\in A^*$ is a \emph{border} of $u$ (denoted by $v\presufeq u$) if $v \preceq u$ and $v \sqsubseteq u$. A \emph{border-decomposition} of $u$ is a sequence of words $\epsilon = u_0,u_1,\ldots, u_n = u$ such that for all $0\leq i < n$ it holds that
+	$u_i \presuf u_{i+1}$. A border-decomposition $u_0,u_1,\ldots, u_n $ is \emph{complete} if there is no $1\leq i< n$ and $v\in A^\ast$ with $u_i \presuf v \presuf u_{i+1}$.
+\end{definition}
+
+Hence, a complete border-decomposition of $u\in A^*$ is the sequence of all borders of $u$ ordered by word length. So, it is easy to observe that each word $u\in A^*$ has exactly one complete border-decomposition.
+
+%\begin{observation}
+%	Every word $w\in A^\ast$ has a unique complete canon-decomposition.
+%\end{observation}
+%\begin{proof}
+%	Obviously, every word $w$ possesses at least one complete canon-decomposition. Now suppose $\vec{u} = (u_0,\ldots,u_m)$ and $\vec{v}=(v_0,\ldots,v_n)$ are two distinct complete canon-decompositions of
+%	a word $w\in A^\ast$. W.l.o.g. assume that $n \leq m$. We claim that there is an $0\leq i \leq n$ with $u_i \neq v_i$. Because otherwise it follows from $w= u_n = v_n$ that    
+%	$\vec{u}$ and $\vec{v}$ have the same length $n$ and this, in turn, implies that they are identical since $u_i=v_i$ for all $0\leq i\leq n$. Now choose the smallest $i$ between $0$ and $n$ such that $u_i \neq v_i$. As $u_0 = \epsilon = v_0$ it holds that $i>0$. Hence $u_{i-1}, v_{i-1}$ are defined and $u_{i-1} = v_{i-1}$. Since $u_i, v_i \preceq w$ and $u_i \neq v_i$ it must be the case that $|u_i| \neq |v_i|$. Again w.l.o.g. assume that $|u_i| < |v_i|$. Then  $u_i, v_i \preceq w$, $u_i, v_i \sqsubseteq w$ and $|u_i| < |v_i|$, which implies $u_i \presuf v_i$. Therefore 
+%	$v_{i-1} = u_{i-1} \presuf u_i \presuf v_i$ in contradiction to the completeness of $\vec{v}$!
+%\end{proof}
+
+\begin{example}
+	The complete border-decomposition of $ababa$ is $(\epsilon, a, aba, ababa)$.
+\end{example}
+
+Let $u\in\Sigma^*$ be any element from the $\cQ$ and $(u_0,\dots,u_n)$ be the complete border-decomposition of $\rd{u}\sqcap\wrt{u}$. Then the characteristics $(\rd{u}\inv{u_i},u_i,\inv{u_i}\wrt{u})$ describe all the words having the same projections to write and read actions, resp., as $u$. In the decidability proof of $\FOTh{\cQ}$ we consider these words since these are all close to each other in $\cQ$.
+
+%\begin{definition}
+%	A word $u$ is \emph{periodic} if $u=v^n$ for some $v\in\Sigma^+$ and $n>1$. Otherwise $u$ is primitiv. We say that $u$ is almost periodic if $u= (vw)^nv$ for some $n\geq 1$,  $v\in \Sigma^\ast$, and $w\in\Sigma^+$.  We write $\sqrt{u}^{\ast}$ for the unique pair $(v,w) \in \Sigma^\ast\times\Sigma^+$ such that
+%   $vw$ is primitive and $u = (vw)^nv$ for some $n\geq 1$.
+%
+%\end{definition}
+
+%\begin{lemma}
+%	Let $\vec{u} = (u_0,\ldots,u_n)$ be a complete border-decomposition. Then $\root{u_{i+1}} = u_{i+1}u_i^{-1}$ for all $0\leq i < n$. 
+%\end{lemma}
+%\begin{proof}
+%	Fix some $0\leq i < n$ and let $v:= u_{i+1}u_i^{-1}$. Let us verify first that $v$ is indeed a period of $u_{i+1}$. If $2|u_i| \leq |u_{i+1}|$ then $u_{i+1} = u_iwu_i$ for some $w\in\Sigma^\ast$. 
+%	Hence $v= u_iw$ and $u_{i+1} \preceq (u_iw)^\omega = v^\omega$. Otherwise  $2|u_i| > |u_{i+1}|$ and therefore the $u_i$-prefix and the $u_i$-suffix of $u_{i+1}$ overlap. We can use this overlap to 
+%	show via a simple induction that the situation is as depicted in Fig.~\ref{fig:root}.
+%	\begin{figure}[h]
+%		\centering\include{figures/root}
+%		\caption{\label{fig:root}}
+%	\end{figure}
+%
+%	Now suppose that $|\root{u_{i+1}}| < |v|$. Then let $u_i' \coloneq \root{u_{i+1}}^{\lexp(\root{u_{i+1}}, u_{i+1}) -1}(u_{i+1} \mod \root{u_{i+1}})$.
+%	Then $u_i' \presuf u_{i+1}$ and $|u_i'| = |u_{i+1}| - \root{u_{i+1}} > |u_{i+1}| - |v| = |u_i|$. Hence $u_i\presuf u_i' \presuf u_{i+1}$ contradicting the completeness of $\vec{u}$! 
+%\end{proof}
+
+From the complete border-decomposition of a word~$w$ we derive the so called skeleton of~$w$ containing the inner words $v$ of all bordered words $uvu$ in $w$.
+
+\begin{definition}
+	Let $w\in A^\ast$ and $\vec{w} = (w_0,\ldots,w_n)$ be the complete border-decomposition of $w$. The \emph{$r$-skeleton} of $w$, denoted by $\calS_r(w)$, is the word of length $n$ over the alphabet $\Gamma = A^{\leq r}$ with $\calS_r(w)[i] = \pref_r(w_i^{-1}w)$ for each $0\leq i\leq n-1$. Note that $w_i^{-1}w$ is always defined since $w_i\preceq w$.
+	\begin{figure}[H]
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,every node/.style={scale=0.7}]
+			\path[draw] (0,0) rectangle (3.5,0.5);
+			\path[draw] (3.5,0) rectangle (5,0.5);
+			\path[draw] (6.5, 0) rectangle (8.5, -.5);
+			\path[draw] (3.5,0) rectangle (5,-0.5);
+			\path[draw] (5, 0) rectangle (6.5, -.5);
+			\draw[draw, decorate, decoration={brace,amplitude=5pt}] (5, 0) -- node[above, yshift= 5pt] {$r$} (6.5, 0);
+			
+			
+			\node at (4.25, 0.25) {$w_i$};
+			\node at (4.25, -0.25) {$w_i$};
+			\node at (5.75, -0.25) {$\calS_r(w)[i]$};
+			\node at (-.5, .25) {$w=$};
+			\node at (9, -.25) {$=w$};
+			\end{tikzpicture}
+		\end{center}\label{fig:skeletondef}\caption{Definition of $\calS_r(w).$}
+	\end{figure}
+\end{definition}
+Note that it is convenient for our purpose to consider $\calS_r(w)$ to be a word over an alphabet, which in itself consists of words of bounded length rather than to consider $\calS_r(w)$ as a sequence of words.
+
+\begin{example}
+	Let $u= bababa$ and $v=ababab$. Then $u\sqcap v = ababa$ and the complete border-decomposition of $u\sqcap v$ is $(\epsilon, a, aba, ababa)$. The $2$-skeleton of $u\sqcap v$ is the word depicted below.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.85]
+		\node[] (0) {$ab$};
+		\node[ right=of 0] (1) {$ba$};
+		\node[ right=of 1] (2) {$ba$};
+		
+		\path[ ->,>=latex'] (0) edge (1)
+		(1) edge (2);
+		\end{tikzpicture}
+	\end{center}\label{fig:skeletonex}
+\end{example}
+
+Skeletons will play a crucial role in Section \ref{sec:decidability}. 
+We will prove the decidability of the Cayley-graph of a queue-monoid by  translating back and forth between 
+an Ehrenfeucht-Fra\"{\i}ss\'{e} game played on the Cayley-graph (presented as EF-relations) and games played on certain skeletons which are derived from the game played on the Cayley-graph. 
+
+\begin{lemma}\label{lem:short_from_skeleton}
+	Let $r\in\bbN$, $w\in A^*$ and $n\in\bbN$ be the length of $\calS_r(w)$. Then a word $v\in A^*$ can be constructed from $w$ such that $|v|=\calO(2^{nr})$ and $\calS_r(w)=\calS_r(v)$.
+\end{lemma}
+\begin{proof}
+	Let $\vec{w}=(w_0,\dots,w_n)$ be the complete border-decomposition of~$w$. At first, assume $|\calS_r(w)[n-1]|<r$ (i.e., the last component is small). Then there are two possibilities: on the one hand $w=w_{n-1}xw_{n-1}$ and $|xw_{n-1}|<r$. In this case we have $|w|<2r=\calO(2^{nr})$. On the other hand we have $w=xw_{n-1}=w_{n-1}y$ where $|x|=|y|<\min\{|w_{n-1}|,r\}$, i.e., the prefix and the suffix $w_{n-1}$ overlap in $w_n$. Then it is easy to see that $x$ is a period of $w_{n-1}$ and of $w_n$. Concretely, there is a prefix $p$ of $x$ and a number $k\in\bbN$ such that $w=x^kp$ and $w_{n-1}=x^{k-1}p$. In particular, all word $x^ip$ with $1\leq i\leq k$ are borders of $w$ which implies $k\leq n$. Hence we have $|w|\leq|x|\cdot(k+1)\leq r\cdot(n+1)=\calO(2^{nr})$. Therefore, in both cases we are ready and we can assume $|\calS_r(w)[n-1]|$ from now on.
+	
+	We construct~$v$ inductively as follows: We set $v_0:=\epsilon$. Now let $a,b\in A$ be distinct with $\calS_r(w)[0]\in aA^*$. Then $x\presuf\calS_r(w)[0]b^{2n+r}$ implies $x=\epsilon$. Hence, we set, for $0\leq i<n$, $v_{i+1}:=v_ix_iv_i$ where $x_i=\calS_r(w)[i]\,b^{n-i}a^ib^{n+r}$. Finally, we set $v:=v_{n}$.
+	
+	Before we can prove $\calS_r(w)=\calS_r(v)$ we need to prove the following two properties of $(v_0,\dots,v_n)$:
+	\begin{alphaenumerate}
+		\item For each $0\leq i\leq n$ $\root{v_{i+1}}=v_ix_i$ and\label{prf:short_from_skeleton:i1}
+		\item $\vec{v}=(v_0,\dots,v_{n})$ is a complete border-decomposition of $v$.\label{prf:short_from_skeleton:i2}
+	\end{alphaenumerate}
+	\emph{Proof of (\ref{prf:short_from_skeleton:i1}).}\ We observe that $v_ix_i$ is a period of $v_{i+1}$ and we prove by induction on $0\leq i\leq n$ that this period is minimal. For $i=0$ this is trivial since $v_1\in aA^{r-1}b^{2n+r}$ and $a\neq b$. So now let $i>0$. We suppose that there is a period $p$ of $v_{i+1}$ with $|p|<|v_ix_i|$. Then, for $y_j:=x_j(b^{n+r})^{-1}$ for $0\leq j\leq i$, the word $v_{i+1}$ is an alternation of words $y_j$ and $b^{r+n}$ which are all of length $r+n$. Note that by construction we have $y_{j}\neq b^{n+r}$ (since each $y_{j}$ contains at least one $a$) as well as $y_{j}\neq y_{k}$ if $j\neq k$ for each $0\leq j,k\leq i$. Additionally, each second occurrence of a $y_j$-block is $y_1$. We now consider two cases:
+	
+	First, assume that $|p|$ is not a divisor of $n+r$. If $|p|<n+r$ then the distance between each two occurrences of $a$ in $p^\omega$ is at most $|p|<n+r$ but $v_{i+1}$ contains at least one $b^{n+r}$-block. Hence, we have $|p|>n+r$. If $\lfloor\frac{|p|}{n+r}\rfloor$ is odd (cf.\ Fig.~\ref{fig:repetition:i1}), $p$ starts with $a$ and ends in a block of the form $b^{n+r}$, but does not contain all of these $n+r$ many $b$'s. Since $p$ start with an $a$, a first repetition of $p$ this first $a$ is different from the $b$ at this position in $v_{i+1}$, i.e., $p$ is not a period of $v_{i+1}$. Otherwise, if $\lfloor\frac{|p|}{n+r}\rfloor$ is even (cf.\ Fig.~\ref{fig:repetition:i2}), then the prefix of $p^{-1}v_{i+1}$ of length $|p|$ contains at most one $y_1$-block and this overlaps with a $b^{n+r}$-block. Hence, there is a position in the first repetition of $p$ containing a $b$ which is different from the $a$ at this position in $v_{i+1}$.
+	
+	\begin{figure}[h]
+		\begin{subfigure}{\textwidth}
+			\begin{tikzpicture}[scale=0.65,every node/.style={scale=0.85}]
+			\path[fill=red!10] (0,0) rectangle (0.5,0.75);
+			\path[fill=red!10] (0,-0.5) rectangle (0.5,-1.25);
+			\path[fill=red!10] (4.5,-0.5) rectangle (5,-1.25);
+			\path[fill=blue!10] (4.5,0) rectangle (5,0.75);
+			
+			\draw (0,0) rectangle (15,0.75);
+			\draw (0,0) rectangle (15,0.75);
+			\draw (15,0) -- (16,0);
+			\draw[decorate,decoration={snake,amplitude=.4mm,segment length=2mm}] (16,0) -- (16,0.75);
+			\draw (16,0.75) -- (15,0.75);
+			
+			\draw (2.5,0) -- (2.5,0.75);
+			\draw (5,0) -- (5,0.75);
+			\draw (7.5,0) -- (7.5,0.75);
+			\draw (10,0) -- (10,0.75);
+			\draw (12.5,0) -- (12.5,0.75);
+			
+			\node at (1.25,0.3) {$y_1$};
+			\node at (3.75,0.3) {$b^{n+r}$};
+			\node at (6.25,0.3) {$y_2$};
+			\node at (8.75,0.3) {$b^{n+r}$};
+			\node at (11.25,0.3) {$y_1$};
+			\node at (13.75,0.3) {$b^{n+r}$};
+			
+			\draw[dashed] (4.5,-0.2) -- (4.5,0.95);
+			
+			\node at (4.75,0.3) {$b$};
+			\node at (0.25,0.3) {$a$};
+			\node at (0.25,-0.95) {$a$};
+			\node at (4.75,-0.95) {$a$};
+			
+			\node[rotate=90] at (4.75,-0.275) {$\neq$};
+			
+			\draw (0,-0.5) rectangle (4.5,-1.25);
+			\draw (4.5,-0.5) rectangle (9,-1.25);
+			
+			\node at (2.25,-0.95) {$p$};
+			\node at (6.75,-0.95) {$p$};
+			\end{tikzpicture}
+			\subcaption{Case $\left\lfloor\frac{|p|}{n+r}\right\rfloor$ is odd\label{fig:repetition:i1}}
+		\end{subfigure}
+		\begin{subfigure}{\textwidth}
+			\begin{tikzpicture}[scale=0.65,every node/.style={scale=0.85}]
+			\path[fill=red!10] (0,0) rectangle (0.5,0.75);
+			\path[fill=blue!10] (10,-0.5) rectangle (10.5,-1.25);
+			\path[fill=red!10] (10,0) rectangle (10.5,0.75);
+			
+			\draw (0,0) rectangle (15,0.75);
+			\draw (15,0) -- (16,0);
+			\draw[decorate,decoration={snake,amplitude=.4mm,segment length=2mm}] (16,0) -- (16,0.75);
+			\draw (16,0.75) -- (15,0.75);
+			
+			\draw (2.5,0) -- (2.5,0.75);
+			\draw (5,0) -- (5,0.75);
+			\draw (7.5,0) -- (7.5,0.75);
+			\draw (10,0) -- (10,0.75);
+			\draw (12.5,0) -- (12.5,0.75);
+			
+			\node at (1.25,0.3) {$y_1$};
+			\node at (3.75,0.3) {$b^{n+r}$};
+			\node at (6.25,0.3) {$y_2$};
+			\node at (8.75,0.3) {$b^{n+r}$};
+			\node at (11.25,0.3) {$y_1$};
+			\node at (13.75,0.3) {$b^{n+r}$};
+			
+			\draw[dashed] (5.5,-0.2) -- (5.5,0.95);
+			
+			\draw (0,-0.5) rectangle (5.5,-1.25);
+			\draw (5.5,-0.5) rectangle (11,-1.25);
+			\draw (8,-0.5) -- (8,-1.25);
+			\draw (10.5,-0.5) -- (10.5,-1.25);
+			
+			\node at (2.75,-0.95) {$p$};
+			\node at (6.75,-0.95) {$y_1$};
+			\node at (9.25,-0.95) {$b^{n+r}$};
+			
+			\node at (0.25,0.3) {$a$};
+			\node at (10.25,0.35) {$a$};
+			\node at (10.25,-0.95) {$b$};
+			
+			\node[rotate=90] at (10.25,-0.275) {$\neq$};
+			\end{tikzpicture}
+			\subcaption{Case $\left\lfloor\frac{|p|}{n+r}\right\rfloor$ is even\label{fig:repetition:i2}}
+		\end{subfigure}
+		\caption{\label{fig:repetition}}
+	\end{figure}
+	
+	Now, assume $|p|$ is a divisor of $n+r$. Then we can understand the blocks of length $n+r$ as letters of the alphabet $\{b^{n+r},y_1,\dots,y_i\}$. Since there is no $y_i$-block in $v_i$ we have $|p|\geq|v_iy_i|$. Since $p$ starts with $y_1$ and $y_i$ is followed by $b^{n+r}$, $p$ has length at least $|v_ix_i|$.
+	
+	\emph{Proof of (\ref{prf:short_from_skeleton:i2}).}\ By construction, it is easy to see that $\vec{v}=(v_0,\dots,v_n)$ is a border-decomposition of $v=v_n$. We prove now by induction on $0\leq i<n$ that $(v_0,\dots,v_{i+1})$ is a complete border-decomposition of $v_i$. The case $i=0$ is easy to verify since $v_1\in aA^{r-1}b^{2n+r}$. So, let $i\geq1$. Assume there is $u\in A^*$ with $v_i\presuf u\presuf v_{i+1}$. Let $u$ be of minimal length satisfying this inequality. Then there are two possible cases:
+	
+	First, suppose $|u|\geq|v_ix_i|$ holds, i.e., the prefix and suffix $u$ overlap in $v_i$ and the overlap contains at most $x_i$ (cf.\ Fig.~\ref{fig:skeleton}). Let $x,y\in A^*$ such that $u=xx_iv_i=y$. Then we have $|x|=|y|$ and $m:=xx_iy\presuf u$. Hence, by minimality of $u$ we have $|m|\leq|v_i|$ and therefore, by induction hypothesis, $m=v_k$ for some $0< k\leq i$. This implies
+	\[v_{k-1}x_{k-1}v_{k-1}=v_k=m=xx_iy\,.\]
+	Since $|x|=|y|$ and $|x_i|=|x_{k-1}|$ we have $x_i=x_{k-1}$, which is a contradiction to the construction of the $x_i$'s.
+	
+	\begin{figure}[h]
+		\centering\begin{tikzpicture}[scale=0.65,every node/.style={scale=0.85}]
+		\node at (-0.75,0.2){$v_{i+1}=$};
+		\node at (-0.75,-0.9){$u=$};
+		\node at (-0.75,-1.7){$u=$};
+		
+		\draw (0,0) rectangle (15,0.75);
+		\draw (0, -0.5) rectangle (10,-1.25);
+		\draw (5, -1.25) rectangle (15,-2);
+		
+		\draw (5,.75) -- (5,0);	
+		\draw (6,.75) -- (6,0);
+		\draw (9,.75) -- (9,0);
+		\draw (10,.75) -- (10,0);
+		
+		\draw (5,-0.5) -- (5,-2);
+		\draw (6,-0.5) -- (6,-2);
+		\draw (9,-0.5) -- (9,-2);
+		\draw (10,-0.5) -- (10,-2);
+		
+		\node at (7.5,0.3) {$x_i$};
+		\node at (9.5,-0.95) {$y$};
+		\node at (5.5,-1.7) {$x$};
+		
+		\draw[snake=brace] (0,0.8) -- (6,0.8);
+		\draw[snake=brace] (9,0.8) -- (15,0.8);
+		\draw[snake=brace] (10,-2.05) -- (5,-2.05);
+		
+		\node at (3,1.1) {$v_i$};
+		\node at (12,1.1) {$v_i$};
+		\node at (7.5,-2.4) {$m$};
+		\end{tikzpicture}
+		\caption{\label{fig:skeleton}}
+	\end{figure}
+	
+	Now, suppose $|u|<|v_ix_i|$. If $|u|\geq\frac{|v_{i+1}|}{2}$ (i.e., the prefix and suffix $u$ in $v_i$ overlap) then there is a word $m\in A^*$ such that $m\presuf u$ holds. Hence, by minimality of $u$ and by induction hypothesis we have $m=v_k$ for some $0\leq k\leq i$. Since $|m|<|x_i|=|x_1|$ we have $m=\varepsilon$, i.e., we have $|u|=\frac{|v_{i+1}|}{2}$.
+	
+	Suppose $|u|\leq\frac{|v_{i+1}|}{2}$ (i.e., the prefix and suffix $u$ in $v_i$ do not overlap). Then there is a word $p\in A^*$ such that $v_{i+1}=pu$. Since $u$ is a prefix of $v_{i+1}$ and $|p|>\frac{|v_{i+1}|}{2}$, $u$ also is a prefix of $p$. Hence, $p$ is a period of $v_{i+1}$ and we have
+	\[|p|=|v_{i+1}|-|u|<|v_{i+1}|-|v_i|=|v_ix_i|\,.\]
+	This is a contradiction to property~\ref{prf:short_from_skeleton:i1} stating that $v_ix_i$ is the minimal period of $v_{i+1}$.
+	
+	So, in both cases we have seen that there is no $v_i\presuf u\presuf v_{i+1}$, i.e., $(v_0,\dots,v_{i+1})$ is a complete border-decomposition.
+	
+	Finally, let $0\leq i<n$. Then we have
+	\[\calS_r(v)[i]=\pref_r(\inv{v_i}v)=\pref_r(\calS_r(w)[i]\,s)=\calS_r(w)[i]\]
+	for some $s\in A^*$, i.e., $\calS_r(v)=\calS_r(w)$. Additionally, we have $|v_i|=2|v_{i-1}+2n+2r$ for $1\leq i\leq n$ and $|v_0|=0$ which results in $|v|=|v_n|=(2^n-1)(2n+2r)=\calO(2^{nr})$.
+\end{proof}
+
+Let $V\in (A^{\leq r})^*$ be the $r$-skeleton of some word $w\in A^*$. We call the word $v\in A^*$ constructed in the proof of Lemma~\ref{lem:short_from_skeleton} the \emph{$r$-instantiation of $V$}.
+
+
+\section{Decidability of the FO-Theory}\label{sec:decidability}
+Recall that the Cayley-graph of the queue monoid $\Qx$ induced by $A$ is denoted by $\frakC=(\Qx,(E_\alpha)_{\alpha\in\Sigma})$.
+In order to ease the notation we let elements of $\frakC$ inherit some properties from their projections to the read and write actions. 
+For $p,q\in \Qx$ let $|p| = |(\rd{p}, \wrt{p})|$, $p\Delta q = (\rd{p}, \wrt{p})\Delta (\rd{q}, \wrt{q})$, and we call $|p\Delta q|$ the \emph{($\Delta$-)distance} of $p$ and $q$. Note that $\Delta$ defines a metric on $\frakC$. Further for $\vec{p} = (p_1,\ldots,p_k)\in \Qx^k$ let 
+$\calN_r(\vec{p}) = \{ q\in \Qx \mid \exists 1\leq i \leq k\colon |p_i\Delta q| \leq r \vee |q| \leq r \}$ be the \emph{($\Delta$-)neighborhood} of $\vec{p}$ of radius $r$ (\emph{$r$-neighborhood}). Note that we implicitly add the origin
+of $\frakC$ to $\vec{p}$ when we compute the neighborhood. Moreover we define the notion of a border-decomposition and an $r$-skeleton for an element $p\in\Qx$ as the border-decomposition and the $r$-skeleton of $\rd{p} \sqcap \wrt{p}$.
+
+Let us first give an intuitive outline of our decidability proof. We follow a classical proof strategy due to Ferrante and Rackoff \cite{FerR79}. Roughly speaking  we show that there is some fixed primitive recursive function $f:\bbN \to \bbN$ such that for every
+two $({r+1})$-equivalent tuples $\vec{p},\vec{q} \in \Qx^n$ and every $p\in \Qx$ there is a $q$ in the $f(r+1)$-neighborhood of the tuple $\vec{q}$ such that $(\vec{p},p) \equiv_r (\vec{q}, q)$.
+This implies that in order to evaluate a formula $Qx\phi(\vec{p})$ where $\phi$ has quantifier rank $r$ and $Q\in\{\exists,\forall\}$  we can restrict the quantification of $x$ to the $f(r+1)$-neighborhood of $\vec{p}$. Since the
+$r$-neighborhood of each element $p\in \Qx$ is finite and effectively computable for every radius $r$, we can use the above observation to implement a decision procedure for the theory of $\frakC$.   
+In order to achieve this goal we exploit the fact that first-order logic cannot measure distances between two nodes that are more than exponentially far away in the quantifier rank. Therefore our task for a given quantifier rank $r>0$ is to find for every $p$ that is far away from a tuple $\vec{p}$ an element $p'$ that is closer (but not yet too close) to $\vec{p}$ such that the neighborhoods of $p$ and $p'$ of a suitably chosen radius are not distinguishable with the remaining quantifier rank $r-1$. What makes this task more complex than for most other examples of Cayley-graphs with decidable first-order theory that can be found in the literature is that the Cayley-graph of the queue monoid is in some sense less local.
+In fact, the neighborhood-structure of an element $p$ does not only depend on suffixes of  bounded length of $\rd{p}$ and $\wrt{p}$ (as it would be the case for instance for the direct product of two free monoids). We solve this problem via the notion of skeletons. Our proof 
+reveals that   the $r$-type of the $2^{r+1}$-neighborhood of an element $p$ is basically determined by the $(r+1)$-type of the $3\cdot 2^{r+1}$-skeleton of $\rd{p} \sqcap \wrt{p}$. This will be the core
+of our proof.
+
+Let us start off by making some technical preparations in order to formulate the core idea precisely.
+\begin{definition}
+	Let $V$ be an $r$-skeleton. We say that $q\in\Qx$ is \emph{compatible} with $V$ 
+	if $V$ has an instantiation $v$ such that $\rd{q} \sqcap \wrt{q}= vx$ for some $x\in A^{\leq r}$ and 
+	$|\wrt{q} \Delta v| \leq r$.
+\end{definition}
+Intuitively, $q$ being compatible to an $r$-skeleton $V$ means that we can obtain an element
+$q'$ with $r$-skeleton $V$ by deleting up to $r$ many read actions and modifying the write
+actions arbitrarily up to distance $r$. We use this notion in order to translate elements of the Cayley-graph
+into positions of an $r$-skeleton. Next we describe how we translate back and forth between elements of the Cayley-graph and positions in a skeleton.
+However we can not guarantee that every element in close proximity to a given element $p$ can be associated with a position in the $r$-skeleton of $p$ because small changes to the read and write actions might change the border-decomposition dramatically. But we can modify
+$r$ and $p$ slightly to circumvent this problem.  
+\begin{definition}
+	For $q\in\Qx$ with $|\rd{q}| \geq r$ let $\cpr_r(q)$ be the element $q'$  with $\wrt{q'} = \wrt{q}$, $\rd{q'}=\rd{q}\suf_{r}({\rd{q}})^{-1}$, and $\mu({q'}) = \rd{q'} \sqcap \wrt{q'}$.
+	In other words, $\cpr_r$ just cuts the last $r$ read actions and pushes read and write actions as far together as possible. 
+	%	\begin{center}
+	%	\begin{tikzpicture}[scale=0.85,every node/.style={scale=0.85}]
+	%	\path[draw, fill=red!10] (0,0) rectangle (5,0.25);
+	%	\path[draw, fill=blue!10] (1.5, 0) rectangle (6.5, -.25);
+	%	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (2.5, .25) -- node[above, yshift= 5pt] {$r$} (5, .25);
+	%	\node at (8, 0) {$\mapsto$};
+	%	\path[draw, fill=red!10] (9.5,0) rectangle (12,0.25);
+	%	\path[draw, fill=blue!10] (11, 0) rectangle (16, -.25);
+	%	\draw[draw, decorate, decoration={brace,amplitude=5pt}] (12, .25) -- node[above, yshift= 5pt] {$r$} (14.5, .25);
+	%	\path[draw, dotted] (12, 0) rectangle (14.5, .25);
+	%	\end{tikzpicture}
+	%	\end{center}
+\end{definition}
+\begin{definition}
+	Let $p,q\in \Qx$ and let $U$ and $V$ be the $3r$-skeletons of $\cpr_{2r}(p)$ and $\cpr_{2r}(q)$, respectively. If we suppose that $(m_1,\ldots,m_k)$ are positions in $V$ and $(n_1,\ldots,n_k)$ are positions in $U$ such that $(U,m_1,\ldots,m_k) \equiv_{\ell} (V,n_1,\ldots,n_k)$ for some $\ell \geq 1$. For $p'\in \Qx$ with $|p'\Delta p| \leq r$ and $|\mu(p')| \geq 2r$ we associate a position $m_{k+1}$ in $U$ as follows:
+	Let $(u_1,\ldots, u_m)$ be the complete border-decomposition of $\rd{\cpr_{2r}(p)}$ and $(v_1,\ldots,v_n)$ be the complete border-decomposition of $\rd{\cpr_{2r}(q)}$. As $p'$ has distance at most $r$ from $p$ we have that $\rd{p'} = \rd{\cpr_{2r}(p)}x$
+	for some $x\in A^{\leq 2r}$. Therefore there is an $i\leq m$ such that $\mddl{p'} = u_ix$. Then $i$ is the position that is associated with $p'$.
+	
+	Now let $n_{k+1}$ be such that $(U,m_1,\ldots,m_{k+1}) \equiv_{\ell-1} (V,n_1,\ldots,n_{k+1})$ we associate an element $q'$ with $n_{k+1}$ as follows:
+	Let $q'$ be the element with $\rd{q'} = \rd{\cpr_{2r}(q)}u_{m_{k+1}}^{-1}\mddl{p'}$, $\wrt{q'}\Delta\wrt{\cpr_r({q})} = \wrt{p'}\Delta\wrt{\cpr_{2r}({p})}$, and 
+	$\mddl{q'} = v_{m_{k+1}}u_{n_{k+1}}^{-1}\mddl{p'}$. Note that $q'$ is well defined since $V[j]$ is labeled by $\pref_{2^{r+2}}(u_i^{-1}\mddl{p})$. Therefore $v_j\pref_{2^{r+1}}(v_i^{-1}\mddl{p})$ is a prefix of $\wrt{q'}$ by construction.
+\end{definition}
+
+Another important ingredient of our proof is to construct ``small'' $r$-equivalent words from a given word $w$. This is routine since it can be achieved by a simple automata-theoretic approach.
+\begin{lemma}[\!\!\cite{Tho97}]\label{lem:r-equiv_word_construction}
+	From a given alphabet $\Gamma$, a word $v\in\Gamma^\ast$, and $r\in\bbN$ one can compute an automaton $\calA$ in time $\exp_{r+1}(f(r))$ with $L(\calA) = \{w\in \Gamma^\ast\mid w\equiv_r v \}$ for some primitive recursive function $f$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+	Construct a first-order formula $\phi$ that characterizes the $r$-type of $v$. From $\phi$ compute an automaton $\calA_\phi$ with $L(\calA_\phi) = \{ w\in\Gamma^\ast \mid w\equiv_r v \}$. One easily show via induction on $r$ that the size of the automaton $\calA$ is at most
+	$\exp_{r+1}(2, f(r))$ where $f(r)$ is an upper bound for the size of the formula $\phi$ (which can be chosen to be primitive recursive).
+\end{proof}
+
+We use this idea to  define a family of  equivalence relations $(\calE^r_m)_{r,m\in\bbN}$.
+For $r,m\in \bbN$ and $\vec{p},\vec{q}\in \Qx^m$ let $\vec{p} \calE^r_m \vec{q}$ iff
+\begin{bracketenumerate}
+	\item If $|p_i \Delta \epsilon| \leq 4\exp_{r+2}(2, f(r))$ then $p_i=q_i$ where $f$ is the function from Lemma \ref{lem:r-equiv_word_construction}.
+	\item\label{item:E_distance} $|p_i \Delta p_j| =_{2^r} |q_i\Delta q_j|$ for all $1\leq i, j\leq m$ and if $|p_i\Delta p_j| \leq 2^r$ then also $p_i \Delta p_j = q_i\Delta q_j$. 
+	\item\label{item:E_partition} There is a partition $X_1,\ldots,X_k$ of $\{1,\ldots,m\}$ such that for $X\neq X'\in \{X_1,\ldots,X_k\}$ it holds that with $\text{min} = \min X$: 
+	\begin{alphaenumerate}
+		\item\label{item:part_distance} If $i\in X$, $j\in X'$ it holds that $|p_i\Delta p_j| > 2^r$ (and therefore $|q_i\Delta q_j| > 2^r$).
+		\item\label{item:E_suffix} $\suf_{2^{r+m+2}}(\rd{p_i}) = \suf_{2^{r+m+2}}(\rd{q_i})$ and \\$\suf_{2^{r+m+2}}(\wrt{p_i}) = \suf_{2^{r+m+2}}(\wrt{q_i})$ for all $i\in X$.
+		\item For all $j\in X$ it holds that $|p_\text{min} \Delta p_j| \leq \sum_{s= r}^{r+m} 2^s$ (and therefore also $|q_\text{min} \Delta q_j| \leq \sum_{s= r}^{r+m} 2^s$).
+		\item\label{subitem:E_partition:equivalence} Let $U$ be the $3\cdot 2^{r+m+1}$-skeleton of $\cpr_{2^{r+m+2}}(p_\text{min})$ and $V$ be the $3\cdot 2^{r+m+1}$-skeleton $\cpr_{2^{r+m+2}}(q_\text{min})$. Then for all 
+		$j\in X$ we have that either $\mu(p_j) = \mu(q_j)$ or $|\mu(p_j)| \geq 2^{r+m+2}$ and $p_j$ is compatible with $U$ and $q_j$ is compatible with $V$. Further if $m_1,\ldots, m_k$ are the positions in $U$ that are associated with $\{p_j \mid j\in X \}$ and $n_1,\ldots, n_k$ are the positions in $U$ that are associated with $\{q_j \mid j\in X \}$ then $(V,m_1,\ldots,m_k) \equiv_{r+1} (U,n_1,\ldots,n_k)$.
+	\end{alphaenumerate}  
+\end{bracketenumerate} 
+We show that $(\calE^r_m)_{r,m\in\bbN}$ are indeed EF-relations for $\frakC$.
+\begin{lemma}\label{lem:partial_isomorphism}
+	For all $m\in\bbN_{>0}$ and all $\vec{p},\vec{q} \in \Qx^m$: If $\vec{p} \calE^0_m \vec{q}$ then the mapping $p_i \mapsto q_i$ is a partial isomorphism.
+\end{lemma}
+\begin{proof}
+	We need to show that $(p_i,p_j)\in E_a \Rightarrow (q_i,q_j)\in E_a$  for all $i,j\leq m$ and all $a\in \Sigma$.
+	Let $\vec{p}, \vec{q} \in \Qx^m$ with $\vec{p} \calE^0_m \vec{q}$. Suppose  $(p_i,p_j) \in E_a$ for some $a\in\Sigma$. Then $|p_i\Delta p_j| = 1$. Hence $p_i\Delta p_j = q_i\Delta q_j$ by (\ref{item:E_distance}). 
+	Let $X_1,\ldots, X_k$ be the partition from Property \ref{item:E_partition}. Since the distance between $p_i$ and $p_j$ and between $q_i$ and $q_j$ is $1$ we derive from Property (\ref{item:part_distance}) that $i$ and $j$ belong to the same 
+	$X\in\{X_1,\ldots, X_k\}$. Let $\ell = \min X$.
+	If $|\mu(p_i)| < 2^{m  +2}$ then, by Property (\ref{subitem:E_partition:equivalence}) and (\ref{item:E_suffix}), $\mu(p_i) = \mu(q_i)$. In this case $(p_i, p_j) \in E_a \Leftrightarrow (q_i,q_j) \in E_a$  obviously holds.
+	Otherwise there are $3\cdot2^{m + 1}$-skeletons $U,V$ such that 
+	$p_i$ and $p_j$ can be translated into positions $m_1, m_2$ in $U$ and $q_i$ and $q_j$ can be translated into position $n_1,n_2$ in $V$ such that $(U,m_1,m_2) \equiv_1 (V,n_1,n_2)$. 
+	There are two possible types of configurations for $p_i$ and $p_j$ such that they can be connected by an edge. First, it might be the case  that $\rd{p_i} = \rd{p_j}$,
+	$\wrt{p_i}a = \wrt{p_j}$, and $\mddl{p_i} = \mddl{p_j}$. In this case $m_1=m_2$ and therefore $n_1=n_2$, which implies that $\rd{q_i} = \rd{q_j}$,
+	$\wrt{q_i}a = \wrt{q_j}$, and $\mddl{q_i} = \mddl{q_j}$. Therefore $(q_i,q_j) \in E_a$.
+	
+	Second, it might be that $\rd{p_i}a = \rd{p_j}$ (where $a=\ov{b}$),
+	$\wrt{p_i} = \wrt{p_j}$, and $\mddl{p_j}a^{-1}$ is the largest suffix $w$ of $\mddl{p_i}$ such that $wa$ is a prefix of $\wrt{p_i}$.  This property can be translated into the formula of quantifier rank $1$. Let $(w_0,\ldots, w_n)$ be the complete border-decomposition of $\cpr_{2^{m+2}}(p_\ell)$ and $v:= w_{m_1}^{-1}\mddl{p_i} \in A^{\leq 3\cdot 2^{m+1}}$. Then
+	\[\phi(x_1, x_2) \coloneq x_2 \leq x_1 \land \bigvee_{s\in A^{\leq 3\cdot 2^{m+1}} : (va)\preceq s} P_s(x_2) \land  \forall y: \left(x_2 < y < x_1 \to \bigwedge_{s\in A^{\leq 3\cdot 2^{m+1}} : va\preceq s} \lnot P_s(y)\right) . \]
+	Hence $U \models \phi(m_1,m_2)$  and since $(U,m_1,m_2) \equiv_1 (V, n_1,n_2)$ also $V \models \phi(n_1, n_2)$ and therefore $(q_i,q_j)\in E_a$.
+\end{proof}
+
+
+\begin{lemma}\label{lem:EF_relations}
+	For all $m,r\in\bbN$ and all $\vec{p},\vec{q}\in \Qx^m$:  
+	\[\vec{p} \calE^{r+1}_m \vec{q} \Rightarrow \forall p\in \Qx \exists q\in \calN_{\exp_{r+3}(g(r+m))}(\vec{q}): (\vec{p}, p) \calE^{r}_{m+1} (\vec{q}, q)\]
+	for some primitive recursive function $g$.
+\end{lemma}
+\begin{proof}
+	Let $f$ be the primitive recursive function from Lemma \ref{lem:r-equiv_word_construction}.
+	Let $\vec{p}, \vec{q} \in \Qx^m$ with $(\vec{p}, \vec{q}) \in \calE^{r+1}_m$ and 
+	let $X_1,\ldots,X_k$ be a partition of $\{1,\ldots,m\}$ with the properties described in (\ref{item:E_partition}). 
+	%Further let $X_i(\vec{p}) = \{p_j \mid j\in X_i \}$ and $X_i(\vec{q}) = \{q_j \mid j\in X_i \}$. 
+	Consider $p\in \Qx$. We distinguish three cases.
+	If $p$ has distance $\leq 4\exp_{r+2}(2, f(r))$ from $\epsilon$ then we choose $q=p$.
+	
+	From now on suppose $p$ has distance $> 4\exp_{r+2}(2, f(r))$ from $\epsilon$.
+	We consider the case that $p$ has distance $>2^r$ from every $p_i$.
+	Since the distance from $\epsilon$ is exactly $|\strt{p}| + 2|\mddl{p}| + |\rght{p}|$ it follows that $|\strt{p}| > \exp_{r+2}(f(r))$ or $|\mddl{p}| > \exp_{r+2}(f(r))$ or $|\rght{p}| > \exp_{r+2}(f(r))$. 
+	%	 If $|\lambda(a)| > 2^r$ then we choose a $v\in \Sigma^\ast$ such that  
+	%    $\rd{a}\suf_{2^{r}}(\rd{a})^{-1} \sqcap \wrt{a} = v\,\rd{a}\suf_{2^{r}}(v\,\rd{a})^{-1} \sqcap \wrt{b}$. If $x$ is the first letter of $\wrt{a}$ then we can choose $v= y^\ell$ for some $y\neq x$ and some $\ell\in\bbN$. 
+	%    Let $b_\ell$ be the element with $\rd{b_\ell} = y^\ell \rd{a}$, $\wrt{b_\ell} = \wrt{a}$, and $\mu(b) = \mu(a)$.
+	%    As there are only $m$ other elements chosen so far, we can choose $\ell$ large enough so that the element $b$ has distance $>2^{r}$ from every $b_i$ and from $\epsilon$. If   
+	%	Basically, we want to use the $3\cdot 2^{r+1}$-skeleton of $p$ to construct a suitable answer $q$. However, we need to cut the last $2^{r+1}$ read actions in order to avoid certain problems that would occur if we want to translate elements in close proximity to $p$ into positions of the $3\cdot 2^{r+1}$-skeleton.   
+	Let $p'= \cpr_{2^{r+m+2}}(p)$.  Consider 
+	the $3\cdot 2^{r+m+1}$-skeleton $V = \calS_{3\cdot 2^{r+m+1}}(p')$. By Lemma \ref{lem:r-equiv_word_construction} we can find a $3\cdot 2^{r+m+1}$-skeleton $W$ of length at most $(m+1)\exp_{r+2}(f(r+1))$ with $V \equiv_{r+1} W$ and $3\cdot 2^{r+m+1}$-instantiation $w$ with $|w|\leq  c\cdot 2^{(m+1)\exp_{r+2}(f(r+1)) \cdot 3\cdot 2^{r+m+1}}  \leq \exp_{r+3}(g(r+m))$ (for a suitable primitive recursive function $g$). Using Lemma \ref{lem:short_ends_construction}, words $u,v$ of length at most 
+	$(m+1)2^{r+m+3}$ such that 
+	\begin{enumerate}
+		\item $\suf_{2^{r+m+2}}(uw) = \suf_{2^{r+m+2}}(\rd{p}\suf_{2^{r+m+2}}(\rd{p})^{-1} )$
+		\item $\suf_{2^{r+m+2}}(wv) = \suf_{2^{r+m+2}}(\wrt{p})$
+		\item $\pref_{2^{r+m+2}}(wv) = \pref_{2^{r+m+2}}(\wrt{p})$
+		\item $uw\sqcap wv = w$
+	\end{enumerate}
+	such that every element $x$ with $\rd{x} = uw$ and $\wrt{x} = wv$ has distance $> 2^r$ from every $q_i$.
+	We choose to $q$ to be such an element $x$. It remains to specify $\mddl{x}$. if $|\mddl{p}| \leq 2^{r+m+2}$ then choose $\mu(q) = \mu(p)$. Otherwise
+	let $(v_0,v_1,\ldots, v_m)$ be the complete border-decomposition of $p'$ and let $(w_0, w_1,\ldots, w_n)$ be the complete border-decomposition of $w$. Let $i$
+	be the index of $\mddl{p'}$ in $(v_0,v_1,\ldots, v_m)$. Because $\calS_{3\cdot 2^{r+m+1}}(p') \equiv_{r+1} W$ there is a $j\in \{0,\ldots,n\}$ such that $(\calS_{3\cdot 2^{r+m+1}}(p'), i) \equiv_r (W,j)$.
+	Now choose $\mu(q) = w_j$. Finally extend the partition by $X_{k+1} = \{m+1\}$.
+	
+	%As the tuples $(\vec{a}, a)$ and $(\vec{a},b)$ fulfill the precondition of Lemma \ref{lem:EF_relations}, we can derive that the two tuples are $r$-equivalent. 
+	
+	If $p$ has distance $\leq 2^{r}$ from some $p_i$ then let $Y\in \{X_1,\ldots,X_k\}$ be such that $i\in Y$ and let $j=\min Y$. Let $U$ be the $3\cdot 2^{r+m+1}$-skeleton of $\cpr_{2^{r+m+2}}(p_j)$ and 
+	$V$ be the $3\cdot 2^{r+m+1}$-skeleton of $\cpr_{2^{r+m+2}}(q_j)$.
+	Since $|p_i\Delta p_j| \leq \sum_{s=r+1}^{r+m} 2^s$ and $|p\Delta p_i| \leq 2^r$ we conclude that $|p\Delta p_j| \leq \sum_{s=r}^{r+m} 2^s \leq 2^{r+m+1}$. Hence, $p$ is compatible with $U$. Let $m_1,\ldots,m_\ell$ be the positions in $U$ that are associated with the elements $\{q_s \mid s\in Y\}$, $m_{\ell+1}$ the position in $U$ that is associated with $p$, and $n_1,\ldots,n_\ell$ be the positions associated with $\{q_s \mid s\in Y\}$ in $V$. Since $(U,m_1,\ldots,m_\ell) \equiv_{r+2} (V,n_1,\ldots,n_\ell)$ by Property (\ref{subitem:E_partition:equivalence}) there exists a $n_{\ell+1}$ with $(U,m_1,\ldots,m_{\ell+1}) \equiv_{r+1} (V,n_1,\ldots,n_{\ell+1})$. From $n_{\ell+1}$ we compute the associated element $q$
+	in the $(\sum_{s= r+m}^{r} 2^s)$-neighborhood of $q_j$.
+	\begin{figure}[h]
+		\centering\begin{center}
+			\begin{tikzpicture}[scale=0.5,every node/.style={scale=0.5}]
+			\draw (0,1) circle (2cm);
+			\draw (8,1) circle (2cm);
+			
+			\node (pj) at (0,1) {$p_j$};
+			\node (qj) at (8,1) {$q_j$};
+			\draw (pj) -- node[above] {$2^{r+1}$}  (2,1); 
+			\draw (qj) -- node[above] {$2^{r+1}$}  (10,1);
+			
+			\node (p) at (0, 2) {$p$};
+			\node (q) at (8, 2) {$q$};
+			
+			\path[draw] (-4, 4) rectangle (4,4.5);
+			\node at (-4.5, 4.25) {$U=$};
+			\draw (-3, 4) -- (-3, 4.5);
+			\draw (-.5, 4) -- (-.5, 4.5);
+			\draw (.5, 4) -- (.5, 4.5);
+			\draw (3, 4) -- (3, 4.5);
+			\node at (-3.5, 4.25) {$u_1$};
+			\node at (-1.75, 4.25) {$\cdots$};
+			\node at (0, 4.25) {$u_{m_{\ell + 1}}$};
+			\node at (1.75, 4.25) {$\cdots$};
+			\node at (3.5, 4.25) {$u_{|U|}$};
+			
+			\path[draw] (5, 4) rectangle (11,4.5);
+			\node at (11.5, 4.25) {$=V$};
+			\draw (6, 4) -- (6, 4.5);
+			\draw (7.5, 4) -- (7.5, 4.5);
+			\draw (8.5, 4) -- (8.5, 4.5);
+			\draw (10, 4) -- (10, 4.5);
+			\node at (5.5, 4.25) {$v_1$};
+			\node at (6.75, 4.25) {$\cdots$};
+			\node at (8, 4.25) {$v_{n_{\ell + 1}}$};
+			\node at (9.25, 4.25) {$\cdots$};
+			\node at (10.5, 4.25) {$v_{|V|}$};
+			
+			\draw[->, dashed] (p) -- (0, 4);
+			\draw[->, dashed] (8,4) -- (q);
+			
+			\path[draw] (0, 4.5) -- (0, 5) edge node[above] {$(U, m_1,\ldots, m_\ell) \equiv_{r+2} (V, n_1,\ldots,n_\ell)$} (8, 5) 
+			(8, 5)            edge[->] (8, 4.5);
+			
+			
+			\end{tikzpicture}
+		\end{center}
+		\caption{\label{fig:construction}Construction of $q$ from $p$ using $U$ and $V$.}
+	\end{figure}
+	The construction of $q$ ensures that Properties (\ref{item:E_suffix}) to (\ref{item:E_partition}) are fulfilled for $(\vec{p}, p)$ and $(\vec{q}, q)$ by adding $\ell+1$ to $Y$. Hence $(\vec{p}, p) \calE^r_m (\vec{q}, q)$.
+\end{proof}
+
+The Lemmata \ref{lem:partial_isomorphism} and \ref{lem:EF_relations} ensure that $\calE^r_m$-equivalent tuples are also $r$-equivalent.
+
+\begin{corollary}\label{cor:equivalence}
+	For all $\vec{p}\in \Qx^m$, $p\in \Qx$, and $r\in\bbN$ there exists an element $q\in \calN_{\exp_{r+3}(g(r+m))}(\vec{p})$ with $(\frakC, \vec{p}, p) \equiv_r (\frakC,\vec{p}, q)$ for some polynomial~$f$.
+\end{corollary}
+%\begin{lemma}
+%	There is a primitive-recursive function $f\colon \bbN \to \bbN$ such that for all $r\in\bbN_{>0}$, all $m$-tuples $\vec{a}\in C^m$, and all $a\in C$ there exists a $b \in \calN_{f(r)}(\vec{a})$ such that $(\calC, \vec{a}, a) \equiv_r (\calC, \vec{a}, b)$
+%\end{lemma}
+%\begin{proof}
+%	Let $\vec{a}\in C^m$ and $a_{m+1} \in C$. If $a_{m+1}\in \calN_{2^{r+4}}(\vec{a})$ then we can choose $b_{m+1} = a_{m+1}$ and be done. Otherwise 
+%	the tuple  
+%	$\chi(a') = (\lambda(a'), \mu(a'), \rho(a'))$. Since $a$ has distance $> 2^{r+4}$ from the origin $\epsilon$ and 
+%	$|\Delta(\epsilon, a_{m+1})| = |\lambda(a_{m+1})| + 2|\mu(a_{m+1})| + |\rho(a_{m+1})|$ it follows that at least one of the three values $|\theta(a_{m+1})|$,  $\theta\in \{\lambda,\mu, \rho \}$, is larger than $(2^{r+4} - 2^{r+1})/4  > 2^{r+2} - 2^{r+1} = 2^{r+1}$.  
+%\end{proof}
+%\begin{definition}
+%	For $a\in C$  let $\cut_r(a) \in C$ be the element.  
+%\end{definition}
+\begin{lemma}\label{lem:neighborhood_size}
+	For every $p\in \Qx$ and every $r$ there are at most $|A|^{4r} (\min\{|\rd{p}|, |\wrt{p}|\} + r)$ many elements in the $r$-neighborhood of a node $p\in \Qx$. 
+\end{lemma}
+\begin{proof}
+	Every element $q$ in the $r$-neighborhood of $p$ can be characterized by the tuple $p\Delta q = (u,v, w, x)\in (A^{\leq r})^4$ and $\mddl{q}$. Once we have fixed  
+	$p\Delta q \in (A^{\leq r})^4$ (and therefore fixed $\rd{q}$ and $\wrt{q}$) there are at most $\min\{ |\rd{q}|, |\wrt{q}| \} \leq \min\{ |\rd{p}|, |\wrt{p}| \} + r$ possible values for $\mddl{q}$.
+\end{proof}
+
+With this lemma we obtain our main result.
+
+\begin{theorem}
+	$\FOTh{\frakC}$ is primitive recursive.
+\end{theorem}
+\begin{proof}
+	We use the standard model-checking algorithm for first-order logic but restrict quantification to the $\exp_{r+1}(2,f(r))$-neighborhood of the current variable assignment. The correctness of this procedure is guaranteed by Corollary \ref{cor:equivalence}.
+	We see that the values $|\rd{p}|$ and $|\wrt{p}|$ are bounded by $\exp_{r+3}(g(r+m))$
+	Hence, by Lemma \ref{lem:neighborhood_size} the algorithm needs to consider at most $|A|^{4r} (\exp_{r+3}(g(r+m)) +1)$ many Elements, which leads to a runtime of
+	$|\phi| \cdot (|A|^{4r} (\exp_{r+3}(g(r+m)) +1))^r$, which is obviously a primitive recursive function. 
+\end{proof}
+
+\section{Conclusion and Open Problems}
+We studied the Cayley-graph of the queue monoid and the logics of these graphs. Concretely, we have shown the decidability of the Cayley-graph's first order theory and the undecidability of the monadic second-order theory. This answers a question from Huschenbett et al.\ in \cite{HusKZ17}.
+
+In Table~\ref{tab:conclusion} is a comparison of our results compared to other fundamental data structures.
+
+\begin{table}[H]
+	\begin{tabular}{cc|cc}
+		Data Structure & Transformation Monoid $\calM$ & $\FOTh{\cayley{\calM}{\varGamma}}$ & $\MSOTh{\cayley{\calM}{\varGamma}}$\\
+		\hline
+		\hline
+		finite monoid & finite monoid & $\classfont{PSPACE}$ \cite{Graedel03} & $\classfont{PSPACE}$ \cite{Graedel03}\\
+		counter & $(\bbZ,+)$ & $\classfont{2EXPSPACE}$ \cite{KusL11} & decidable \cite{KusL06}\\
+		stack & polycyclic monoid & $\classfont{2EXPSPACE}$ \cite{KusL11} & decidable \cite{DelKT03,KusL06}\\
+		queue & queue monoid & primitive recursive & undecidable
+	\end{tabular}
+	\caption{Comparison of the decidability of logics on Cayley-graphs of fundamental data structures.\label{tab:conclusion}}
+\end{table}%\vspace{-1cm}
+There are still some questions open relating to the queue monoid: in this paper we have given a primitive recursive but non-elementary upper bound on the complexity of the first-order theory of the queue monoid's Cayley-graph. So, one may ask for tight upper and lower bounds.
+Another open question concern the automaticity of the queue monoid. While it is neither automatic in the sense of Khoussainov and Nerode~\cite{KN95} nor automatic in the sense of Thurston et al.~\cite{CEHLPT92} due to~\cite{HusKZ17}, we still do not know whether the Cayley-graph of the queue monoid is automatic.
+Finally, the decidability of the first-order theory of the (partially) lossy queue monoid's (cf.~\cite{KKP18,Koe18}) Cayley-graph is left open as well and is worth to be studied.
+
+	\bibliographystyle{plainurl}
+	\bibliography{lit}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
